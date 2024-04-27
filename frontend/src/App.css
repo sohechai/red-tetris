@@ -1,42 +1,192 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+    --red-shadow: #ff001baa;
+    /* max-width: 1280px; */
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+    height: 16em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+    filter: drop-shadow(0 0 1em var(--red-shadow));
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* sign up page */
+
+.signup-container {
+    background-color: #ffffff;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 32px 64px 32px 64px;
+    border-radius: 4px;
+    width: 320px;
+    /* justify-content: center; */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+form {
+    display: flex;
+    flex-direction: column;
+    /* width: 224px; */
+    /* justify-content: start; */
+    align-items: start;
+    /* gap: 24px; */
+    /* max-width: 20em; */
+    /* margin: 0 auto; */
 }
 
-.card {
-  padding: 2em;
+form > label {
+    /* margin: 0; */
+    margin-bottom: 0.5em;
 }
 
-.read-the-docs {
-  color: #888;
+form > input {
+    padding: 1em;
+    width: 90%;
+    margin-bottom: 1em;
+}
+
+/* login page */
+
+.login-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* home page */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.navbar-container {
+    width: 100vw;
+    height: 64px;
+    position: absolute;
+    top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    /* padding: 1em 2em; */
+}
+
+.navbar-container > .logo {
+    position: fixed;
+    left: 0;
+    height: 80px;
+    padding: 0.5em;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.nav-links > a:nth-child(2) {
+    border: 0.5px solid #ffffff;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    box-shadow: 0 0 20px 2px var(--red-shadow);
+    text-shadow: var(--red-shadow) 0 0 10px;
+    will-change: filter;
+    transition: filter 300ms;
+}
+.nav-links > a:nth-child(2):hover {
+    color: #ffffff;
+    filter: drop-shadow(0px 0px 12px var(--red-shadow));
+    ));
+}
+
+.home-content {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+/* How to play */
+
+.howto-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.howto-content {
+    width: 60%;
+    /* padding: 3em; */
+    padding: 8em;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+}
+
+.howto-block {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+.howto-block > p{
+    display: flex;
+   align-items: center;
+    gap: 16px;
+}
+
+/* Scoreboard page */
+
+.scoreboard-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.scoreboard-content {
+    /* width: 70%; */
+    height: 60vh;
+    padding: 3em;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    background-color: var(--red-shadow);
+}
+
+table {
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+tbody {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    /* gap: 16px; */
+}
+
+tr {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
 }
