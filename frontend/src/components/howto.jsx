@@ -1,4 +1,4 @@
-import leeftRightArrows from "../assets/left-right-arrows.svg";
+import leftRightArrows from "../assets/left-right-arrows.svg";
 import upArrow from "../assets/up-arrow.svg";
 import downArrow from "../assets/down-arrow.svg";
 import spacebar from "../assets/spacebar.svg";
@@ -54,7 +54,7 @@ const Howto = () => {
             <h2>Controls</h2>
             <div className="howto-block">
               <p>
-                <img alt="left-right-arrows" src={leeftRightArrows} />
+                <img alt="left-right-arrows" src={leftRightArrows} />
                 Move the tetrimino left or right.
               </p>
               <p>

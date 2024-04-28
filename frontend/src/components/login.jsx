@@ -2,7 +2,7 @@ import logo from "../assets/tetris-logo.svg";
 
 const signup = () => {
   return (
-    <div>
+    <div className="sign-up">
       <img src={logo} alt="Tetris Logo" className="logo" />
       <div className="signup-container">
         <h1>Login</h1>
