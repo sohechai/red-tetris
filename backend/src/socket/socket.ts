@@ -43,12 +43,12 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
     @SubscribeMessage('joinRoom')
     handleJoinRoom(client: Socket, data: { room: string, pseudo: string }): void {
-        this.logger.log(`Client joined room: ${data.room} with pseudo : ${data.pseudo}`);
         if (CheckIfUserIsUnique(this.users, data.pseudo) === 1) {
             client.emit("error", "Error: the pseudo is already used");
         }
         else {
             RegisterUser(this.users, data.pseudo, data.room, client);
         }
+        this.logger.log(`Client joined room: ${data.room} with pseudo : ${data.pseudo}`);
     }
 }

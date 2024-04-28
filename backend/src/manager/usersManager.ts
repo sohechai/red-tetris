@@ -22,7 +22,9 @@ function SendNewUsersInRoom(users: User[], client: Socket, room: string) {
         if(user.room === room)
             usersInRoom.push(user.pseudo);
     }
-    client.to(room).emit("usersInRoom", usersInRoom);
+    console.log(client.rooms);
+    client.to(client.rooms[0]).emit("usersInRoom", usersInRoom);
+
 }
 
 function RoomAlreadyExist(users: User[], room: string): boolean {
