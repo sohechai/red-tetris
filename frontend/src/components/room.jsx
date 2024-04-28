@@ -1,5 +1,4 @@
 import logo from "../assets/tetris-logo.svg";
-import homeImg from "../assets/home-img.png";
 
 const Room = () => {
   return (
