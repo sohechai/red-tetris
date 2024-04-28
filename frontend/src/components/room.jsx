@@ -1,19 +1,17 @@
-import logo from "../assets/tetris-logo.svg";
-
 const Room = () => {
   return (
-    <div className="room-container">
-      <img src={logo} alt="Tetris Logo" className="logo" />
-      <div className="room-box">
-        <div className="room-form">
-          <form>
-            <label htmlFor="room-name">Room Name</label>
-            <input type="text" placeholder="Room Name" />
-            <label htmlFor="username">Username</label>
-            <input type="text" placeholder="Username" />
-            <button type="submit">Create / Join Room</button>
-          </form>
-        </div>
+    <div className="room-container" id="#room">
+      <div className="room-form">
+        <h1>Create / Join Room</h1>
+        <form>
+          <label htmlFor="room-name">Room Name</label>
+          <input type="text" placeholder="Room Name" />
+          <label htmlFor="username">Username</label>
+          <input type="text" placeholder="Username" />
+          <a href="roomName" className="a_button">
+            Create / Join Room
+          </a>
+        </form>
       </div>
     </div>
   );

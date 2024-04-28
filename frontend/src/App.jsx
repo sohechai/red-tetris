@@ -1,28 +1,27 @@
 import "./App.css";
-import socketIO from "socket.io-client";
-import Navbar from "./components/navbar.jsx";
-import Signup from "./components/signup.jsx";
-import Login from "./components/login.jsx";
-import Home from "./components/home.jsx";
-import homeImg from "./assets/tetris-logo.svg";
-import Howto from "./components/howto.jsx";
-import Scoreboard from "./components/scoreboard.jsx";
-import Play from "./components/play.jsx";
-import Room from "./components/room.jsx";
+import { Routes, Route, BrowserRouter, NavLink } from "react-router-dom";
+import io from "socket.io-client";
+import Play from "./components/Play.jsx";
+import Room from "./components/Room.jsx";
+import RoomName from "./components/RoomName.jsx";
+import logo from "./assets/tetris-logo.svg";
 
-const socket = socketIO.connect("http://localhost:4000");
+const socket = io("http://localhost:4001", { transports: ["websocket"] });
 
 function App() {
   return (
     <>
-      {/* <Navbar /> */}
-      {/* <Signup /> */}
-      {/* <Login /> */}
-      {/* <Home /> */}
-      {/* <Howto /> */}
-      {/* <Scoreboard /> */}
-      <Room />
-      {/* <Play /> */}
+      <BrowserRouter>
+        <img alt="Tetris Logo" className="logo" src={logo} />
+        {/* <NavLink to="/room"> */}
+        {/* <Play /> */}
+        {/* </NavLink> */}
+        <Routes>
+          <Route path="/" exact element={<Play />} />
+          <Route path="/room" exact element={<Room />} />
+          <Route path="/roomName" exact element={<RoomName />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
