@@ -1,4 +1,4 @@
-import { Socket } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { User } from 'src/interface/user';
 import { generateNewMap } from 'src/model/map';
 
@@ -14,18 +14,19 @@ export function RemoveUser(users: User[], client: Socket) {
   return users;
 }
 
-function SendNewUsersInRoom(users: User[], client: Socket, room: string) {
+function SendNewUsersInRoom(users: User[], client: Socket, room: string, server: Server) {
     const usersInRoom: String[] = [];
     for (let user of users) {
         if(user.room === room)
             usersInRoom.push(user.pseudo);
     }
-    console.log(client.rooms);
+    console.log(users, "______________\n", usersInRoom);
+    server.to(room).emit("usersInRoom", usersInRoom);
     client.to(client.rooms[0]).emit("usersInRoom", usersInRoom);
 }
 
 function RoomAlreadyExist(users: User[], room: string): boolean {
-  if (users.findIndex((user) => user.room === room)) return true;
+  if (users.findIndex((user) => user.room === room) !== -1) return true;
   return false;
 }
 
@@ -34,6 +35,7 @@ export function RegisterUser(
   pseudo: string,
   room: string,
   client: Socket,
+  server: Server,
 ): User[] {
   users.push({
     pseudo: pseudo,
@@ -44,6 +46,6 @@ export function RegisterUser(
     map: generateNewMap(),
   });
   client.join(room);
-  SendNewUsersInRoom(users, client, room);
+  SendNewUsersInRoom(users, client, room, server);
   return users;
 }

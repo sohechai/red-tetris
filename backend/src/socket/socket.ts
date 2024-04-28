@@ -55,7 +55,7 @@ export class AppGateway
             client.emit("error", "Error: the pseudo is already used");
         }
         else {
-            RegisterUser(this.users, data.pseudo, data.room, client);
+            this.users = RegisterUser(this.users, data.pseudo, data.room, client, this.wss);
         }
         this.logger.log(`Client joined room: ${data.room} with pseudo : ${data.pseudo}`);
     }
