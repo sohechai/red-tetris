@@ -26,7 +26,16 @@
     width: 100vw;
     height: 100vh;
 }
+
 .room-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    margin-bottom: 100;
+}
+.room-form {
     background-color: #ffffff;
     color: #000000;
     display: flex;
@@ -35,6 +44,7 @@
     padding: 32px 64px 32px 64px;
     border-radius: 4px;
     width: 320px;
+
     /* justify-content: center; */
 }
 
