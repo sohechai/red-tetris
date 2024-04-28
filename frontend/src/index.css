@@ -15,10 +15,9 @@
 a {
     text-decoration: none;
     color: inherit;
-    /* font-size: 1.2em; */
 }
+
 a:hover {
-    /* color: var(--red-shadow); */
     text-shadow: rebeccapurple 0 0 10px;
 }
 
@@ -34,8 +33,6 @@ a:hover {
     cursor: pointer;
     will-change: filter;
     transition: filter 300ms;
-    /* width: 90%; */
-    /* width: fit-content; */
 }
 
 .a_button:hover {
