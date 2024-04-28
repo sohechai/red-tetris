@@ -10,7 +10,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { CheckIfUserIsUnique, User, registerUser } from 'src/users/users';
   
-  @WebSocketGateway()
+  @WebSocketGateway(4000)
   export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer()
     private wss: Server;

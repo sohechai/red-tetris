@@ -25,6 +25,7 @@ function sendNewUsersInRoom(users: User[], client: Socket, room: string) {
             usersInRoom.push(user.pseudo);
         }
     }
+    client.to(room).emit("usersInRoom", usersInRoom);
 }
 
 export function registerUser(users: User[], pseudo: string, room: string, client: Socket) {
@@ -34,4 +35,5 @@ export function registerUser(users: User[], pseudo: string, room: string, client
         client: client,
     });
     client.join(room);
+    sendNewUsersInRoom(users, client, room);
 }
