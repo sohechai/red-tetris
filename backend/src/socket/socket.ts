@@ -7,8 +7,8 @@ import {
     OnGatewayDisconnect,
     WebSocketServer,
   } from '@nestjs/websockets';
-  import { Server, Socket } from 'socket.io';
-import { User } from 'src/users/users';
+import { Server, Socket } from 'socket.io';
+import { CheckIfUserIsUnique, User, registerUser } from 'src/users/users';
   
   @WebSocketGateway()
   export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
@@ -31,8 +31,10 @@ import { User } from 'src/users/users';
     @SubscribeMessage('joinRoom')
     handleJoinRoom(client: Socket, room: string, pseudo: string): void {
         this.logger.log(`Client joined room: ${room} with pseudo : ${pseudo}`);
-        
-        client.join(room);
+        if (CheckIfUserIsUnique(this.users, pseudo) == 1) {
+            client.emit("error", "Error: the pseudo is already used");
+        }
+        registerUser(this.users, pseudo, room, client);
         client.emit("playerInRoom", )
     }
     
