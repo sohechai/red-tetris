@@ -1,0 +1,1 @@
+export interface Map extends Array<string>{};
