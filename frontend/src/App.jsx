@@ -1,33 +1,24 @@
 import "./App.css";
+import { Routes, Route, BrowserRouter, NavLink } from "react-router-dom";
+import { Provider } from "react-redux";
+// import store from "./store.jsx";
 import io from "socket.io-client";
-import Navbar from "./components/navbar.jsx";
-import Signup from "./components/signup.jsx";
-import Login from "./components/login.jsx";
-import Home from "./components/home.jsx";
-import homeImg from "./assets/tetris-logo.svg";
-import Howto from "./components/howto.jsx";
-import Scoreboard from "./components/scoreboard.jsx";
-import Play from "./components/play.jsx";
-import Room from "./components/room.jsx";
-import { socket } from "./main.jsx";
-import { useEffect } from "react";
+import Play from "./components/Play.jsx";
+import Room from "./components/Room.jsx";
+import RoomName from "./components/RoomName.jsx";
+import logo from "./assets/tetris-logo.svg";
+
 function App() {
-    useEffect(() => {
-      socket.on("error", (error) => {
-        console.log(error);
-      });
-      socket.emit("joinRoom", {room:"room", pseudo:"missaw"})
-    }, []);
   return (
     <>
-      {/* <Navbar /> */}
-      {/* <Signup /> */}
-      {/* <Login /> */}
-      {/* <Home /> */}
-      {/* <Howto /> */}
-      {/* <Scoreboard /> */}
-      <Room />
-      {/* <Play /> */}
+      <BrowserRouter>
+        <img alt="Tetris Logo" className="logo" src={logo} />
+        <Routes>
+          <Route path="/" exact element={<Play />} />
+          <Route path="/room" exact element={<Room />} />
+          <Route path="/roomName" exact element={<RoomName />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

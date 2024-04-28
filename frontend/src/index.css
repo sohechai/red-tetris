@@ -14,13 +14,34 @@
 
 a {
     text-decoration: none;
-
     color: inherit;
-    font-size: 1.2em;
 }
+
 a:hover {
-    color: var(--red-shadow);
     text-shadow: rebeccapurple 0 0 10px;
+}
+
+.a_button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 1em 2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #000000;
+    color: #ffffff;
+    cursor: pointer;
+    will-change: filter;
+    transition: filter 300ms;
+}
+
+.a_button:hover {
+    border-color: #646cff;
+    filter: drop-shadow(0px 0px 12px var(--red-shadow)));
+}
+.a_button:focus,
+.a_button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
 }
 
 body {
