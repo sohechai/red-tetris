@@ -1,5 +1,5 @@
 import "./App.css";
-import socketIO from "socket.io-client";
+import io from "socket.io-client";
 import Navbar from "./components/navbar.jsx";
 import Signup from "./components/signup.jsx";
 import Login from "./components/login.jsx";
@@ -9,10 +9,15 @@ import Howto from "./components/howto.jsx";
 import Scoreboard from "./components/scoreboard.jsx";
 import Play from "./components/play.jsx";
 import Room from "./components/room.jsx";
-
-const socket = socketIO.connect("http://localhost:4000");
-
+import { socket } from "./main.jsx";
+import { useEffect } from "react";
 function App() {
+    useEffect(() => {
+      socket.on("error", (error) => {
+        console.log(error);
+      });
+      socket.emit("joinRoom", {room:"room", pseudo:"missaw"})
+    }, []);
   return (
     <>
       {/* <Navbar /> */}
