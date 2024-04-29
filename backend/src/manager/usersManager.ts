@@ -42,7 +42,7 @@ export function RegisterUser(
     pseudo,
     client,
     room,
-    RoomAlreadyExist(players, room) ? 1 : players[players.findIndex(player => player.user.owner === true)]?.user.gameMode,
+    RoomAlreadyExist(players, room) ? players[players.findIndex(player => player.user.owner === true)].user.gameMode : 1,
     RoomAlreadyExist(players, room) ? false : true,
     generateNewMap(),
     0
