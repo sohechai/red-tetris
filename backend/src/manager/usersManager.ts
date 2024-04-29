@@ -21,6 +21,7 @@ function SendNewUsersInRoom(players: Player[], client: Socket, room: string, ser
         if(player.user.room === room)
             usersInRoom.push({pseudo: player.user.pseudo, score: player.user.score});
     }
+    console.log(usersInRoom);
     server.to(room).emit("usersInRoom", usersInRoom);
     client.emit("usersInRoom", usersInRoom);
 }
