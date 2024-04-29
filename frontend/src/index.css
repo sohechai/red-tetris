@@ -4,9 +4,14 @@
     font-weight: 400;
 
     color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
 
-    font-synthesis: none;
+    /*
+    * Created with https://www.css-gradient.com
+    * Gradient link: https://www.css-gradient.com/?c1=121212&c2=050101&gt=r&gd=dtl
+    */
+    background: #121212;
+    /* background: radial-gradient(at left top, #121212, #050101); */
+
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -62,7 +67,7 @@ h1 {
 
 button {
     border-radius: 8px;
-    border: 1px solid transparent;
+    border: 1px solid #ffffffaa;
     padding: 1em 2em;
     font-size: 1em;
     font-weight: 500;
@@ -73,9 +78,18 @@ button {
     will-change: filter;
     transition: filter 300ms;
 }
+
 button:hover {
-    border-color: #646cff;
-    filter: drop-shadow(0px 0px 12px var(--red-shadow)));
+    /* border-color: var(--red-shadow);
+    color: var(--red-shadow);
+    filter: drop-shadow(0px 0px 12px var(--red-shadow))); */
+    /* box-shadow:
+        0 0 10px lightblue,
+        0 0 8px lightblue; */
+    border: 1px solid white;
+    /* color: lightblue; */
+    /* color: red; */
+    /* background-color: var(--red-shadow); */
 }
 button:focus,
 button:focus-visible {

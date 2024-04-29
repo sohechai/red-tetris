@@ -47,7 +47,7 @@ const Room = () => {
             placeholder="Username"
             onChange={(e) => setUsername(e.target.value)}
           />
-          <button type="submit" className="a_button" onClick={handleJoinRoom}>
+          <button type="submit" onClick={handleJoinRoom}>
             Create / Join Room
           </button>
         </form>

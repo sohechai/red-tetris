@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { RECEIVE_USERS } from "./actionType.jsx";
 import { thunk as thunkMiddleware } from "redux-thunk";
+
 const initialState = {
   users: [],
 };

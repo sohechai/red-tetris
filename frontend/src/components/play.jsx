@@ -10,9 +10,7 @@ const play = () => {
 
   return (
     <div className="parent-container">
-      <button className="a_button" onClick={handleClick}>
-        PLAY
-      </button>
+      <button onClick={handleClick}>PLAY</button>
     </div>
   );
 };

@@ -46,9 +46,15 @@
     height: 60vh;
     margin-bottom: 100;
 }
+
 .room-form {
-    background-color: #ffffff;
-    color: #000000;
+    /* background-color: #ffffff; */
+    border: 2px solid red;
+    color: white;
+    background: #0f0f0f;
+    box-shadow:
+        0 0 20px var(--red-shadow),
+        0 0 8px var(--red-shadow);
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -71,9 +77,21 @@ form > input {
     padding: 1em;
     width: 90%;
     margin-bottom: 1em;
+    color: white;
+    caret: red;
+    /* padding-left: 0; */
+    background-color: transparent;
+    border: 1px solid #ffffffaa;
+    border-radius: 4px;
+    /* border-bottom: 1px solid #ffffff; */
 }
-form > .a_button {
+form > button {
     margin-top: 16px;
     width: 100%;
     padding: 1em 0 1em 0;
+    margin-bottom: 32px;
+    background-color: transparent;
+    border: none;
+    /* color: #ff001b; */
+    border: 1px solid #ffffffaa;
 }
