@@ -1,5 +1,5 @@
 import { Bag } from "src/interface/bag";
-import { iBlock, jBlock, lBlock, oBlock, sBlock, tBlock, zBlock } from "src/model/piece";
+import { iBlock, jBlock, lBlock, oBlock, sBlock, tBlock, zBlock } from "src/model/block";
 
 
 function ShuffleBag(bag: Bag): Bag {
