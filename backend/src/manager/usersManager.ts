@@ -16,10 +16,10 @@ export function RemoveUser(player: Player[], client: Socket) {
 }
 
 function SendNewUsersInRoom(players: Player[], client: Socket, room: string, server: Server) {
-    const usersInRoom: {pseudo: string, score: number}[] = [];
+    const usersInRoom: {pseudo: string, score: number, room: string, gameMode: number}[] = [];
     for (let player of players) {
         if(player.user.room === room)
-            usersInRoom.push({pseudo: player.user.pseudo, score: player.user.score});
+            usersInRoom.push({pseudo: player.user.pseudo, score: player.user.score, room: player.user.room, gameMode: player.user.gameMode});
     }
     console.log(usersInRoom);
     server.to(room).emit("usersInRoom", usersInRoom);
@@ -42,7 +42,7 @@ export function RegisterUser(
     pseudo,
     client,
     room,
-    1,
+    RoomAlreadyExist(players, room) ? 1 : players[players.findIndex(players => players.user.owner === true)].user.gameMode,
     RoomAlreadyExist(players, room) ? false : true,
     generateNewMap(),
     0
