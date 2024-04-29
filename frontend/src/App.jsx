@@ -2,20 +2,12 @@ import "./App.css";
 import { Routes, Route, BrowserRouter, NavLink } from "react-router-dom";
 import { Provider } from "react-redux";
 // import store from "./store.jsx";
-import io from "socket.io-client";
 import Play from "./components/Play.jsx";
 import Room from "./components/Room.jsx";
 import RoomName from "./components/RoomName.jsx";
 import logo from "./assets/tetris-logo.svg";
-import { useEffect } from "react";
-import socket from "./socket.jsx";
 
 function App() {
-  useEffect(() => {
-    socket.on("usersInRoom", (users) => {
-      console.log("users" + users);
-    });
-  }, []);
   return (
     <>
       <BrowserRouter>

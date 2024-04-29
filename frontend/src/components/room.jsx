@@ -1,23 +1,21 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  joinRoom,
-  sendMessage,
-  setupUserListeners,
-} from "../socketActions.jsx";
+import { joinRoom, setupUserListeners } from "../socketActions.jsx";
 import { useState } from "react";
-import socket from "../socket.jsx";
-// import socket from "../socket.jsx";
 
 const Room = () => {
   const users = useSelector((state) => state.users.users);
+  let navigate = useNavigate();
 
   const dispatch = useDispatch();
   const [roomName, setRoomname] = useState("");
   const [username, setUsername] = useState("");
 
   const handleJoinRoom = (e) => {
+    e.preventDefault();
     dispatch(joinRoom(roomName, username));
+    navigate(`/RoomName`);
   };
 
   useEffect(() => {
@@ -49,14 +47,9 @@ const Room = () => {
             placeholder="Username"
             onChange={(e) => setUsername(e.target.value)}
           />
-          <a
-            href="roomName"
-            type="button"
-            className="a_button"
-            onClick={handleJoinRoom}
-          >
+          <button type="submit" className="a_button" onClick={handleJoinRoom}>
             Create / Join Room
-          </a>
+          </button>
         </form>
       </div>
     </div>

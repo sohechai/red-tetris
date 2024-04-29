@@ -1,9 +1,18 @@
+import { useNavigate } from "react-router-dom";
+
 const play = () => {
+  let navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/room`);
+  };
+
   return (
     <div className="parent-container">
-      <a href="room" className="a_button">
+      <button className="a_button" onClick={handleClick}>
         PLAY
-      </a>
+      </button>
     </div>
   );
 };
