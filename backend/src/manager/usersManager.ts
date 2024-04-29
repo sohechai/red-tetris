@@ -1,50 +1,52 @@
 import { Server, Socket } from 'socket.io';
 import { User } from 'src/interface/user';
 import { generateNewMap } from 'src/model/map';
+import { Player } from 'src/model/player';
 
-export function CheckIfUserIsUnique(users: User[], pseudo: string): number {
-  for (let user of users) {
-    if (user.pseudo === pseudo) return 1; // 1 = error user already exist
+export function CheckIfUserIsUnique(players: Player[], pseudo: string): number {
+  for (let player of players) {
+    if (player.user.pseudo === pseudo) return 1; // 1 = error user already exist
   }
   return 0;
 }
 
-export function RemoveUser(users: User[], client: Socket) {
-  users = users.filter((user) => user.client.id !== client.id);
-  return users;
+export function RemoveUser(player: Player[], client: Socket) {
+  player = player.filter((player) => player.user.client.id !== client.id);
+  return player;
 }
 
-function SendNewUsersInRoom(users: User[], client: Socket, room: string, server: Server) {
-    const usersInRoom: String[] = [];
-    for (let user of users) {
-        if(user.room === room)
-            usersInRoom.push(user.pseudo);
+function SendNewUsersInRoom(players: Player[], client: Socket, room: string, server: Server) {
+    const usersInRoom: {pseudo: string, score: number}[] = [];
+    for (let player of players) {
+        if(player.user.room === room)
+            usersInRoom.push({pseudo: player.user.pseudo, score: player.user.score});
     }
     server.to(room).emit("usersInRoom", usersInRoom);
-    client.to(client.rooms[0]).emit("usersInRoom", usersInRoom);
+    client.emit("usersInRoom", usersInRoom);
 }
 
-function RoomAlreadyExist(users: User[], room: string): boolean {
-  if (users.findIndex((user) => user.room === room) !== -1) return true;
+function RoomAlreadyExist(players: Player[], room: string): boolean {
+  if (players.findIndex((player) => player.user.room === room) !== -1) return true;
   return false;
 }
 
 export function RegisterUser(
-  users: User[],
+  players: Player[],
   pseudo: string,
   room: string,
   client: Socket,
   server: Server,
-): User[] {
-  users.push({
-    pseudo: pseudo,
-    room: room,
-    client: client,
-    gameMode: 1,
-    owner: RoomAlreadyExist(users, room) ? false : true,
-    map: generateNewMap(),
-  });
+): Player[] {
+  players.push(new Player(
+    pseudo,
+    client,
+    room,
+    1,
+    RoomAlreadyExist(players, room) ? false : true,
+    generateNewMap(),
+    0
+  ));
   client.join(room);
-  SendNewUsersInRoom(users, client, room, server);
-  return users;
+  SendNewUsersInRoom(players, client, room, server);
+  return players;
 }

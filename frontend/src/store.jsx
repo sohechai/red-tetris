@@ -1,4 +1,3 @@
-import { useRouteError } from "react-router-dom";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { RECEIVE_USERS } from "./actionType.jsx";
 import { thunk as thunkMiddleware } from "redux-thunk";

@@ -1,20 +1,21 @@
 import { Socket } from 'socket.io';
-import { User } from "src/interface/user";
+import { Player } from 'src/model/player';
 
 const availableGameMode: number[] = [1, 2];
 
-export function SelectGameMode(users: User[], gameMode: number, client: Socket) {
-    const owner = users[users.findIndex(user => user.client.id === client.id)];
+export function SelectGameMode(players: Player[], gameMode: number, client: Socket): Player[] {
+    const owner = players[players.findIndex(players => players.user.client.id === client.id)];
     if (availableGameMode.findIndex(mode => mode === gameMode)) {
-        owner.gameMode = gameMode;
-        client.to(owner.room).emit("gameModeUpdate", { gameMode });
-        for (const user of users) {
-            if (user.room === owner.room) {
-                user.gameMode = gameMode;
+        owner.user.gameMode = gameMode;
+        client.to(owner.user.room).emit("gameModeUpdate", { gameMode });
+        for (const player of players) {
+            if (player.user.room === owner.user.room) {
+                player.user.gameMode = gameMode;
             }
         }
     }
     else {
         client.emit("error", "Error: the selected game mode does not exist.");
     }
+    return players;
 }
