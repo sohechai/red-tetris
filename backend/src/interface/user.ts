@@ -8,4 +8,5 @@ export interface User {
     gameMode: number;
     owner: boolean;
     map: Map;
-}
+} 
+// convertir en class et ajouter toutes les fonctions en rapport avec la map.
