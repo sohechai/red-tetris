@@ -19,7 +19,7 @@ function SendNewUsersInRoom(users: User[], client: Socket, room: string) {
   for (let user of users) {
     if (user.room === room) usersInRoom.push(user.pseudo);
   }
-  client.to(client.rooms[room]).emit('usersInRoom', usersInRoom);
+  client.to(room).emit('usersInRoom', usersInRoom);
   client.emit('usersInRoom', usersInRoom);
 }
 

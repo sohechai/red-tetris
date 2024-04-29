@@ -6,8 +6,12 @@ import {
   setupUserListeners,
 } from "../socketActions.jsx";
 import { useState } from "react";
+import socket from "../socket.jsx";
 // import socket from "../socket.jsx";
+
 const Room = () => {
+  const users = useSelector((state) => state.users.users);
+
   const dispatch = useDispatch();
   const [roomName, setRoomname] = useState("");
   const [username, setUsername] = useState("");
@@ -23,6 +27,10 @@ const Room = () => {
       cleanup();
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("users = " + users);
+  }, [users]);
 
   return (
     <div className="room-container" id="#room">
