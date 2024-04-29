@@ -1,5 +1,5 @@
 import { Map } from "src/interface/map";
-import { User } from "src/interface/user";
+import { User, UserInfo } from "src/interface/user";
 import { Socket } from "socket.io";
 
 
@@ -21,5 +21,15 @@ export class Player {
                 map,
                 score,
             }
+    }
+    me(): UserInfo {
+        const me: UserInfo = {
+            pseudo: this.user.pseudo,
+            room: this.user.room,
+            gameMode: this.user.gameMode,
+            owner: this.user.owner,
+            score: this.user.score,
+        }
+        return me;
     }
 }
