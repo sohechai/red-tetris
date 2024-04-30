@@ -1,19 +1,23 @@
 #root {
     --red-shadow: #ff001baa;
+    --red: #ff001d;
+    --white: #ffffff;
     margin: 0;
     padding: 0;
     text-align: center;
 }
 
+#play-logo {
+    height: 24em;
+}
+
 .logo {
-    height: 16em;
+    height: 8em;
     padding: 1.5em;
     will-change: filter;
     transition: filter 300ms;
     filter: drop-shadow(0 0 1em var(--red-shadow));
-}
-.logo:hover {
-    filter: drop-shadow(0 0 1em var(--red-shadow));
+    /* background-color: red; */
 }
 
 /* Home page */
@@ -29,12 +33,27 @@
 
 .room-container {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
     justify-content: center;
+    flex-direction: column;
+    /* gap: 16px; */
+    /* margin: 80px; */
+    /* justify-content: space-between; */
     align-items: center;
     width: 100vw;
+    height: 100vh;
     /* height: 100vh; */
+}
+
+.room-header {
+    display: flex;
+    align-items: center;
+    height: 10em;
+}
+
+.room-content {
+    height: calc(100vh - 10em);
+    display: flex;
+    align-items: center;
 }
 
 .room-box {
@@ -100,4 +119,188 @@ form > button {
 
 .room-grid {
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 0.4fr 0.6fr 2fr 1fr;
+    height: 70vh;
+    width: calc(100vw - 80px);
+    gap: 8px;
+}
+
+.room-grid-header {
+    grid-column: 1 / 5;
+    grid-row: 1 / 2;
+    /* background-color: red; */
+    /* border: 1px solid white; */
+}
+
+.room-player {
+    /* grid-column: 1 / 2; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: baseline; */
+    align-items: start;
+    text-align:;
+    grid-row: 2 / 3;
+    gap: 8px;
+    /* border: 1px solid red; */
+}
+.h1-red {
+    color: var(--red);
+}
+
+/* room chat */
+
+.room-chat {
+    /* grid-column: 1 / 2; */
+    position: relative;
+    grid-row: 3 / 5;
+    border: 1px solid var(--white);
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    gap: 8px;
+}
+
+.chat-messages {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    height: calc(100% - 100px);
+    /* background-color: red; */
+}
+
+.chat-message {
+    display: flex;
+    padding: 8px;
+    gap: 8px;
+    margin: 8px;
+    border: 1px solid var(--white);
+}
+
+.h1-header {
+    font-size: 16px;
+    padding: 8px;
+    border-bottom: 1px solid var(--white);
+}
+
+.input-container {
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 16px);
+    margin: 8px;
+}
+
+.input-container > input {
+    position: relative;
+    width: calc(100% - 16px);
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px;
+    background: none;
+    border: 1px solid var(--white);
+    color: var(--white);
+}
+.input-container > img {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    cursor: pointer;
+}
+
+/* room game */
+
+.room-game {
+    grid-row: 2 / 5;
+    border: 1px solid var(--white);
+}
+.room-grid-middle-right-header {
+    grid-row: 2 / 3;
+    grid-column: 3 / 4;
+    border: 1px solid var(--white);
+}
+.room-grid-middle-right-content {
+    grid-column: 3 / 4;
+    grid-row: 3 / 5;
+    border: 1px solid var(--white);
+}
+
+/* room lobby */
+.room-lobby {
+    grid-row: 2 / 4;
+    border: 1px solid var(--white);
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+}
+
+.lobby-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid var(--white);
+}
+
+.lobby-header > h1 {
+    font-size: 16px;
+    /* padding: 8px; */
+    /* border-bottom: 1px solid var(--white); */
+}
+
+.lobby-players {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    gap: 16px;
+}
+.player-info {
+    display: flex;
+    gap: 8px;
+}
+.pseudo {
+    color: var(--red);
+    width: 100px;
+    align-items: center;
+}
+.pseudo > img {
+    width: 16px;
+    margin-left: 8px;
+}
+
+/* room settings */
+
+.room-settings {
+    grid-row: 4 / 5;
+    border: 1px solid var(--white);
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+}
+.settings-buttons {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+.settings-buttons > button {
+    border-radius: 0;
+    background-color: transparent;
+}
+.not-owner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.play-button {
+    display: flex;
+    /* width: 100%; */
+}
+.play-button > button {
+    /* display: flex; */
+    width: 100%;
+    margin: 0 8px 8px 8px;
+    /* background: none; */
+    border: 1px solid var(--white);
+    border-radius: 0;
+    background-color: red;
 }

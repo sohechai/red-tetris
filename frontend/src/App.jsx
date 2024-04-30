@@ -78,7 +78,6 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <img alt="Tetris Logo" className="logo" src={logo} />
         {/* <div className="blocks-container">
           <div id="blocks"> </div>
         </div> */}
