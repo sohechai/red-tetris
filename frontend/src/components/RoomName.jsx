@@ -111,7 +111,8 @@ const RoomName = () => {
                 <div className="player-info">
                   <div className="pseudo">
                     {user.pseudo}
-                    <img alt="crown" src={crown} />
+                    <div className="circle" />
+                    {/* <img alt="crown" src={crown} /> */}
                   </div>
                   <div className="score">score : {user.score}</div>
                 </div>

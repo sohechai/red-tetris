@@ -8,7 +8,7 @@
 }
 
 #play-logo {
-    height: 24em;
+    height: 16vw;
 }
 
 .logo {
@@ -70,7 +70,7 @@
     /* background-color: #ffffff; */
     border: 2px solid red;
     color: white;
-    background: #0f0f0f;
+    background: #0e0d0d;
     box-shadow:
         0 0 20px var(--red-shadow),
         0 0 8px var(--red-shadow);
@@ -120,10 +120,10 @@ form > button {
 .room-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 0.4fr 0.6fr 2fr 1fr;
-    height: 70vh;
+    grid-template-rows: 0.2fr 0.6fr 2fr 1fr;
+    height: 95%;
     width: calc(100vw - 80px);
-    gap: 8px;
+    gap: 1vw;
 }
 
 .room-grid-header {
@@ -173,7 +173,7 @@ form > button {
     padding: 8px;
     gap: 8px;
     margin: 8px;
-    border: 1px solid var(--white);
+    border: 0.5px solid var(--white);
 }
 
 .h1-header {
@@ -254,15 +254,27 @@ form > button {
 }
 .player-info {
     display: flex;
+    justify-content: space-between;
     gap: 8px;
+    border: 1px solid var(--white);
+    padding: 8px;
 }
 .pseudo {
     color: var(--red);
     width: 100px;
     align-items: center;
+    display: flex;
 }
 .pseudo > img {
     width: 16px;
+    margin-left: 8px;
+}
+
+.circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--white);
     margin-left: 8px;
 }
 
