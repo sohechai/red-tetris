@@ -29,7 +29,7 @@ function SendNewUsersInRoom(players: Player[], pseudo: string, client: Socket, r
   console.log("ME :");
   console.log(me)
   server.to(room).emit("usersInRoom", usersInRoom);
-  client.emit("me", );
+  client.emit("me", me);
 }
 
 function RoomAlreadyExist(players: Player[], room: string): boolean {
