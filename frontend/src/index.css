@@ -5,13 +5,7 @@
 
     color: rgba(255, 255, 255, 0.87);
 
-    /*
-    * Created with https://www.css-gradient.com
-    * Gradient link: https://www.css-gradient.com/?c1=121212&c2=050101&gt=r&gd=dtl
-    */
     background: #121212;
-    /* background: radial-gradient(at left top, #121212, #050101); */
-
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -80,16 +74,7 @@ button {
 }
 
 button:hover {
-    /* border-color: var(--red-shadow);
-    color: var(--red-shadow);
-    filter: drop-shadow(0px 0px 12px var(--red-shadow))); */
-    /* box-shadow:
-        0 0 10px lightblue,
-        0 0 8px lightblue; */
     border: 1px solid white;
-    /* color: lightblue; */
-    /* color: red; */
-    /* background-color: var(--red-shadow); */
 }
 button:focus,
 button:focus-visible {
@@ -100,4 +85,34 @@ button:focus-visible {
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     margin: 0;
+}
+
+.blocks-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#blocks {
+    width: 105vw;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    overflow: hidden;
+    z-index: 10000;
+}
+
+.block {
+    width: 50px;
+    height: 50px;
+    border: 0.5px solid rgba(255, 255, 255, 0.075);
+    transition: border-color 0.3s ease;
+}
+
+.hightlight {
+    border-color: #ebfb1d;
 }

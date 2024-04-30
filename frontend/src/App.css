@@ -95,3 +95,9 @@ form > button {
     /* color: #ff001b; */
     border: 1px solid #ffffffaa;
 }
+
+/* Game page */
+
+.room-grid {
+    display: grid;
+}

@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { joinRoom, setupUserListeners } from "../socketActions.jsx";
+import {
+  joinRoom,
+  setupMeInfo,
+  setupUserListeners,
+} from "../socketActions.jsx";
 import { useState } from "react";
 
 const Room = () => {
@@ -20,15 +24,13 @@ const Room = () => {
 
   useEffect(() => {
     const cleanup = dispatch(setupUserListeners());
+    const cleanup2 = dispatch(setupMeInfo());
 
     return () => {
       cleanup();
+      cleanup2();
     };
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log("users = " + users);
-  }, [users]);
 
   return (
     <div className="room-container" id="#room">

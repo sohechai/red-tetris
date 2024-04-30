@@ -1,19 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setupUserListeners } from "../socketActions";
-import socket from "../socket";
 
 const RoomName = () => {
   const users = useSelector((state) => state.users.users);
-
-  useEffect(() => {
-    console.log("users = " + users);
-  }, [users]);
+  const me = useSelector((state) => state.me.me);
 
   return (
-    <div className="room-container" id="#room">
-      GAMEEE
-    </div>
+    // <div className="room-container" id="#room">
+    // <h1>Room Name</h1>
+    <div className="room-grid"></div>
   );
 };
 
