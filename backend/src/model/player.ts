@@ -1,26 +1,32 @@
 import { Map } from "src/interface/map";
 import { User, UserInfo } from "src/interface/user";
 import { Socket } from "socket.io";
+import { IBag } from "src/interface/bag";
 
 
 export class Player {
     user: User = null;
-    constructor(pseudo: string,
+    map: Map = null;
+    bag: IBag = null;
+    indexOfBag: number = 0;
+
+    constructor(
+        pseudo: string,
         client: Socket,
         room: string,
         gameMode: number,
         owner: boolean,
         map: Map,
         score: number) {
-            this.user = {
-                pseudo,
-                client,
-                room,
-                gameMode,
-                owner,
-                map,
-                score,
-            }
+        this.user = {
+            pseudo,
+            client,
+            room,
+            gameMode,
+            owner,
+            score,
+        };
+        this.map = map;
     }
     me(): UserInfo {
         const me: UserInfo = {
@@ -29,7 +35,15 @@ export class Player {
             gameMode: this.user.gameMode,
             owner: this.user.owner,
             score: this.user.score,
-        }
+        };
         return me;
+    }
+
+    initBag(bag: IBag) {
+        this.bag = bag;
+    }
+
+    static getRoomBySocketId(players: Player[], me: Socket): string {
+        return players[players.findIndex(player => player.user.client.id === me.id)].user.room;
     }
 }

@@ -1,5 +1,4 @@
 import { Socket } from "socket.io"
-import { Map } from "./map";
 
 export interface User {
     pseudo: string;
@@ -7,7 +6,6 @@ export interface User {
     room: string;
     gameMode: number;
     owner: boolean;
-    map: Map;
     score: number;
 }
 

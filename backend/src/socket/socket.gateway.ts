@@ -8,6 +8,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { Game } from 'src/manager/gameManager';
 import { SelectGameMode } from 'src/manager/lobbyManager';
 import {
   CheckIfUserIsUnique,
@@ -15,6 +16,7 @@ import {
   RemoveUser,
 } from 'src/manager/usersManager';
 import { Player } from 'src/model/player';
+
 @WebSocketGateway(4001)
 export class AppGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
@@ -27,22 +29,25 @@ export class AppGateway
   afterInit(server: Server) {
     this.logger.log('Initialized!');
   }
-  handleDisconnect(client: Socket) {
+  handleDisconnect(client: Socket): void {
     this.players = RemoveUser(this.players, client);
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  handleConnection(client: Socket) {
+  handleConnection(client: Socket): void {
     this.logger.log(`Client connected: ${client.id}`);
   }
 
   @SubscribeMessage('startGame')
-  handleGameStart(client: Socket) {
+  async handleGameStart(client: Socket): Promise<void> {
     this.logger.log(`Client started game: ${client.id}`);
+    const game: Game = new Game(this.players, Player.getRoomBySocketId(this.players, client));
+    game.game();
+    client.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameStart");
   }
 
   @SubscribeMessage('selectGameMode')
-  handleSelectGameMode(client: Socket, data: { gameMode: number }) {
+  handleSelectGameMode(client: Socket, data: { gameMode: number }): void {
     this.logger.log(
       `Client : ${client.id} selected game mode: ${data.gameMode}`,
     );

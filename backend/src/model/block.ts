@@ -1,36 +1,36 @@
-import { Block } from "src/interface/block";
+import { IBlock } from "src/interface/block";
 
 
-export const iBlock: Block = [
+export const iBlock: IBlock = [
     "IIII",
 ];
 
-export const jBlock: Block = [
+export const jBlock: IBlock = [
     "JXX",
     "JJJ",
 ];
 
-export const lBlock: Block = [
+export const lBlock: IBlock = [
     "XXL",
     "LLL",
 ];
 
-export const oBlock: Block = [
+export const oBlock: IBlock = [
     "OO",
     "OO",
 ];
 
-export const sBlock: Block = [
+export const sBlock: IBlock = [
     "XSS",
     "SSX",
 ];
 
-export const tBlock: Block = [
+export const tBlock: IBlock = [
     "XTX",
     "TTT",
 ];
 
-export const zBlock: Block = [
+export const zBlock: IBlock = [
     "ZZX",
     "XZZ",
 ];
