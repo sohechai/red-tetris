@@ -120,7 +120,7 @@ form > button {
 .room-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 0.2fr 0.6fr 2fr 1fr;
+    grid-template-rows: 0.1fr 0.6fr 2fr 1fr;
     height: 95%;
     width: calc(100vw - 80px);
     gap: 1vw;
@@ -221,6 +221,19 @@ form > button {
     grid-column: 3 / 4;
     grid-row: 3 / 5;
     border: 1px solid var(--white);
+}
+
+/* game grid */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    /* background-color: red; */
+    height: calc(100% - 16px);
+    padding: 8px;
+}
+.game-grid > div {
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
 }
 
 /* room lobby */

@@ -4,6 +4,7 @@ import { setupUserListeners } from "../socketActions";
 import sendButton from "../assets/send.svg";
 import logo from "../assets/tetris-logo.svg";
 import crown from "../assets/crown.svg";
+import Game from "./Game.jsx";
 
 const RoomName = () => {
   const users = useSelector((state) => state.users.users);
@@ -98,7 +99,9 @@ const RoomName = () => {
               <img src={sendButton} alt="send" onClick={sendMessage} />
             </div>
           </div>
-          <div className="room-game">game</div>
+          <div className="room-game">
+            <Game />
+          </div>
           <div className="room-grid-middle-right-header">NEXT PIECE</div>
           <div className="room-grid-middle-right-content">ENNEMIES MAPS</div>
           <div className="room-lobby">
