@@ -52,6 +52,7 @@ const Settings = () => {
       ) : (
         <div className="not-owner">
           <p>Waiting for the owner to start the game</p>
+          {selectedMode && <p>{selectedMode}</p>}
         </div>
       )}
     </div>

@@ -7,6 +7,8 @@
     text-align: center;
 }
 
+/* logo */
+
 #play-logo {
     height: 16vw;
 }
@@ -20,6 +22,7 @@
 }
 
 /* Home page */
+
 .parent-container {
     display: flex;
     flex-direction: column;
@@ -271,7 +274,7 @@ form > button {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(20, 1fr);
-    gap: 1px;
+    gap: 2px;
 }
 
 .row {
