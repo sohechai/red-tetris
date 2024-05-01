@@ -4,6 +4,7 @@ import Game from "./Game.jsx";
 import Chat from "./Chat.jsx";
 import Lobby from "./Lobby.jsx";
 import Settings from "./Settings.jsx";
+import NextP from "./NextP.jsx";
 
 const RoomName = () => {
   const me = useSelector((state) => state.me.me);
@@ -22,7 +23,7 @@ const RoomName = () => {
           </div>
           <Chat />
           <Game />
-          <div className="room-grid-middle-right-header">NEXT PIECE</div>
+          <NextP type="Z" />
           <div className="room-grid-middle-right-content">ENNEMIES MAP</div>
           <Lobby />
           <Settings />

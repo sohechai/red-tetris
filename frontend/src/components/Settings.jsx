@@ -9,7 +9,7 @@ const Settings = () => {
   const handleButtonClick = (mode) => {
     setSelectedMode(mode);
     // socket.emit('changeMode', mode);
-    console.log(selectedMode);
+    console.log("change mode");
   };
 
   return (
