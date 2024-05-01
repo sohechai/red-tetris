@@ -8,7 +8,7 @@ export class Player {
     user: User;
     map: Map;
     bag: IBag;
-    indexOfBag: number = 0;
+    indexOfBag: number = -1;
 
     constructor(
         pseudo: string,

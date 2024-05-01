@@ -12,12 +12,10 @@ export class Game {
         for (let player of this.players) {
             player.bag = this.bag.blocks;
         }
-        console.log(this.players);
     }
 
     bagRefueler(): void {
         for (let player of this.players) {
-            console.log(player.bag);
             if (player.indexOfBag === player.bag.length - 1) {
                 if (this.bag.blocks.length === player.bag.length) {
                     this.bag.AppendBlockToBag();
@@ -39,16 +37,24 @@ export class Game {
 
     pieceManager(): void {
         for (let player of this.players) {
-            player.map.isBlockFalling() ? player.map.blockFall(player.bag[player.indexOfBag].block) : player.map.addFallingBlock(player.bag[player.indexOfBag].block) ;
+            if (player.map.isBlockFalling()) {
+                player.map.blockFall(player.bag[player.indexOfBag].block) 
+            }
+            else {
+                console.log("Index of bag:", player.indexOfBag);
+                console.log(player.bag);
+                player.indexOfBag++;
+                player.map.addFallingBlock(player.bag[player.indexOfBag].block);
+            }
         }
     }
 
     async game(): Promise<void> {
-        let gamespeed: number = 1000;
+        let gamespeed: number = 200;
         while (1) {
             this.bagRefueler();
             this.pieceManager();
-             this.logMap();
+            this.logMap();
             await sleep(gamespeed);
             gamespeed -= 1;
         }

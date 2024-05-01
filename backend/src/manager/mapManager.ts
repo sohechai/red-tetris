@@ -1,7 +1,8 @@
 import { IBlock } from "src/interface/block";
 import { IMap } from "src/interface/map";
 import { findCharacter } from "src/utils/findCharacter";
-import { writeCharacter } from "src/utils/writeCharacter";
+import { lowercaseArray } from "src/utils/lowercaseArray";
+import { replaceAllChar } from "src/utils/replaceAllCharacterOfArray";
 
 export class Map {
     map: IMap;
@@ -11,32 +12,53 @@ export class Map {
         const newMap: IMap = [];
 
         for (let i = 0; i < 20; i++) {
-            newMap[i] = "XXXXXXXXXX";
+            newMap[i] = "..........";
         }
         this.map = newMap;
         this.specterMap = newMap;
     }
 
-    blockFall(block: IBlock) {
-        let BlockPos: number;
-        let index: number;
-        let blockIndex: number = 0;
-        const newMap: IMap = [];
+    parseMapLine(line: string, block: string, blockPos: number): string {
+        const prefix = line.slice(0, blockPos);
+        const suffix = line.slice(blockPos + block.length);
+        
+        return prefix + block + suffix;
+    }
 
-        newMap.push("XXXXXXXXXX");
-        for (let e of this.map) {
-            index = this.map.indexOf(e);
-            if ((BlockPos = findCharacter(e)) !== -1) {
-                const prefix = e.slice(0, BlockPos);
-                const suffix = e.slice(BlockPos + block[blockIndex].length);
-                if (index + 1 < 20) {
-                    newMap.push(prefix + block[blockIndex] + suffix);
+    isNotAtBottomOfMap(index: number, offset: number): boolean {
+        if (index + offset < 20)
+            return true;
+        return false;
+    }
+
+    copyMap(cpyMap: IMap) {
+        for (let i = 0; i < 20; i++) {
+            this.map[i] = cpyMap[i];
+        }
+    }
+
+    blockFall(block: IBlock) {
+        let blockPos: number;
+
+        let blockIndex: number = 0;
+        let newMap: IMap = replaceAllChar(this.map);
+        
+        for (let i = 0; i < 20; i++) {
+            if (newMap[19] && findCharacter(newMap[19]) !== -1) {
+                newMap = lowercaseArray(newMap);
+                break;
+            }
+            if ((blockPos = findCharacter(this.map[i])) !== -1) {
+                if (i < 20) {
+                    newMap[i + 1] = (this.parseMapLine(this.map[i + 1], block[blockIndex], blockPos));
                     blockIndex++;
                 }
             }
-            else {
-                newMap.push(e);
-            }
+            // else {
+            //     console.log("pushed :", e);
+            //     newMap.push(e);
+            // }
+          
         }
         this.map = newMap;
     }
