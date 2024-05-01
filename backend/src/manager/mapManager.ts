@@ -19,9 +19,11 @@ export class Map {
     }
 
     parseMapLine(line: string, block: string, blockPos: number): string {
+        console.log("LENGTH OF I: ", block.length);
         const prefix = line.slice(0, blockPos);
         const suffix = line.slice(blockPos + block.length);
-        
+        console.log("OLD LINE:", line);
+        console.log("NEW LINE: ", prefix + block + suffix);
         return prefix + block + suffix;
     }
 
@@ -39,26 +41,24 @@ export class Map {
 
     blockFall(block: IBlock) {
         let blockPos: number;
-
-        let blockIndex: number = 0;
         let newMap: IMap = replaceAllChar(this.map);
-        
+        let pieceCopied: boolean = false;
         for (let i = 0; i < 20; i++) {
+            console.log("Block lenght: ", block.length);
             if (newMap[19] && findCharacter(newMap[19]) !== -1) {
                 newMap = lowercaseArray(newMap);
                 break;
             }
+            if (pieceCopied)
+                break;
             if ((blockPos = findCharacter(this.map[i])) !== -1) {
                 if (i < 20) {
-                    newMap[i + 1] = (this.parseMapLine(this.map[i + 1], block[blockIndex], blockPos));
-                    blockIndex++;
+                    for (let j = 0; j < block.length; j++) {
+                        newMap[i + j + 1] = (this.parseMapLine(newMap[i + 1], block[j], blockPos));
+                    }
+                    pieceCopied = true;
                 }
-            }
-            // else {
-            //     console.log("pushed :", e);
-            //     newMap.push(e);
-            // }
-          
+            } 
         }
         this.map = newMap;
     }

@@ -45,5 +45,6 @@ export class Block {
         }
 
         this.block =  rotatedArray;
+        console.log(this.block);
     }
 }

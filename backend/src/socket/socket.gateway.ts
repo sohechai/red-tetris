@@ -53,7 +53,14 @@ export class AppGateway
     );
     this.players = SelectGameMode(this.players, data.gameMode, client);
   }
-
+  
+  @SubscribeMessage('rotatePiece')
+  handleRotatePiece(client: Socket): void {
+    const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
+    console.log("here");
+    if (player.indexOfBag >= 0)
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].bag[this.players[this.players.findIndex(player => player.user.client.id === client.id)].indexOfBag].rotateBlockLeft();
+  }
     @SubscribeMessage('joinRoom')
     handleJoinRoom(client: Socket, data: { room: string, pseudo: string }): void {
         if (CheckIfUserIsUnique(this.players, data.pseudo) === 1) {

@@ -50,7 +50,7 @@ export class Game {
     }
 
     async game(): Promise<void> {
-        let gamespeed: number = 200;
+        let gamespeed: number = 500;
         while (1) {
             this.bagRefueler();
             this.pieceManager();
