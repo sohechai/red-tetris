@@ -1,7 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import { UserInfo } from 'src/interface/user';
-import { generateNewMap } from 'src/model/map';
 import { Player } from 'src/model/player';
+import { Map } from './mapManager';
 
 export function CheckIfUserIsUnique(players: Player[], pseudo: string): number {
   for (let player of players) {
@@ -16,12 +16,12 @@ export function RemoveUser(player: Player[], client: Socket) {
 }
 
 function SendNewUsersInRoom(players: Player[], pseudo: string, client: Socket, room: string, server: Server) {
-  const usersInRoom: { pseudo: string, score: number }[] = [];
+  const usersInRoom: { pseudo: string, score: number, owner: boolean }[] = [];
   const me: UserInfo = players[players.findIndex(player => player.user.pseudo === pseudo)].me();
 
   for (let player of players) {
     if (player.user.room === room)
-      usersInRoom.push({ pseudo: player.user.pseudo, score: player.user.score });
+      usersInRoom.push({ pseudo: player.user.pseudo, score: player.user.score, owner: player.user.owner });
   }
   console.log("USERS IN ROOM :");
   console.log(usersInRoom);
@@ -50,7 +50,7 @@ export function RegisterUser(
     room,
     RoomAlreadyExist(players, room) ? players[players.findIndex(player => player.user.owner === true)].user.gameMode : 1,
     RoomAlreadyExist(players, room) ? false : true,
-    generateNewMap(),
+    new Map(),
     0
   ));
   client.join(room);

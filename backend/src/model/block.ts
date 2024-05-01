@@ -6,12 +6,12 @@ export const iBlock: IBlock = [
 ];
 
 export const jBlock: IBlock = [
-    "JXX",
+    "J00",
     "JJJ",
 ];
 
 export const lBlock: IBlock = [
-    "XXL",
+    "00L",
     "LLL",
 ];
 
@@ -21,16 +21,16 @@ export const oBlock: IBlock = [
 ];
 
 export const sBlock: IBlock = [
-    "XSS",
-    "SSX",
+    "0SS",
+    "SS0",
 ];
 
 export const tBlock: IBlock = [
-    "XTX",
+    "0T0",
     "TTT",
 ];
 
 export const zBlock: IBlock = [
-    "ZZX",
-    "XZZ",
+    "ZZ0",
+    "0ZZ",
 ];
