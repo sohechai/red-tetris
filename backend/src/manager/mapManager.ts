@@ -2,6 +2,7 @@ import { IBlock } from "src/interface/block";
 import { IMap } from "src/interface/map";
 import { findCharacter } from "src/utils/findCharacter";
 import { lowercaseArray } from "src/utils/lowercaseArray";
+import { replaceAllChar } from "src/utils/replaceAllCharacterOfArray";
 
 export class Map {
     map: IMap;
@@ -30,16 +31,26 @@ export class Map {
         return false;
     }
 
+    copyMap(cpyMap: IMap) {
+        for (let i = 0; i < 20; i++) {
+            this.map[i] = cpyMap[i];
+        }
+    }
+
     blockFall(block: IBlock) {
         let blockPos: number;
 
         let blockIndex: number = 0;
-        let newMap: Map = new Map();
-
+        let newMap: IMap = replaceAllChar(this.map);
+        
         for (let i = 0; i < 20; i++) {
+            if (newMap[19] && findCharacter(newMap[19]) !== -1) {
+                newMap = lowercaseArray(newMap);
+                break;
+            }
             if ((blockPos = findCharacter(this.map[i])) !== -1) {
                 if (i < 20) {
-                    newMap.map[i + 1] = (this.parseMapLine(this.map[i + 1], block[blockIndex], blockPos));
+                    newMap[i + 1] = (this.parseMapLine(this.map[i + 1], block[blockIndex], blockPos));
                     blockIndex++;
                 }
             }
@@ -47,12 +58,9 @@ export class Map {
             //     console.log("pushed :", e);
             //     newMap.push(e);
             // }
-            if (newMap[19] && findCharacter(newMap[19]) !== -1) {
-                newMap.map = lowercaseArray(newMap.map);
-                break;
-            }
+          
         }
-        this.map = newMap.map;
+        this.map = newMap;
     }
 
     addFallingBlock(block: IBlock) {
