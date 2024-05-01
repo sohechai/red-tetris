@@ -44,7 +44,7 @@ export class Game {
     }
 
     async game(): Promise<void> {
-        let gamespeed: number = 1000;
+        let gamespeed: number = 200;
         while (1) {
             this.bagRefueler();
             this.pieceManager();
