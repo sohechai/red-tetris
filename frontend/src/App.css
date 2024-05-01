@@ -256,22 +256,22 @@ form > button {
     background-color: var(--red);
 }
 .cell.J {
-    background-color: green;
+    background-color: #ce1026;
 }
 .cell.L {
-    background-color: blue;
+    background-color: #ff4b4b;
 }
 .cell.O {
-    background-color: yellow;
+    background-color: #ff6577;
 }
 .cell.S {
-    background-color: pink;
+    background-color: #f93b50;
 }
 .cell.T {
-    background-color: orange;
+    background-color: #8a0e1c;
 }
 .cell.Z {
-    background-color: purple;
+    background-color: #cd051b;
 }
 
 /* room lobby */
@@ -346,6 +346,10 @@ form > button {
 .settings-buttons > button {
     border-radius: 0;
     background-color: transparent;
+}
+.settings-buttons button.selected {
+    /* border-radius: 0; */
+    background-color: red;
 }
 .not-owner {
     display: flex;

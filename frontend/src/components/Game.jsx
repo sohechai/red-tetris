@@ -23,14 +23,16 @@ function Game() {
   ];
 
   return (
-    <div className="game-container">
-      {grid.map((row, rowIndex) => (
-        <div key={rowIndex} className="row">
-          {row.map((cell, cellIndex) => (
-            <div key={cellIndex} className={`cell ${cell}`} />
-          ))}
-        </div>
-      ))}
+    <div className="room-game">
+      <div className="game-container">
+        {grid.map((row, rowIndex) => (
+          <div key={rowIndex} className="row">
+            {row.map((cell, cellIndex) => (
+              <div key={cellIndex} className={`cell ${cell}`} />
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import sendButton from "../assets/send.svg";
+import "../App.css";
 
-const chat = () => {
+const Chat = () => {
   // const messages = useSelector((state) => state.messages.messages);
 
   const messages = [
