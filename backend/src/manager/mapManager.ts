@@ -12,7 +12,7 @@ export class Map {
         const newMap: IMap = [];
 
         for (let i = 0; i < 20; i++) {
-            newMap[i] = "XXXXXXXXXX";
+            newMap[i] = "..........";
         }
         this.map = newMap;
         this.specterMap = newMap;
