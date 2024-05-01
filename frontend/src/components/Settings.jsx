@@ -12,6 +12,11 @@ const Settings = () => {
     console.log("change mode");
   };
 
+  const launchGame = () => {
+    // socket.emit('launchGame');
+    console.log("launch game");
+  };
+
   return (
     <div className="room-settings">
       <h1 className="h1-header">GAME MODES</h1>
@@ -39,7 +44,9 @@ const Settings = () => {
             </button>
           </div>
           <div className="play-button">
-            <button type="button">PLAY</button>
+            <button type="button" onClick={launchGame}>
+              PLAY
+            </button>
           </div>
         </>
       ) : (
