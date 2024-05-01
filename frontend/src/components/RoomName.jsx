@@ -67,6 +67,26 @@ const RoomName = () => {
       pseudo: "toto",
       message: "salut",
     },
+    {
+      pseudo: "toto",
+      message: "salut",
+    },
+    {
+      pseudo: "toto",
+      message: "salut",
+    },
+    {
+      pseudo: "toto",
+      message: "salut",
+    },
+    {
+      pseudo: "toto",
+      message: "salut",
+    },
+    {
+      pseudo: "toto",
+      message: "salut",
+    },
   ];
 
   const sendMessage = () => {
@@ -110,11 +130,19 @@ const RoomName = () => {
               <p>{users.length} / 5</p>
             </div>
             <div className="lobby-players">
-              {users.map((user) => (
-                <div className="player-info">
+              {users.map((user, index) => (
+                <div className="player-info" key={index}>
                   <div className="pseudo">
                     {user.pseudo}
-                    <div className="circle" />
+                    {index === 0 ? (
+                      <div className="circle" />
+                    ) : (
+                      <div
+                        className="circle"
+                        style={{ background: "transparent" }}
+                      />
+                    )}
+
                     {/* <img alt="crown" src={crown} /> */}
                   </div>
                   <div className="score">score : {user.score}</div>
@@ -128,9 +156,9 @@ const RoomName = () => {
             {me.owner ? (
               <>
                 <div className="settings-buttons">
+                  <button>DEFAULT</button>
                   <button>INIVISIBLE</button>
                   <button>GRAVITY</button>
-                  <button>MODE 3</button>
                 </div>
                 <div className="play-button">
                   <button type="button">PLAY</button>
