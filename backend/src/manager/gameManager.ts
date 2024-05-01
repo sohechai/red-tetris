@@ -1,7 +1,6 @@
 import sleep from "src/utils/sleep";
-import { IBag } from "src/interface/bag";
 import { Player } from "src/model/player";
-import { Bag } from "./blockBagManager";
+import { Bag } from "./bagManager";
 
 export class Game {
     players: Player[];
@@ -16,7 +15,7 @@ export class Game {
         console.log(this.players);
     }
 
-    bagRefueler() {
+    bagRefueler(): void {
         for (let player of this.players) {
             console.log(player.bag);
             if (player.indexOfBag === player.bag.length - 1) {
@@ -28,10 +27,28 @@ export class Game {
         }
     }
 
+    logMap()
+    {
+        for (let i = 0; i < 20; i ++) {
+            for (let j = 0; j < 10; j++) {
+                process.stdout.write(this.players[0].map.map[i][j]);
+            }
+            console.log();
+        }
+    }
+
+    pieceManager(): void {
+        for (let player of this.players) {
+            player.map.isBlockFalling() ? player.map.blockFall(player.bag[player.indexOfBag].block) : player.map.addFallingBlock(player.bag[player.indexOfBag].block) ;
+        }
+    }
+
     async game(): Promise<void> {
         let gamespeed: number = 1000;
         while (1) {
             this.bagRefueler();
+            this.pieceManager();
+             this.logMap();
             await sleep(gamespeed);
             gamespeed -= 1;
         }

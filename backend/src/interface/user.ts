@@ -16,4 +16,3 @@ export interface UserInfo {
     owner: boolean;
     score: number;
 }
-// convertir en class et ajouter toutes les fonctions en rapport avec la map.

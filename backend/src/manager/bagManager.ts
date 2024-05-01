@@ -5,6 +5,7 @@ import { Block } from "./blockManager";
 
 export class Bag {
     blocks: IBag;
+
     constructor() {
         this.blocks = this.createBag();
     }

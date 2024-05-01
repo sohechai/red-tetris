@@ -2,6 +2,7 @@ import { IBlock } from "src/interface/block";
 
 export class Block {
     block: IBlock;
+    character: string;
 
     constructor(block: IBlock) {
         this.block = block;

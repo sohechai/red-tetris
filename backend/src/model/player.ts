@@ -1,13 +1,13 @@
-import { Map } from "src/interface/map";
+import { Map } from "src/manager/mapManager";
 import { User, UserInfo } from "src/interface/user";
 import { Socket } from "socket.io";
 import { IBag } from "src/interface/bag";
 
 
 export class Player {
-    user: User = null;
-    map: Map = null;
-    bag: IBag = null;
+    user: User;
+    map: Map;
+    bag: IBag;
     indexOfBag: number = 0;
 
     constructor(
