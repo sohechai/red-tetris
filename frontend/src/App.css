@@ -235,6 +235,44 @@ form > button {
 .game-grid > div {
     border: 0.5px solid rgba(255, 255, 255, 0.2);
 }
+.game-container {
+    height: calc(100% - 16px);
+    padding: 8px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    gap: 1px;
+}
+.row {
+    display: contents;
+}
+
+.cell {
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+}
+
+/* cells I J O L S T Z */
+.cell.I {
+    background-color: var(--red);
+}
+.cell.J {
+    background-color: green;
+}
+.cell.L {
+    background-color: blue;
+}
+.cell.O {
+    background-color: yellow;
+}
+.cell.S {
+    background-color: pink;
+}
+.cell.T {
+    background-color: orange;
+}
+.cell.Z {
+    background-color: purple;
+}
 
 /* room lobby */
 .room-lobby {
