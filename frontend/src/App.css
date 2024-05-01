@@ -242,10 +242,6 @@ form > button {
     /* background-color: red; */
 }
 /* cells I J O L S T Z */
-.next-cell {
-    /* border: 0.5px solid rgba(255, 255, 255, 0.2); */
-}
-
 .next-cell.I,
 .next-cell.J,
 .next-cell.L,
