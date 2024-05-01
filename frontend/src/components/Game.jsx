@@ -3,7 +3,11 @@ function Game() {
     <div key={index}></div>
   ));
 
-  return <div className="game-grid">{cells}</div>;
+  return (
+    // <div className="room-game">
+    <div className="game-grid">{cells}</div>
+    // </div>
+  );
 }
 
 export default Game;
