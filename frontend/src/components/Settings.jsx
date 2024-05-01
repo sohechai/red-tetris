@@ -19,7 +19,7 @@ const Settings = () => {
 
   return (
     <div className="room-settings">
-      <h1 className="h1-header">GAME MODES</h1>
+      <h1 className="h1-header">GAME MODE</h1>
 
       {me.owner ? (
         <>
