@@ -134,7 +134,7 @@ const RoomName = () => {
                 <div className="player-info" key={index}>
                   <div className="pseudo">
                     {user.pseudo}
-                    {index === 0 ? (
+                    {user.owner === true ? (
                       <div className="circle" />
                     ) : (
                       <div
