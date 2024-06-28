@@ -1,6 +1,6 @@
 import sleep from "src/utils/sleep";
 import { Player } from "src/model/player";
-import { Bag } from "./bagManager";
+import { Bag } from "./bag.manager";
 
 export class Game {
     players: Player[];
@@ -27,8 +27,9 @@ export class Game {
 
     logMap()
     {
-        for (let i = 0; i < 20; i ++) {
-            for (let j = 0; j < 10; j++) {
+        console.log("____________________________");
+        for (let i = 0; i < 21; i ++) {
+            for (let j = 0; j < 12; j++) {
                 process.stdout.write(this.players[0].map.map[i][j]);
             }
             console.log();

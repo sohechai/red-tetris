@@ -1,7 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import { UserInfo } from 'src/interface/user';
 import { Player } from 'src/model/player';
-import { Map } from './mapManager';
+import { Map } from './map.manager';
 
 export function CheckIfUserIsUnique(players: Player[], pseudo: string): number {
   for (let player of players) {

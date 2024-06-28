@@ -1,6 +1,6 @@
 import { IBag } from "src/interface/bag";
 import { iBlock, jBlock, lBlock, oBlock, sBlock, tBlock, zBlock } from "src/model/block";
-import { Block } from "./blockManager";
+import { Block } from "./block.manager";
 
 
 export class Bag {

@@ -8,13 +8,14 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { Game } from 'src/manager/gameManager';
-import { SelectGameMode } from 'src/manager/lobbyManager';
+import { IBlock } from 'src/interface/block';
+import { Game } from 'src/manager/game.manager';
+import { SelectGameMode } from 'src/manager/lobby.manager';
 import {
   CheckIfUserIsUnique,
   RegisterUser,
   RemoveUser,
-} from 'src/manager/usersManager';
+} from 'src/manager/users.manager';
 import { Player } from 'src/model/player';
 
 @WebSocketGateway(4001)
@@ -57,9 +58,22 @@ export class AppGateway
   @SubscribeMessage('rotatePiece')
   handleRotatePiece(client: Socket): void {
     const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
-    console.log("here");
     if (player.indexOfBag >= 0)
-      this.players[this.players.findIndex(player => player.user.client.id === client.id)].bag[this.players[this.players.findIndex(player => player.user.client.id === client.id)].indexOfBag].rotateBlockLeft();
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].bag[this.players[this.players.findIndex(player => player.user.client.id === client.id)].indexOfBag].rotateLeft();
+  }
+
+  @SubscribeMessage('movePieceRight')
+  handleMovePieceRight(client: Socket): void {
+    const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
+    if (player.indexOfBag >= 0)
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.movePiece(player.bag[player.indexOfBag].block, 1);
+  }
+
+  @SubscribeMessage('movePieceLeft')
+  handleMovePieceLeft(client: Socket): void {
+    const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
+    if (player.indexOfBag >= 0)
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.movePiece(player.bag[player.indexOfBag].block, -1);
   }
     @SubscribeMessage('joinRoom')
     handleJoinRoom(client: Socket, data: { room: string, pseudo: string }): void {
@@ -71,4 +85,5 @@ export class AppGateway
         }
         this.logger.log(`Client joined room: ${data.room} with pseudo : ${data.pseudo}`);
     }
+    
 }

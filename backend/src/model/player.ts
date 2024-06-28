@@ -1,4 +1,4 @@
-import { Map } from "src/manager/mapManager";
+import { Map } from "src/manager/map.manager";
 import { User, UserInfo } from "src/interface/user";
 import { Socket } from "socket.io";
 import { IBag } from "src/interface/bag";

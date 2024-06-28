@@ -1,4 +1,7 @@
 import { IBlock } from "src/interface/block";
+import { IMap } from "src/interface/map";
+import { findCharacter } from "src/utils/findCharacter";
+import { replaceAllChar } from "src/utils/replaceAllCharacterOfArray";
 
 export class Block {
     block: IBlock;
@@ -7,7 +10,7 @@ export class Block {
     constructor(block: IBlock) {
         this.block = block;
     }
-    rotateBlockRight(): void {
+    rotateRight(): void {
         const n = this.block.length;
         const maxLength = Math.max(...this.block.map(str => str.length));
         const paddedArray = this.block.map(str => str.padEnd(maxLength, ' '));
@@ -25,7 +28,7 @@ export class Block {
         this.block = rotatedArray;
     }
 
-    rotateBlockLeft() {
+    rotateLeft() {
         const n = this.block.length;
         const maxLength = Math.max(...this.block.map(str => str.length)); // Maximum length of strings
 
@@ -44,7 +47,7 @@ export class Block {
             }
         }
 
-        this.block =  rotatedArray;
+        this.block = rotatedArray;
         console.log(this.block);
     }
 }

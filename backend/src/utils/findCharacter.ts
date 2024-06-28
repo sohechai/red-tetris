@@ -7,3 +7,6 @@ export function findCharacter(str: string): number {
     }
     return -1;
 }
+
+export const piecesChar = "IJLOSTZ0";
+export const piecesPlacedChar = "ijklostzX";
