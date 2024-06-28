@@ -42,8 +42,8 @@ export class Game {
                 player.map.blockFall(player.bag[player.indexOfBag].block) 
             }
             else {
-                console.log("Index of bag:", player.indexOfBag);
-                console.log(player.bag);
+                // console.log("Index of bag:", player.indexOfBag);
+                // console.log(player.bag);
                 player.indexOfBag++;
                 player.map.addFallingBlock(player.bag[player.indexOfBag].block);
             }

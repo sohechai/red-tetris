@@ -1,11 +1,7 @@
 import { IBlock } from "src/interface/block";
-import { IMap } from "src/interface/map";
-import { findCharacter } from "src/utils/findCharacter";
-import { replaceAllChar } from "src/utils/replaceAllCharacterOfArray";
 
 export class Block {
     block: IBlock;
-    character: string;
 
     constructor(block: IBlock) {
         this.block = block;
@@ -48,6 +44,5 @@ export class Block {
         }
 
         this.block = rotatedArray;
-        console.log(this.block);
     }
 }
