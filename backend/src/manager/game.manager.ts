@@ -29,7 +29,7 @@ export class Game {
     logMap()
     {
         console.log("____________________________");
-        for (let y = 0; y < 21; y ++) {
+        for (let y = 0; y < 22; y ++) {
             for (let x = 0; x < 12; x++) {
                 if (this.players[0].map.map[y][x] === 10) {
                     process.stdout.write('X');
@@ -90,7 +90,11 @@ export class Game {
             }
             this.sendPenality(player.map.isLineFormed(), player.user.client);
             //ADD EMIT GAMEOVER
+            player.user.client.emit("map", player.map.parsed());
             if (player.hasLost())
+                this.players.splice(this.players.findIndex(_player => _player.user.client.id === player.user.client.id), 1);
+            this.logMap();
+            if (player.user.client.disconnected)
                 this.players.splice(this.players.findIndex(_player => _player.user.client.id === player.user.client.id), 1);
         }
     }
@@ -100,7 +104,6 @@ export class Game {
         while (1) {
             this.bagRefueler();
             this.pieceManager();
-            this.logMap();
             await sleep(gamespeed);
             gamespeed -= 1;
         }

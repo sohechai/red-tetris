@@ -19,7 +19,8 @@ const Room = () => {
   const handleJoinRoom = (e) => {
     e.preventDefault();
     dispatch(joinRoom(roomName, username));
-    navigate(`/${roomName}/${username}`);
+    // navigate(`/${roomName}/${username}`);
+    navigate(`/roomName`)
   };
 
   useEffect(() => {

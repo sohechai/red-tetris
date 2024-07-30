@@ -23,8 +23,8 @@ export const setupUserListeners = () => {
 export const setupMapListeners = () => {
   return (dispatch) => {
     socket.on("map", (map) => {
+      // console.log("map = " + map);
       dispatch(receiveMapInfo(map));
-      console.log("map = " + map);
     });
 
     return () => {

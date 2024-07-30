@@ -210,4 +210,63 @@ export class Map {
         }
         return false;
     }
+
+    parsed(): string[][] {
+        const stringMap: string[][] = [];
+        for (let y = 1; y < 21; y ++) {
+            stringMap.push([]);
+            for (let x = 1; x < 11; x++) {
+                
+                if (this.map[y][x] === 10 || this.map[y][x] === 0) {
+                    stringMap[0].push("X");
+                }
+                else if (this.map[y][x] === 11) {
+                    stringMap[0].push("I");
+                }
+                else if (this.map[y][x] === 12) {
+                    stringMap[0].push("L");
+                }
+                else if (this.map[y][x] === 13) {
+                    stringMap[0].push("J");
+                }
+                else if (this.map[y][x] === 14) {
+                    stringMap[0].push("O");
+                }
+                else if (this.map[y][x] === 15) {
+                    stringMap[0].push("S");
+                }
+                else if (this.map[y][x] === 16) {
+                    stringMap[0].push("T");
+                }
+                else if (this.map[y][x] === 17) {
+                    stringMap[0].push("Z");
+                }
+                else if (this.map[y][x] === 0) {
+                    stringMap[0].push("X");
+                }
+                else if (this.map[y][x] === 1) {
+                    stringMap[0].push("I");
+                }
+                else if (this.map[y][x] === 2) {
+                    stringMap[0].push("L");
+                }
+                else if (this.map[y][x] === 3) {
+                    stringMap[0].push("J");
+                }
+                else if (this.map[y][x] === 4) {
+                    stringMap[0].push("O");
+                }
+                else if (this.map[y][x] === 5) {
+                    stringMap[0].push("S");
+                }
+                else if (this.map[y][x] === 6) {
+                    stringMap[0].push("T");
+                }
+                else if (this.map[y][x] === 7) {
+                    stringMap[0].push("Z");
+                }
+            }
+        }
+        return stringMap;
+    }
 }

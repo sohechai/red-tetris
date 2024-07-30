@@ -12,6 +12,6 @@ export const receiveUserInfo = (userInfo) => ({
 });
 
 export const receiveMapInfo = (mapInfo) => ({
-  type: RECEIVE_USER_INFO,
+  type: "RECEIVE_MAP_INFO",
   payload: mapInfo,
 });

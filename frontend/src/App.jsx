@@ -85,7 +85,7 @@ function App() {
         <Routes>
           <Route path="/" exact element={<Play />} />
           <Route path="/room" exact element={<Room />} />
-          <Route path="/:roomName/:username" exact element={<RoomName />} />
+          <Route path="/roomName" exact element={<RoomName />} />
           <Route path="/game" exact element={<Game />} />
         </Routes>
       </BrowserRouter>

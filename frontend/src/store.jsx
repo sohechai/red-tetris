@@ -61,6 +61,7 @@ const rootReducer = combineReducers({
   messages: messageReducer,
   users: userReducer,
   me: meReducer,
+  map: mapReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
