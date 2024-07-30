@@ -28,9 +28,38 @@ export class Game {
     logMap()
     {
         console.log("____________________________");
-        for (let i = 0; i < 21; i ++) {
-            for (let j = 0; j < 12; j++) {
-                process.stdout.write(this.players[0].map.map[i][j]);
+        for (let y = 0; y < 21; y ++) {
+            for (let x = 0; x < 12; x++) {
+                if (this.players[0].map.map[y][x] === 10) {
+                    process.stdout.write('X');
+                }
+                else if (this.players[0].map.map[y][x] === 11) {
+                    process.stdout.write('I');
+                }
+                else if (this.players[0].map.map[y][x] === 12) {
+                    process.stdout.write('L');
+                }
+                else if (this.players[0].map.map[y][x] === 13) {
+                    process.stdout.write('J');
+                }
+                else if (this.players[0].map.map[y][x] === 14) {
+                    process.stdout.write('O');
+                }
+                else if (this.players[0].map.map[y][x] === 15) {
+                    process.stdout.write('S');
+                }
+                else if (this.players[0].map.map[y][x] === 16) {
+                    process.stdout.write('T');
+                }
+                else if (this.players[0].map.map[y][x] === 17) {
+                    process.stdout.write('Z');
+                }
+                else if (this.players[0].map.map[y][x] === 0) {
+                    process.stdout.write('.');
+                }
+                else {
+                    process.stdout.write(this.players[0].map.map[y][x].toString());
+                }
             }
             console.log();
         }
@@ -39,13 +68,13 @@ export class Game {
     pieceManager(): void {
         for (let player of this.players) {
             if (player.map.isBlockFalling()) {
-                player.map.blockFall(player.bag[player.indexOfBag].block) 
+                player.map.blockFall(player.bag[player.indexOfBag]) 
             }
             else {
                 // console.log("Index of bag:", player.indexOfBag);
                 // console.log(player.bag);
                 player.indexOfBag++;
-                player.map.addFallingBlock(player.bag[player.indexOfBag].block);
+                player.map.addFallingBlock(player.bag[player.indexOfBag]);
             }
         }
     }

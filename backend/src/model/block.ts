@@ -2,35 +2,35 @@ import { IBlock } from "src/interface/block";
 
 
 export const iBlock: IBlock = [
-    "IIII",
+    [1, 1, 1, 1],
 ];
 
 export const jBlock: IBlock = [
-    "J00",
-    "JJJ",
+    [2, 0, 0],
+    [2, 2, 2],
 ];
 
 export const lBlock: IBlock = [
-    "00L",
-    "LLL",
+    [0, 0, 3],
+    [3, 3, 3],
 ];
 
 export const oBlock: IBlock = [
-    "OO",
-    "OO",
+    [4, 4],
+    [4, 4],
 ];
 
 export const sBlock: IBlock = [
-    "0SS",
-    "SS0",
+    [0, 5, 5],
+    [5, 5, 0],
 ];
 
 export const tBlock: IBlock = [
-    "0T0",
-    "TTT",
+    [0, 6, 0],
+    [6, 6, 6],
 ];
 
 export const zBlock: IBlock = [
-    "ZZ0",
-    "0ZZ",
+    [7, 7, 0],
+    [0, 7, 7],
 ];

@@ -2,7 +2,7 @@ import socket from "./socket";
 import { receiveUsers } from "./usersAction.jsx";
 
 export const sendMessage = (message) => {
-  return (dispatch) => {
+  return () => {
     socket.emit("message", message);
   };
 };
@@ -20,8 +20,33 @@ export const setupUserListeners = () => {
   };
 };
 
+export const startGame = () => {
+  return () => {
+    socket.emit("startGame");
+  };
+};
+
+export const Rotate = () => {
+  return () => {
+    socket.emit("rotatePiece");
+  };
+};
+
+
+export const MoveLeft = () => {
+  return () => {
+    socket.emit("movePieceLeft");
+  };
+};
+
+export const MoveRight = () => {
+  return () => {
+    socket.emit("movePieceRight");
+  };
+};
+
 export const joinRoom = (room, pseudo) => {
-  return (dispatch) => {
+  return () => {
     socket.emit("joinRoom", { room: room, pseudo: pseudo });
   };
 };

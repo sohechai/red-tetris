@@ -1,9 +1,8 @@
 import { Mutex } from "async-mutex";
-import { IBlock } from "src/interface/block";
 import { IMap } from "src/interface/map";
-import { findCharacter, piecesChar, piecesPlacedChar } from "src/utils/findCharacter";
 import { lowercaseArray } from "src/utils/lowercaseArray";
 import { replaceAllChar } from "src/utils/replaceAllCharacterOfArray";
+import { Block } from "./block.manager";
 
 export class Map {
     map: IMap;
@@ -13,10 +12,18 @@ export class Map {
     constructor() {
         const newMap: IMap = [];
 
-        for (let i = 0; i < 20; i++) {
-            newMap[i] = "X..........X";
+        for (let y = 0; y < 21; y++) {
+            newMap.push([]);
+            for (let x = 0; x < 12; x++)
+            {
+                if (x === 0 || x === 11 || y == 20) {
+                    newMap[y].push(10);
+                }
+                else {
+                    newMap[y].push(0);
+                }
+            }
         }
-        newMap[20] = "XXXXXXXXXXXX";
         this.map = newMap;
         this.specterMap = newMap;
         this.mutex = new Mutex();
@@ -40,54 +47,103 @@ export class Map {
         }
     }
 
-    async blockFall(block: IBlock) {
+    async blockFall(block: Block) {
         const release = await this.mutex.acquire();
-        let blockPos: number;
         let newMap: IMap = replaceAllChar(this.map);
-        for (let i = 0; i < 20; i++) {
-            if ((blockPos = findCharacter(this.map[i])) !== -1) {
-                for (let j = 0; j < block.length; j++) {
-                    newMap[i + 1] = (this.parseMapLine(newMap[i + 1], block[j], blockPos));
-                    i++;
-                }
-            }
-            else if (findCharacter(newMap[i]) === -1) {
-                newMap[i] = this.map[i];
+        block.position[0] += 1;
+        for (let y = 0; y < block.block.length; y++) {
+            for (let x = 0; x < block.block[y].length; x++) {
+                if (block.block[y][x] !== 0)
+                    newMap[y + block.position[0]][x + block.position[1]] = block.block[y][x];
             }
         }
         if (this.isValidMove(newMap)) {
             this.map = newMap;
         }
         else {
+            block.position[0] -= 1;
             this.map = lowercaseArray(this.map);
         }
         release();
     }
 
-    async movePiece(block: IBlock, move: number) {
+    async rotatePiece(block: Block) {
         const release = await this.mutex.acquire();
-        let blockPos: number;
         let newMap: IMap = replaceAllChar(this.map);
-        for (let i = 0; i < 20; i++) {
-            if ((blockPos = findCharacter(this.map[i])) !== -1) {
-                for (let j = 0; j < block.length; j++) {
-                    newMap[i] = (this.parseMapLine(newMap[i], block[j], blockPos + move));
-                    i++;    
-                }
-            }
-            else if (findCharacter(newMap[i]) === -1) {
-                newMap[i] = this.map[i];
+        block.rotateRight();
+        for (let y = 0; y < block.block.length; y++) {
+            for (let x = 0; x < block.block[y].length; x++) {
+                if (block.block[y][x] !== 0)
+                    newMap[y + block.position[0]][x + block.position[1]] = block.block[y][x];
             }
         }
+        this.map = newMap;
+        release(); 
+    }
+    async movePiece(block: Block, move: number) {
+        const release = await this.mutex.acquire();
+        block.position[1] += move;
+        let newMap: IMap = replaceAllChar(this.map);
+        for (let y = 0; y < block.block.length; y++) {
+                for (let x = 0; x < block.block[y].length; x++) {
+                    newMap[y + block.position[0]][x + block.position[1]] = block.block[y][x];
+                }
+            }
         if (this.isValidMove(newMap)) {
             this.map = newMap;
         }
+        else {
+            block.position[1] -= move;
+        }
         release();   
     }
+    logMap(map: IMap)
+    {
+        console.log("____________________________");
+        for (let y = 0; y < 21; y ++) {
+            for (let x = 0; x < 12; x++) {
+                if (map[y][x] === 10) {
+                    process.stdout.write('X');
+                }
+                else if (map[y][x] === 11) {
+                    process.stdout.write('I');
+                }
+                else if (map[y][x] === 12) {
+                    process.stdout.write('L');
+                }
+                else if (map[y][x] === 13) {
+                    process.stdout.write('J');
+                }
+                else if (map[y][x] === 14) {
+                    process.stdout.write('O');
+                }
+                else if (map[y][x] === 15) {
+                    process.stdout.write('S');
+                }
+                else if (map[y][x] === 16) {
+                    process.stdout.write('T');
+                }
+                else if (map[y][x] === 17) {
+                    process.stdout.write('Z');
+                }
+                else {
+                    process.stdout.write(map[y][x].toString());
+                }
+            }
+            console.log();
+        }
+    }
     isValidMove(newMap: IMap): boolean {
-        for (let i = 0; i < 21; i++) {
-            for (let j = 0; j < 12; j++) {
-                if (piecesPlacedChar.includes(this.map[i][j]) && piecesChar.includes(newMap[i][j])) {
+        console.log("NEW MAP");
+        this.logMap(newMap);
+        console.log("OLD MAP");
+        this.logMap(this.map);
+        for (let y = 0; y < 21; y++) {
+            for (let x = 0; x < 12; x++) {
+                if (newMap[y][x] < 8 && newMap[y][x] > 0)
+                    console.log(this.map[y][x], " ", newMap[y][x]);
+                if (this.map[y][x] > 9 && this.map[y][x] < 18 && newMap[y][x] > 0 && newMap[y][x] < 8) {
+                    console.log("here");
                     return false;
                 }
             }
@@ -95,18 +151,19 @@ export class Map {
         return true;
     }
 
-    addFallingBlock(block: IBlock) {
-        for (let e in block) {
-            const prefix = this.map[e].slice(0, 4);
-            const suffix = this.map[e].slice(4 + block[e].length);
-            this.map[e] = prefix + block[e] + suffix;
+    // verifier que la piece est posable
+    addFallingBlock(block: Block) {
+        for (let y = 0; y < block.block.length; y++) {
+            for (let x = 0; x < block.block[y].length; x++) {
+                this.map[y + block.position[0]][x + block.position[1]] = block.block[y][x];
+            }
         }
     }
 
     isBlockFalling(): boolean {
-        for (let i = 0; i < 20; i++) {
-            for (let j = 0; j < 10; j++) {
-                if ("IJLOSTZ".includes(this.map[i][j]))
+        for (let y = 0; y < 21; y++) {
+            for (let x = 0; x < 12; x++) {
+                if (this.map[y][x] > 0 && this.map[y][x] < 8)
                     return true;
             }
         }
