@@ -1,11 +1,10 @@
-export function findCharacter(str: string): number {
-    const characters: string = "IJLOSTZ0";
-    for (let i = 0; i < str.length; i++) {
-        if (characters.includes(str[i])) {
-            return i;
+export function findCharacter(line: number[]): boolean {
+    for (let i = 0; i < line.length; i++) {
+        if (line[i] < 18 && line[i] > 10) {
+            return true;
         }
     }
-    return -1;
+    return false;
 }
 
 export const piecesChar = "IJLOSTZ";

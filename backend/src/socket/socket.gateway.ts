@@ -8,7 +8,6 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { IBlock } from 'src/interface/block';
 import { Game } from 'src/manager/game.manager';
 import { SelectGameMode } from 'src/manager/lobby.manager';
 import {

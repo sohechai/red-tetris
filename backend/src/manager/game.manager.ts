@@ -1,6 +1,7 @@
 import sleep from "src/utils/sleep";
 import { Player } from "src/model/player";
 import { Bag } from "./bag.manager";
+import { Socket } from "socket.io";
 
 export class Game {
     players: Player[];
@@ -65,6 +66,17 @@ export class Game {
         }
     }
 
+    sendPenality(penality: number, client: Socket): void {
+        if (penality) {
+            for (let player of this.players) {
+                //ADD EMIT GAMEOVER
+                if (player.map.addPenality(penality)) {
+                    this.players.splice(this.players.findIndex(player => player.user.client.id === client.id), 1);
+                }
+            }
+        }
+    }
+
     pieceManager(): void {
         for (let player of this.players) {
             if (player.map.isBlockFalling()) {
@@ -76,6 +88,10 @@ export class Game {
                 player.indexOfBag++;
                 player.map.addFallingBlock(player.bag[player.indexOfBag]);
             }
+            this.sendPenality(player.map.isLineFormed(), player.user.client);
+            //ADD EMIT GAMEOVER
+            if (player.hasLost())
+                this.players.splice(this.players.findIndex(_player => _player.user.client.id === player.user.client.id), 1);
         }
     }
 
