@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-
-
-const play = () => {
+import logo from "../assets/tetris-logo.svg";
+const Play = () => {
   let navigate = useNavigate();
   
   const handleClick = (e) => {
@@ -11,9 +10,10 @@ const play = () => {
 
   return (
     <div className="parent-container">
+      <img alt="Tetris Logo" className="logo" src={logo} id="play-logo" />
       <button onClick={handleClick}>PLAY</button>
     </div>
   );
 };
 
-export default play;
+export default Play;

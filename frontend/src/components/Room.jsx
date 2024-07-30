@@ -1,8 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { joinRoom, setupUserListeners } from "../socketActions.jsx";
-import { useState } from "react";
+import {
+  joinRoom,
+  setupMeInfo,
+  setupUserListeners,
+} from "../socketActions.jsx";
+import logo from "../assets/tetris-logo.svg";
 
 const Room = () => {
   const users = useSelector((state) => state.users.users);
@@ -15,23 +19,22 @@ const Room = () => {
   const handleJoinRoom = (e) => {
     e.preventDefault();
     dispatch(joinRoom(roomName, username));
-    navigate(`/RoomName`);
+    navigate(`/${roomName}/${username}`);
   };
 
   useEffect(() => {
     const cleanup = dispatch(setupUserListeners());
+    const cleanup2 = dispatch(setupMeInfo());
 
     return () => {
       cleanup();
+      cleanup2();
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log("users = " + users);
-  }, [users]);
-
   return (
     <div className="room-container" id="#room">
+      <img alt="Tetris Logo" className="logo" src={logo} id="play-logo" />
       <div className="room-form">
         <h1>Create / Join Room</h1>
         <form>

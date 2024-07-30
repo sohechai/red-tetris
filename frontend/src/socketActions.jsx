@@ -1,5 +1,5 @@
 import socket from "./socket";
-import { receiveUsers } from "./usersAction.jsx";
+import { receiveMapInfo, receiveUserInfo, receiveUsers } from "./usersAction.jsx";
 
 export const sendMessage = (message) => {
   return () => {
@@ -11,7 +11,33 @@ export const setupUserListeners = () => {
   return (dispatch) => {
     socket.on("usersInRoom", (users) => {
       dispatch(receiveUsers(users));
-      console.log("users" + users);
+      console.log("usersInRoom = " + users);
+    });
+
+    return () => {
+      socket.off("usersList");
+    };
+  };
+};
+
+export const setupMapListeners = () => {
+  return (dispatch) => {
+    socket.on("map", (map) => {
+      dispatch(receiveMapInfo(map));
+      console.log("map = " + map);
+    });
+
+    return () => {
+      socket.off("map");
+    };
+  };
+};
+
+export const setupMeInfo = () => {
+  return (dispatch) => {
+    socket.on("me", (user) => {
+      dispatch(receiveUserInfo(user));
+      console.log("me = " + user);
     });
 
     return () => {
