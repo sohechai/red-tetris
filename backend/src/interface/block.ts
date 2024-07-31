@@ -1,1 +1,1 @@
-export interface IBlock extends Array<Array<number>>{};
+export interface IBlock extends Array<Array<Array<number>>>{};

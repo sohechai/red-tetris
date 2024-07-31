@@ -2,6 +2,7 @@ import sleep from "src/utils/sleep";
 import { Player } from "src/model/player";
 import { Bag } from "./bag.manager";
 import { Socket } from "socket.io";
+import { Map } from "./map.manager";
 
 export class Game {
     players: Player[];
@@ -71,41 +72,66 @@ export class Game {
             for (let player of this.players) {
                 //ADD EMIT GAMEOVER
                 if (player.map.addPenality(penality)) {
-                    this.players.splice(this.players.findIndex(player => player.user.client.id === client.id), 1);
+                    player.isAlive = false;
                 }
             }
         }
     }
 
-    pieceManager(): void {
+    async pieceManager() {
+        let blockFall: boolean = false;
         for (let player of this.players) {
-            if (player.map.isBlockFalling()) {
-                player.map.blockFall(player.bag[player.indexOfBag]) 
+            if (player.isAlive) {
+                if (player.map.isBlockFalling()) {
+                    player.map.blockFall(player.bag[player.indexOfBag]) 
+                }
+                else {
+                    player.indexOfBag++;
+                    blockFall = await player.map.addFallingBlock(player.bag[player.indexOfBag]);
+                    if (blockFall) {
+                        player.isAlive = false;
+                        continue;
+                    }
+                }
+                this.sendPenality(player.map.isLineFormed(), player.user.client);
+                //ADD EMIT GAMEOVER
+                player.user.client.emit("map", player.map.parsed());
+                this.logMap();
+                if (player.hasLost()) {
+                    player.isAlive = false;
+                }
+                if (player.user.client.disconnected)
+                    this.players.splice(this.players.findIndex(_player => _player.user.client.id === player.user.client.id), 1);
             }
-            else {
-                // console.log("Index of bag:", player.indexOfBag);
-                // console.log(player.bag);
-                player.indexOfBag++;
-                player.map.addFallingBlock(player.bag[player.indexOfBag]);
-            }
-            this.sendPenality(player.map.isLineFormed(), player.user.client);
-            //ADD EMIT GAMEOVER
-            player.user.client.emit("map", player.map.parsed());
-            if (player.hasLost())
-                this.players.splice(this.players.findIndex(_player => _player.user.client.id === player.user.client.id), 1);
-            this.logMap();
-            if (player.user.client.disconnected)
-                this.players.splice(this.players.findIndex(_player => _player.user.client.id === player.user.client.id), 1);
+            
         }
+    }
+
+    isAlive(): boolean {
+        for (let player of this.players) {
+            console.log(player.isAlive);
+            if (player.isAlive)
+                return true;
+        }
+        console.log("here");
+        return false;
     }
 
     async game(): Promise<void> {
         let gamespeed: number = 500;
         while (1) {
+            if (!this.isAlive())
+                break;
             this.bagRefueler();
-            this.pieceManager();
+            await this.pieceManager();
             await sleep(gamespeed);
             gamespeed -= 1;
+        }
+        this.bag = this.bag = new Bag();
+        for (let player of this.players) {
+            player.map = new Map();
+            player.isAlive = true;
+            player.bag = this.bag.blocks;
         }
     }
 }

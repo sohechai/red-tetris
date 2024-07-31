@@ -56,10 +56,9 @@ export class AppGateway
   
   @SubscribeMessage('rotatePiece')
   handleRotatePiece(client: Socket): void {
-    console.log('rotate');
     const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
     if (player.indexOfBag >= 0)
-      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.rotatePiece(player.bag[player.indexOfBag]);
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.rotatePiece(player.bag[player.indexOfBag], client);
       // this.players[this.players.findIndex(player => player.user.client.id === client.id)].bag[this.players[this.players.findIndex(player => player.user.client.id === client.id)].indexOfBag].rotateRight();
   }
 
@@ -67,15 +66,21 @@ export class AppGateway
   handleMovePieceRight(client: Socket): void {
     const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
     if (player.indexOfBag >= 0)
-      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.movePiece(player.bag[player.indexOfBag], 1);
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.movePiece(player.bag[player.indexOfBag], 1, client);
   }
 
   @SubscribeMessage('movePieceLeft')
   handleMovePieceLeft(client: Socket): void {
-    console.log("\n\n\n\n\n\n\n\n\n");
     const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
     if (player.indexOfBag >= 0)
-      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.movePiece(player.bag[player.indexOfBag], -1);
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.movePiece(player.bag[player.indexOfBag], -1, client);
+  }
+
+  @SubscribeMessage('dropPiece')
+  handleDropPiece(client: Socket): void {
+    const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
+    if (player.indexOfBag >= 0)
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.dropPiece(player.bag[player.indexOfBag], client);
   }
     @SubscribeMessage('joinRoom')
     handleJoinRoom(client: Socket, data: { room: string, pseudo: string }): void {

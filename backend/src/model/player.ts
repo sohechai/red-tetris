@@ -9,6 +9,7 @@ export class Player {
     user: User;
     map: Map;
     bag: IBag;
+    isAlive: boolean;
     lineDestroyed: number;
     indexOfBag: number = -1;
 
@@ -30,6 +31,7 @@ export class Player {
         };
         this.lineDestroyed = 0;
         this.map = map;
+        this.isAlive = true;
     }
     me(): UserInfo {
         const me: UserInfo = {
