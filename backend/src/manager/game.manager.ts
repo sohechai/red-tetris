@@ -18,7 +18,7 @@ export class Game {
 
     bagRefueler(): void {
         for (let player of this.players) {
-            if (player.indexOfBag === player.bag.length - 1) {
+            if (player.indexOfBag === player.bag.length - 2) {
                 if (this.bag.blocks.length === player.bag.length) {
                     this.bag.AppendBlockToBag();
                 }
@@ -81,6 +81,7 @@ export class Game {
     async pieceManager() {
         let blockFall: boolean = false;
         for (let player of this.players) {
+            console.log("ID:", player.user.client.id);
             if (player.isAlive) {
                 if (player.map.isBlockFalling()) {
                     player.map.blockFall(player.bag[player.indexOfBag]) 
@@ -96,6 +97,7 @@ export class Game {
                 this.sendPenality(player.map.isLineFormed(), player.user.client);
                 //ADD EMIT GAMEOVER
                 player.user.client.emit("map", player.map.parsed());
+                // player.user.client.emit("nextPiece", player.getNextPiece());
                 this.logMap();
                 if (player.hasLost()) {
                     player.isAlive = false;
@@ -129,6 +131,7 @@ export class Game {
         }
         this.bag = this.bag = new Bag();
         for (let player of this.players) {
+            player.indexOfBag = -1;
             player.map = new Map();
             player.isAlive = true;
             player.bag = this.bag.blocks;

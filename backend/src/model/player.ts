@@ -57,4 +57,17 @@ export class Player {
             return true;
         return false;
     }
+
+    getNextPiece() {
+        const type = ["X", "I", "L", "J", "O", "S", "T"]
+        console.log(this.bag[this.indexOfBag + 1].block[this.bag[this.indexOfBag + 1].rotation]);
+        let block = this.bag[this.indexOfBag + 1].block[this.bag[this.indexOfBag + 1].rotation];
+        for (let y = 0; y < block.length; y++) {
+            for (let x = 0; x < block[y].length; x++) {
+                if (block[y][x] !== 0) {
+                    return type[block[y][x]];
+                }
+            }
+        }
+    }
 }

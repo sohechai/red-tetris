@@ -7,6 +7,7 @@ const initialState = {
   users: [],
   me: [],
   map: [],
+  nextPiece: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -45,6 +46,18 @@ const mapReducer = (state = initialState, action) => {
   }
 };
 
+const nextPieceReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "RECEIVE_PIECE_INFO":
+      return {
+        ...state,
+        nextPiece: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 const messageReducer = (state = { messages: [] }, action) => {
   switch (action.type) {
     case "RECEIVE_MESSAGE":
@@ -62,6 +75,7 @@ const rootReducer = combineReducers({
   users: userReducer,
   me: meReducer,
   map: mapReducer,
+  nextPiece: nextPieceReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));

@@ -64,6 +64,7 @@ export class Map {
     }
 
     async dropPiece(block: Block, client: Socket) {
+        //BUG PRESS DROP ET MOVE
         const release = await this.mutex.acquire();
         let i = 0;
         while (this.isBlockFalling() && i < 22) {
@@ -78,6 +79,7 @@ export class Map {
             }
             if (this.isValidMove(newMap)) {
                 this.map = newMap;
+                client.emit("map", this.parsed());
             }
             else {
                 block.position[0] -= 1;
@@ -109,6 +111,7 @@ export class Map {
     async movePiece(block: Block, move: number, client: Socket) {
         const release = await this.mutex.acquire();
         block.position[1] += move;
+        console.log("ID:", client.id);
         let newMap: IMap = replaceAllChar(this.map);
         for (let y = 0; y < block.block[block.rotation].length; y++) {
                 for (let x = 0; x < block.block[block.rotation][y].length; x++) {
@@ -162,14 +165,13 @@ export class Map {
         }
     }
     isValidMove(newMap: IMap): boolean {
-        console.log("NEW MAP");
-        this.logMap(newMap);
-        console.log("OLD MAP");
-        this.logMap(this.map);
+        // console.log("NEW MAP");
+        // this.logMap(newMap);
+        // console.log("OLD MAP");
+        // this.logMap(this.map);
         for (let y = 0; y < 22; y++) {
             for (let x = 0; x < 12; x++) {
                 if (this.map[y][x] > 9 && this.map[y][x] < 18 && newMap[y][x] > 0 && newMap[y][x] < 8) {
-                    console.log(this.map[y][x], " === ", newMap[y][x]);
                     return false;
                 }
             }
@@ -181,10 +183,8 @@ export class Map {
     async addFallingBlock(block: Block) {
         const release = await this.mutex.acquire();
         let newMap: IMap = replaceAllChar(this.map);
-        console.log(block.block[block.rotation]);
         for (let y = 0; y < block.block[block.rotation].length; y++) {
             for (let x = 0; x < block.block[block.rotation][y].length; x++) {
-                console.log("value: " + block.block[block.rotation][y][x]);
                 newMap[y + block.position[0]][x + block.position[1]] = block.block[block.rotation][y][x];
             }
         }

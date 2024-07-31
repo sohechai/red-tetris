@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {  MoveLeft, MoveRight, Rotate, startGame } from "../socketActions.jsx";
+import {  dropPiece, MoveLeft, MoveRight, Rotate, setupNextPieceListeners, startGame } from "../socketActions.jsx";
 import logo from "../assets/tetris-logo.svg";
 import Game from "./Game.jsx";
 import Chat from "./Chat.jsx";
@@ -11,10 +11,12 @@ import OpponentsMap from "./OpponentsMap.jsx";
 
 const RoomName = () => {
   const me = useSelector((state) => state.me.me);
+  // const piece = useSelector((state) => state.piece.piece);
   const dispatch = useDispatch();
   useEffect(() => {
-    
+    dispatch(setupNextPieceListeners);
     const handleKeyPress = (e) => {
+      console.log(e.key);
       e.preventDefault();
       if (e.key == 'd') {
         console.log(e.key);
@@ -28,12 +30,15 @@ const RoomName = () => {
         console.log(e.key);
         dispatch(Rotate());
       }
+      if (e.key == 'ArrowDown') {
+        console.log(e.key);
+        dispatch(dropPiece());
+      }
     }
     window.addEventListener('keydown', handleKeyPress);
   }, []);
   const handleStartGame = (e) => {
     e.preventDefault();
-    console.log("here");
     dispatch(startGame());
   };
   return (
@@ -51,10 +56,10 @@ const RoomName = () => {
           </div>
           <Chat />
           <Game />
-          <NextP type="Z" />
+          <NextP type={ "T" } />
           <OpponentsMap />
           <Lobby />
-          <Settings /> 
+          <Settings />
         </div>
       </div>
     </div>

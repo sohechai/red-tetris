@@ -1,5 +1,5 @@
 import socket from "./socket";
-import { receiveMapInfo, receiveUserInfo, receiveUsers } from "./usersAction.jsx";
+import { receiveMapInfo, receiveNextPieceInfo, receiveUserInfo, receiveUsers } from "./usersAction.jsx";
 
 export const sendMessage = (message) => {
   return () => {
@@ -23,8 +23,19 @@ export const setupUserListeners = () => {
 export const setupMapListeners = () => {
   return (dispatch) => {
     socket.on("map", (map) => {
-      // console.log("map = " + map);
       dispatch(receiveMapInfo(map));
+    });
+
+    return () => {
+      socket.off("map");
+    };
+  };
+};
+
+export const setupNextPieceListeners = () => {
+  return (dispatch) => {
+    socket.on("nextPiece", (nextPiece) => {
+      dispatch(receiveNextPieceInfo(nextPiece));
     });
 
     return () => {
@@ -49,6 +60,12 @@ export const setupMeInfo = () => {
 export const startGame = () => {
   return () => {
     socket.emit("startGame");
+  };
+};
+
+export const dropPiece = () => {
+  return () => {
+    socket.emit("dropPiece");
   };
 };
 
