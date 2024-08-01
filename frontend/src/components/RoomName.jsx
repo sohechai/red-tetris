@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {  dropPiece, MoveLeft, MoveRight, Rotate, setupNextPieceListeners, startGame } from "../socketActions.jsx";
+import {  dropPiece, FallByOne, MoveLeft, MoveRight, Rotate, setupMeInfo, setupNextPieceListeners, setupUserListeners, startGame } from "../socketActions.jsx";
 import logo from "../assets/tetris-logo.svg";
 import Game from "./Game.jsx";
 import Chat from "./Chat.jsx";
@@ -11,28 +11,41 @@ import OpponentsMap from "./OpponentsMap.jsx";
 
 const RoomName = () => {
   const me = useSelector((state) => state.me.me);
-  // const piece = useSelector((state) => state.piece.piece);
   const dispatch = useDispatch();
+
+  // const piece = useSelector((state) => state.piece.piece);
   useEffect(() => {
-    dispatch(setupNextPieceListeners);
+    const cleanup = dispatch(setupUserListeners());
+    const cleanup2 = dispatch(setupMeInfo());
+
+    return () => {
+      cleanup();
+      cleanup2();
+    };
+  }, [dispatch]);
+  useEffect(() => {
     const handleKeyPress = (e) => {
       console.log(e.key);
       e.preventDefault();
-      if (e.key == 'd') {
+      if (e.key == 'ArrowRight') {
         console.log(e.key);
         dispatch(MoveRight())
       }
-      if (e.key == 'a') {
+      if (e.key == 'ArrowLeft') {
         console.log(e.key);
         dispatch(MoveLeft());
       }
-      if (e.key == 'r') {
+      if (e.key == 'ArrowUp') {
         console.log(e.key);
         dispatch(Rotate());
       }
-      if (e.key == 'ArrowDown') {
+      if (e.key == ' ') {
         console.log(e.key);
         dispatch(dropPiece());
+      }
+      if (e.key == 'ArrowDown') {
+        console.log(e.key);
+        dispatch(FallByOne());
       }
     }
     window.addEventListener('keydown', handleKeyPress);
@@ -56,7 +69,7 @@ const RoomName = () => {
           </div>
           <Chat />
           <Game />
-          <NextP type={ "T" } />
+          <NextP type={ "T" }/>
           <OpponentsMap />
           <Lobby />
           <Settings />

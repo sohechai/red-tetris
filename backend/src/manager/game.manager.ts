@@ -1,28 +1,32 @@
 import sleep from "src/utils/sleep";
 import { Player } from "src/model/player";
 import { Bag } from "./bag.manager";
-import { Socket } from "socket.io";
+import { Socket, Server } from "socket.io";
 import { Map } from "./map.manager";
+import structuredClone from '@ungap/structured-clone';
 
 export class Game {
     players: Player[];
     bag: Bag;
+    srv: Server
 
-    constructor(players: Player[], room: string) {
+    constructor(players: Player[], room: string, srv: Server) {
         this.bag = new Bag();
         this.players = players.filter(player => player.user.room === room);
         for (let player of this.players) {
-            player.bag = this.bag.blocks;
+            player.bag = structuredClone(this.bag.blocks);
         }
+        this.srv = srv;
     }
 
     bagRefueler(): void {
         for (let player of this.players) {
-            if (player.indexOfBag === player.bag.length - 2) {
+            if (player.indexOfBag + 2 === player.bag.length) {
                 if (this.bag.blocks.length === player.bag.length) {
                     this.bag.AppendBlockToBag();
                 }
-                player.bag = this.bag.blocks;
+                // console.log(player.bag, player.indexOfBag);
+                player.bag = structuredClone(this.bag.blocks);
             }
         }
     }
@@ -71,9 +75,44 @@ export class Game {
         if (penality) {
             for (let player of this.players) {
                 //ADD EMIT GAMEOVER
-                if (player.map.addPenality(penality)) {
+                if (player.user.client.id !== client.id && player.map.addPenality(penality)) {
                     player.isAlive = false;
                 }
+            }
+        }
+    }
+
+    async gameOver(client: Socket) {
+        let redMap: string[][] = [];
+        let emptyMap: string[][] = [];
+        for(let y = 0; y < 10; y++) {
+            redMap.push([]);
+            emptyMap.push([])
+            for (let x = 0; x < 20; x++) {
+                emptyMap[y].push("X");
+                redMap[y].push("I");
+            }
+        }
+
+        for (let alert = 0; alert < 10; alert++) {
+            this.srv.to(client.id).emit("map", redMap);
+            await sleep(500);
+            this.srv.to(client.id).emit("map", emptyMap);
+            await sleep(500);
+        }
+        this.srv.to(client.id).emit("gameOver");
+    }
+
+    sendSpectre(client: Socket) {
+        const spectre = []
+        for (let player of this.players) {
+            if (client.id !== player.user.client.id) {
+                spectre.push(player.map.parsed(player.map.map));
+            }
+        }
+        for (let player of this.players) {
+            if (client.id !== player.user.client.id) {
+                this.srv.to(client.id).emit("spectre", spectre);
             }
         }
     }
@@ -81,26 +120,29 @@ export class Game {
     async pieceManager() {
         let blockFall: boolean = false;
         for (let player of this.players) {
-            console.log("ID:", player.user.client.id);
+            // console.log("ID:", player.user.client.id);
             if (player.isAlive) {
                 if (player.map.isBlockFalling()) {
-                    player.map.blockFall(player.bag[player.indexOfBag]) 
+                    player.map.blockFall(player.bag[player.indexOfBag])
                 }
                 else {
                     player.indexOfBag++;
                     blockFall = await player.map.addFallingBlock(player.bag[player.indexOfBag]);
                     if (blockFall) {
                         player.isAlive = false;
+                        this.gameOver(player.user.client);
                         continue;
                     }
                 }
                 this.sendPenality(player.map.isLineFormed(), player.user.client);
                 //ADD EMIT GAMEOVER
-                player.user.client.emit("map", player.map.parsed());
-                // player.user.client.emit("nextPiece", player.getNextPiece());
-                this.logMap();
+                this.srv.to(player.user.client.id).emit("map", player.map.parsed(player.map.map));
+                this.srv.to(player.user.client.id).emit("nextPiece", player.getNextPiece());
+                this.sendSpectre(player.user.client);
+                // this.logMap();
                 if (player.hasLost()) {
                     player.isAlive = false;
+                    this.gameOver(player.user.client);
                 }
                 if (player.user.client.disconnected)
                     this.players.splice(this.players.findIndex(_player => _player.user.client.id === player.user.client.id), 1);
@@ -111,15 +153,14 @@ export class Game {
 
     isAlive(): boolean {
         for (let player of this.players) {
-            console.log(player.isAlive);
+            // console.log(player.isAlive);
             if (player.isAlive)
                 return true;
         }
-        console.log("here");
         return false;
     }
 
-    async game(): Promise<void> {
+    async start(): Promise<void> {
         let gamespeed: number = 500;
         while (1) {
             if (!this.isAlive())
@@ -129,12 +170,12 @@ export class Game {
             await sleep(gamespeed);
             gamespeed -= 1;
         }
-        this.bag = this.bag = new Bag();
+        this.bag = new Bag();
         for (let player of this.players) {
             player.indexOfBag = -1;
             player.map = new Map();
             player.isAlive = true;
-            player.bag = this.bag.blocks;
+            player.bag = structuredClone(this.bag.blocks);
         }
     }
 }

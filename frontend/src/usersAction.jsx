@@ -20,3 +20,8 @@ export const receiveNextPieceInfo = (piece) => ({
   type: "RECEIVE_PIECE_INFO",
   payload: piece,
 });
+
+export const receiveOpponentsMapInfo = (opponentsMap) => ({
+  type: "RECEIVE_OPMAP_INFO",
+  payload: opponentsMap,
+});

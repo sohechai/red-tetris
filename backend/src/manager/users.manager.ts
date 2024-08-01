@@ -23,11 +23,11 @@ function SendNewUsersInRoom(players: Player[], pseudo: string, client: Socket, r
     if (player.user.room === room)
       usersInRoom.push({ pseudo: player.user.pseudo, score: player.user.score, owner: player.user.owner });
   }
-  console.log("USERS IN ROOM :");
-  console.log(usersInRoom);
-  console.log("_____________________\n");
-  console.log("ME :");
-  console.log(me)
+  // console.log("USERS IN ROOM :");
+  // console.log(usersInRoom);
+  // console.log("_____________________\n");
+  // console.log("ME :");
+  // console.log(me)
   server.to(room).emit("usersInRoom", usersInRoom);
   client.emit("me", me);
 }

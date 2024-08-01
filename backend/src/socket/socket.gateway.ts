@@ -41,9 +41,11 @@ export class AppGateway
   @SubscribeMessage('startGame')
   async handleGameStart(client: Socket): Promise<void> {
     this.logger.log(`Client started game: ${client.id}`);
-    const game: Game = new Game(this.players, Player.getRoomBySocketId(this.players, client));
-    game.game();
-    client.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameStart");
+    if (this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.owner === true) {
+      const game: Game = new Game(this.players, Player.getRoomBySocketId(this.players, client), this.wss);
+      game.start();
+      client.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameStart");
+    }
   }
 
   @SubscribeMessage('selectGameMode')
@@ -54,33 +56,42 @@ export class AppGateway
     this.players = SelectGameMode(this.players, data.gameMode, client);
   }
   
+  @SubscribeMessage('pieceFallByOne')
+  handlePieceFallByOne(client: Socket): void {
+    const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
+    if (player.indexOfBag >= 0)
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.dropOne(player.bag[player.indexOfBag], client, this.wss);
+      // this.players[this.players.findIndex(player => player.user.client.id === client.id)].bag[this.players[this.players.findIndex(player => player.user.client.id === client.id)].indexOfBag].rotateRight();
+  }
+
   @SubscribeMessage('rotatePiece')
   handleRotatePiece(client: Socket): void {
     const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
     if (player.indexOfBag >= 0)
-      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.rotatePiece(player.bag[player.indexOfBag], client);
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.rotatePiece(player.bag[player.indexOfBag], client, this.wss);
       // this.players[this.players.findIndex(player => player.user.client.id === client.id)].bag[this.players[this.players.findIndex(player => player.user.client.id === client.id)].indexOfBag].rotateRight();
   }
 
   @SubscribeMessage('movePieceRight')
   handleMovePieceRight(client: Socket): void {
     const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
+    console.log("ID: ", player.user.client.id);
     if (player.indexOfBag >= 0)
-      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.movePiece(player.bag[player.indexOfBag], 1, client);
+      player.map.movePiece(player.bag[player.indexOfBag], 1, client, this.wss);
   }
 
   @SubscribeMessage('movePieceLeft')
   handleMovePieceLeft(client: Socket): void {
     const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
     if (player.indexOfBag >= 0)
-      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.movePiece(player.bag[player.indexOfBag], -1, client);
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.movePiece(player.bag[player.indexOfBag], -1, client, this.wss);
   }
 
   @SubscribeMessage('dropPiece')
   handleDropPiece(client: Socket): void {
     const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
     if (player.indexOfBag >= 0)
-      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.dropPiece(player.bag[player.indexOfBag], client);
+      this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.dropPiece(player.bag[player.indexOfBag], client, this.wss);
   }
     @SubscribeMessage('joinRoom')
     handleJoinRoom(client: Socket, data: { room: string, pseudo: string }): void {

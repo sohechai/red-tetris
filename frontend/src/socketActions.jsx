@@ -1,5 +1,5 @@
 import socket from "./socket";
-import { receiveMapInfo, receiveNextPieceInfo, receiveUserInfo, receiveUsers } from "./usersAction.jsx";
+import { receiveMapInfo, receiveNextPieceInfo, receiveOpponentsMapInfo, receiveUserInfo, receiveUsers } from "./usersAction.jsx";
 
 export const sendMessage = (message) => {
   return () => {
@@ -10,8 +10,8 @@ export const sendMessage = (message) => {
 export const setupUserListeners = () => {
   return (dispatch) => {
     socket.on("usersInRoom", (users) => {
-      dispatch(receiveUsers(users));
       console.log("usersInRoom = " + users);
+      dispatch(receiveUsers(users));
     });
 
     return () => {
@@ -24,6 +24,18 @@ export const setupMapListeners = () => {
   return (dispatch) => {
     socket.on("map", (map) => {
       dispatch(receiveMapInfo(map));
+    });
+
+    return () => {
+      socket.off("map");
+    };
+  };
+};
+
+export const setupopponentsMapListeners = () => {
+  return (dispatch) => {
+    socket.on("spectre", (map) => {
+      dispatch(receiveOpponentsMapInfo(map));
     });
 
     return () => {
@@ -85,6 +97,12 @@ export const MoveLeft = () => {
 export const MoveRight = () => {
   return () => {
     socket.emit("movePieceRight");
+  };
+};
+
+export const FallByOne = () => {
+  return () => {
+    socket.emit("pieceFallByOne");
   };
 };
 
