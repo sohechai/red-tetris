@@ -1,6 +1,13 @@
 import socket from "./socket";
 import { receiveUserInfo, receiveUsers } from "./usersAction.jsx";
 
+export const launchGame = () => {
+  return (dispatch) => {
+    socket.emit("startGame");
+    console.log("launch game");
+  };
+};
+
 export const sendMessage = (message) => {
   return (dispatch) => {
     socket.emit("message", message);

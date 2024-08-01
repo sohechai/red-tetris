@@ -10,11 +10,10 @@ import logo from "../assets/tetris-logo.svg";
 
 const Room = () => {
   const users = useSelector((state) => state.users.users);
-  let navigate = useNavigate();
-
   const dispatch = useDispatch();
   const [roomName, setRoomname] = useState("");
   const [username, setUsername] = useState("");
+  let navigate = useNavigate();
 
   const handleJoinRoom = (e) => {
     e.preventDefault();

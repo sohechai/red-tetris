@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { joinRoom } from "../socketActions";
 
 const Settings = () => {
   const me = useSelector((state) => state.me.me);
-
+  const dispatch = useDispatch();
   const [selectedMode, setSelectedMode] = useState("");
 
   const handleButtonClick = (mode) => {
@@ -12,8 +13,9 @@ const Settings = () => {
     console.log("change mode");
   };
 
-  const launchGame = () => {
-    // socket.emit('launchGame');
+  const launchGame = (e) => {
+    // e.preventDefault();
+    dispatch(launchGame());
     console.log("launch game");
   };
 
