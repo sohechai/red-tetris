@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { startGame } from "../socketActions";
 
 const Settings = () => {
   const me = useSelector((state) => state.me.me);
-
+  const dispatch = useDispatch();
   const [selectedMode, setSelectedMode] = useState("");
 
   const handleButtonClick = (mode) => {
@@ -13,7 +15,7 @@ const Settings = () => {
   };
 
   const launchGame = () => {
-    // socket.emit('launchGame');
+    dispatch(startGame());
     console.log("launch game");
   };
 

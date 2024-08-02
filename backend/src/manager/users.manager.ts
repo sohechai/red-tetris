@@ -57,3 +57,11 @@ export function RegisterUser(
   SendNewUsersInRoom(players, pseudo, client, room, server);
   return players;
 }
+
+export function GetUserListFromPlayers(players: Player[]) {
+  const usersInRoom: { pseudo: string, score: number, owner: boolean }[] = [];
+  for (let player of players) {
+      usersInRoom.push({ pseudo: player.user.pseudo, score: player.user.score, owner: player.user.owner });
+  }
+  return usersInRoom;
+}
