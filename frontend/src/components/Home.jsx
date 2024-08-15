@@ -29,7 +29,7 @@ const Play = () => {
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
           <defs>
             <filter id="gooey">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
               <feColorMatrix
                 in="blur"
                 type="matrix"
