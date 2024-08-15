@@ -110,7 +110,7 @@ const OpponentsMap = () => {
       <div className="opponents-grid">
         {opponentsGrid.map((map, i) => (
           <div className="grid-content" key={i}>
-            <p>Opponent {i + 1}</p> {/* recuperer le nom du joueur */}
+            <p>Opponent {i + 1}</p>
             <div className="opponents-grids" key={i}>
               {map.map((row, rowIndex) => (
                 <div key={rowIndex} className="row">

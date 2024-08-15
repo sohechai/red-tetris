@@ -1,90 +1,28 @@
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import sendButton from "../assets/send.svg";
+import { sendMessage, setupChatListeners } from '../socketActions';
 import "../App.css";
 
 const Chat = () => {
-  // const messages = useSelector((state) => state.messages.messages);
+  const dispatch = useDispatch();
+  const messages = useSelector((state) => state.messages.messages);
+  const [inputMessage, setInputMessage] = useState('');
 
-  const messages = [
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-    {
-      pseudo: "toto",
-      message: "salut",
-    },
-  ];
+  useEffect(() => {
+    const cleanup = dispatch(setupChatListeners());
+    return cleanup;
+  }, [dispatch]);
 
-  const sendMessage = () => {
-    console.log("send message");
+  const handleSendMessage = () => {
+    if (inputMessage.trim()) {
+      dispatch(sendMessage(inputMessage));
+      setInputMessage(''); 
+    }
+  };
+
+  const handleInputChange = (event) => {
+    setInputMessage(event.target.value);
   };
 
   return (
@@ -98,8 +36,17 @@ const Chat = () => {
         ))}
       </div>
       <div className="input-container">
-        <input type="text" placeholder="message" />
-        <img src={sendButton} alt="send" onClick={sendMessage} />
+        <input
+          type="text"
+          placeholder="message"
+          value={inputMessage}
+          onChange={handleInputChange}
+        />
+        <img
+          src={sendButton}
+          alt="send"
+          onClick={handleSendMessage}
+        />
       </div>
     </div>
   );
