@@ -217,6 +217,7 @@ form>button {
 }
 
 /* opponents map */
+
 .opponents-grid {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);

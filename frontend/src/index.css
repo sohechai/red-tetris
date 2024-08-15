@@ -67,7 +67,7 @@ h1 {
 
 button {
 	border-radius: 8px;
-	border: 1px solid #ffffffaa;
+	border: 1px solid white;
 	padding: 1em 2em;
 	font-size: 1em;
 	font-weight: 500;
@@ -80,7 +80,8 @@ button {
 }
 
 button:hover {
-	border: 1px solid white;
+	border: 1px solid var(--red);
+	color: var(--red);
 }
 
 button:focus,
