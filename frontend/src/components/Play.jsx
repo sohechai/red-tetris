@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/tetris-logo.svg';
-import { GooCursor } from '../utils/cursor'; // Assurez-vous que le chemin est correct
+import { GooCursor } from '../utils/cursor';
 
 const Play = () => {
   let navigate = useNavigate();
