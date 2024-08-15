@@ -1,4 +1,6 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {  dropPiece, FallByOne, MoveLeft, MoveRight, Rotate, setupMeInfo, setupNextPieceListeners, setupUserListeners, startGame } from "../socketActions.jsx";
 import logo from "../assets/tetris-logo.svg";
 import Game from "./Game.jsx";
 import Chat from "./Chat.jsx";
@@ -9,12 +11,55 @@ import OpponentsMap from "./OpponentsMap.jsx";
 
 const RoomName = () => {
   const me = useSelector((state) => state.me.me);
+  const dispatch = useDispatch();
 
+  // const piece = useSelector((state) => state.piece.piece);
+  useEffect(() => {
+    const cleanup = dispatch(setupUserListeners());
+    const cleanup2 = dispatch(setupMeInfo());
+
+    return () => {
+      cleanup();
+      cleanup2();
+    };
+  }, [dispatch]);
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      console.log(e.key);
+      e.preventDefault();
+      if (e.key == 'ArrowRight') {
+        console.log(e.key);
+        dispatch(MoveRight())
+      }
+      if (e.key == 'ArrowLeft') {
+        console.log(e.key);
+        dispatch(MoveLeft());
+      }
+      if (e.key == 'ArrowUp') {
+        console.log(e.key);
+        dispatch(Rotate());
+      }
+      if (e.key == ' ') {
+        console.log(e.key);
+        dispatch(dropPiece());
+      }
+      if (e.key == 'ArrowDown') {
+        console.log(e.key);
+        dispatch(FallByOne());
+      }
+    }
+    window.addEventListener('keydown', handleKeyPress);
+  }, []);
+  const handleStartGame = (e) => {
+    e.preventDefault();
+    dispatch(startGame());
+  };
   return (
     <div className="room-container" id="#room">
       <div className="room-header">
         <img alt="Tetris Logo" className="logo" src={logo} />
       </div>
+        <button onClick={handleStartGame}>START</button>
       <div className="room-content">
         <div className="room-grid">
           <div className="room-grid-header">Room Name : {me.room}</div>
@@ -24,7 +69,7 @@ const RoomName = () => {
           </div>
           <Chat />
           <Game />
-          <NextP type="Z" />
+          <NextP type={ "T" }/>
           <OpponentsMap />
           <Lobby />
           <Settings />

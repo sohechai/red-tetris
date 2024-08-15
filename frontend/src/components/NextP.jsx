@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 import {
   I_PIECE,
   J_PIECE,
@@ -7,6 +8,8 @@ import {
   T_PIECE,
   Z_PIECE,
 } from "../assets/data/tetris-piece.jsx";
+import { setupNextPieceListeners } from "../socketActions.jsx";
+import { useEffect } from "react";
 
 const pieceMap = {
   I: I_PIECE,
@@ -19,6 +22,15 @@ const pieceMap = {
 };
 
 const NextP = ({ type }) => {
+  const nextPiece = useSelector((state) => state.nextPiece.nextPiece);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("PieceType =", nextPiece);
+  }, [nextPiece]);
+  useEffect(() => {
+    dispatch(setupNextPieceListeners());
+  }, []);
   const grid = pieceMap[type] || [];
 
   const numRows = grid.length;
@@ -34,13 +46,13 @@ const NextP = ({ type }) => {
           gridTemplateRows: `repeat(${numRows}, 30px)`,
         }}
       >
-        {grid.map((row, rowIndex) => (
+        {pieceMap[nextPiece] ? pieceMap[nextPiece].map((row, rowIndex) => (
           <div key={rowIndex} className="row">
             {row.map((cell, cellIndex) => (
               <div key={cellIndex} className={`next-cell ${cell}`} />
             ))}
           </div>
-        ))}
+        )): null}
       </div>
     </div>
   );

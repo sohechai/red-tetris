@@ -1,1 +1,1 @@
-export interface IMap extends Array<string>{};
+export interface IMap extends Array<Array<number>>{};

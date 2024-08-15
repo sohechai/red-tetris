@@ -10,3 +10,18 @@ export const receiveUserInfo = (userInfo) => ({
   type: RECEIVE_USER_INFO,
   payload: userInfo,
 });
+
+export const receiveMapInfo = (map) => ({
+  type: "RECEIVE_MAP_INFO",
+  payload: map,
+});
+
+export const receiveNextPieceInfo = (piece) => ({
+  type: "RECEIVE_PIECE_INFO",
+  payload: piece,
+});
+
+export const receiveOpponentsMapInfo = (opponentsMap) => ({
+  type: "RECEIVE_OPMAP_INFO",
+  payload: opponentsMap,
+});

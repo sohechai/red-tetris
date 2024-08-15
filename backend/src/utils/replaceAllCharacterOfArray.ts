@@ -1,10 +1,15 @@
 import { IMap } from "src/interface/map";
 
 export function replaceAllChar(map: IMap): IMap {
-    for (let e of "IJLOSTZ0") {
-        console.log(e);
-        map = map.map(line => line.replaceAll(e, "."));
+    let newMap: IMap = [];
+    for (let y = 0; y < 22; y++) {
+        newMap.push([]);
+        for (let x = 0; x < 12; x++) {
+            if (map[y][x] < 8 && map[y][x] > 0)
+                newMap[y].push(0);
+            else
+                newMap[y].push(map[y][x]);
+        }
     }
-    console.log(map);
-    return map;
+    return newMap;
 }

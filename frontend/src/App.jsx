@@ -7,6 +7,7 @@ import Room from "./components/Room.jsx";
 import RoomName from "./components/RoomName.jsx";
 import logo from "./assets/tetris-logo.svg";
 import { useEffect } from "react";
+import Game from "./components/Game.jsx";
 
 function App() {
   // // window.addEventListener("DOMContentLoaded", () => {
@@ -84,7 +85,8 @@ function App() {
         <Routes>
           <Route path="/" exact element={<Play />} />
           <Route path="/room" exact element={<Room />} />
-          <Route path="/:roomName/:username" exact element={<RoomName />} />
+          <Route path="/roomName" exact element={<RoomName />} />
+          <Route path="/game" exact element={<Game />} />
         </Routes>
       </BrowserRouter>
     </>
