@@ -44,7 +44,7 @@ export class AppGateway
 		if (this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.owner === true) {
 			const game: Game = new Game(this.players, Player.getRoomBySocketId(this.players, client), this.wss);
 			game.start();
-			client.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameStart");
+			client.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameEnd");
 		}
 	}
 

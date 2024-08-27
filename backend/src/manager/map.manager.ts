@@ -43,7 +43,6 @@ export class Map {
     if (this.isValidMove(newMap)) {
       this.map = newMap;
     } else {
-      block.position[0] -= 1;
       this.map = lowercaseArray(this.map);
     }
     release();
@@ -125,7 +124,7 @@ export class Map {
     const release = await this.mutex.acquire();
     if (this.isBlockFalling()) {
       block.position[1] += move;
-    //   this.logMap(this.map);
+      //   this.logMap(this.map);
       let newMap: IMap = replaceAllChar(this.map);
       for (let y = 0; y < block.block[block.rotation].length; y++) {
         for (let x = 0; x < block.block[block.rotation][y].length; x++) {
@@ -196,8 +195,9 @@ export class Map {
     let newMap: IMap = replaceAllChar(this.map);
     for (let y = 0; y < block.block[block.rotation].length; y++) {
       for (let x = 0; x < block.block[block.rotation][y].length; x++) {
-        newMap[y + block.position[0]][x + block.position[1]] =
-          block.block[block.rotation][y][x];
+        if (block.block[block.rotation][y][x] !== 0)
+          newMap[y + block.position[0]][x + block.position[1]] =
+            block.block[block.rotation][y][x];
       }
     }
     if (this.isValidMove(newMap)) {
@@ -219,7 +219,8 @@ export class Map {
     return false;
   }
 
-  isLineFormed(): number {
+  async isLineFormed(block: Block): Promise<number> {
+    let release = await this.mutex.acquire();
     let lineFormed: number = 0;
     let count: number = 0;
     let indexOfLine: number[] = [];
@@ -231,7 +232,6 @@ export class Map {
           if (count == 10) {
             lineFormed++;
             indexOfLine.push(y);
-            console.log(y);
           }
         }
       }
@@ -240,10 +240,11 @@ export class Map {
       this.map.splice(index, 1);
       this.map.unshift([10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10]);
     }
+    release();
     return lineFormed - 1;
   }
 
-  addPenality(penality: number): boolean {
+  async addPenality(penality: number): Promise<boolean> {
     for (let y = 0; y < penality; y++) {
       if (findCharacter(this.map[0])) {
         return true;
@@ -251,7 +252,6 @@ export class Map {
       this.map.splice(0, 1);
       this.map.push([10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]);
     }
-    for (let y = 0; y < penality; y++) {}
     return false;
   }
 

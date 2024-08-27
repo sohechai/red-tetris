@@ -41,6 +41,11 @@ const Chat = () => {
           placeholder="message"
           value={inputMessage}
           onChange={handleInputChange}
+          onKeyDown={(e) => {
+            if (e.key == "Enter") {
+              handleSendMessage();
+            }
+          }}
         />
         <img
           src={sendButton}

@@ -44,18 +44,26 @@ export function RegisterUser(
 	client: Socket,
 	server: Server,
 ): Player[] {
-	players.push(new Player(
-		pseudo,
-		client,
-		room,
-		RoomAlreadyExist(players, room) ? players[players.findIndex(player => player.user.owner === true)].user.gameMode : 1,
-		RoomAlreadyExist(players, room) ? false : true,
-		new Map(),
-		0
-	));
-	client.join(room);
-	SendNewUsersInRoom(players, pseudo, client, room, server);
-	return players;
+  players.push(new Player(
+    pseudo,
+    client,
+    room,
+    RoomAlreadyExist(players, room) ? players[players.findIndex(player => player.user.owner === true)].user.gameMode : 1,
+    RoomAlreadyExist(players, room) ? false : true,
+    new Map(),
+    0
+  ));
+  client.join(room);
+  SendNewUsersInRoom(players, pseudo, client, room, server);
+  return players;
+}
+
+export function GetUserListFromPlayers(players: Player[]) {
+  const usersInRoom: { pseudo: string, score: number, owner: boolean }[] = [];
+  for (let player of players) {
+      usersInRoom.push({ pseudo: player.user.pseudo, score: player.user.score, owner: player.user.owner });
+  }
+  return usersInRoom;
 }
 
 export function HandleChatMessage(
