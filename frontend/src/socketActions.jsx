@@ -1,13 +1,6 @@
 import socket from "./socket";
 import { receiveMapInfo, receiveNextPieceInfo, receiveOpponentsMapInfo, receiveUserInfo, receiveUsers, receiveChatMessage } from "./usersAction.jsx";
 
-export const launchGame = () => {
-	return (dispatch) => {
-		socket.emit("startGame");
-		console.log("launch game");
-	};
-};
-
 export const sendMessage = (message) => {
 	return () => {
 		socket.emit("chatMessage", { message });
@@ -92,6 +85,14 @@ export const setupMeInfo = () => {
 export const startGame = () => {
 	return () => {
 		socket.emit("startGame");
+	};
+};
+
+export const gameEnd = () => {
+	return () => {
+		socket.on("gameEnd", () => {
+			console.log("gameEnd");
+		});
 	};
 };
 
