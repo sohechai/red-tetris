@@ -19,8 +19,6 @@ const Lobby = () => {
               ) : (
                 <div className="circle" style={{ background: "transparent" }} />
               )}
-
-              {/* <img alt="crown" src={crown} /> */}
             </div>
             <div className="score">score : {user.score}</div>
           </div>

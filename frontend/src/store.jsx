@@ -1,10 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { RECEIVE_USERS } from "./actionType.jsx";
 import { RECEIVE_USER_INFO } from "./actionType.jsx";
+import { RECEIVE_CHAT_MESSAGE } from "./actionType.jsx";
 import { thunk as thunkMiddleware } from "redux-thunk";
 
 const initialState = {
   users: [],
+  messages: [],
   me: [],
   map: [],
   nextPiece: [],
@@ -71,20 +73,20 @@ const opponentsMapReducer = (state = initialState, action) => {
   }
 };
 
-const messageReducer = (state = { messages: [] }, action) => {
-  switch (action.type) {
-    case "RECEIVE_MESSAGE":
-      return {
-        ...state,
-        messages: [...state.messages, action.payload],
-      };
-    default:
-      return state;
-  }
-};
+const chatReducer = (state = initialState, action) => {
+	switch (action.type) {
+	  case RECEIVE_CHAT_MESSAGE:
+		return {
+		  ...state,
+		  messages: [...state.messages, action.payload]
+		};
+	  default:
+		return state;
+	}
+  };
 
 const rootReducer = combineReducers({
-  messages: messageReducer,
+  messages: chatReducer,
   users: userReducer,
   me: meReducer,
   map: mapReducer,

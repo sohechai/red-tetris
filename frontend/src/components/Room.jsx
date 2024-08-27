@@ -7,20 +7,19 @@ import {
   setupUserListeners,
 } from "../socketActions.jsx";
 import logo from "../assets/tetris-logo.svg";
+import { GooCursor } from "../utils/cursor.jsx";
 
 const Room = () => {
   const users = useSelector((state) => state.users.users);
-  let navigate = useNavigate();
-
   const dispatch = useDispatch();
   const [roomName, setRoomname] = useState("");
   const [username, setUsername] = useState("");
+  let navigate = useNavigate();
 
   const handleJoinRoom = (e) => {
     e.preventDefault();
     dispatch(joinRoom(roomName, username));
-    // navigate(`/${roomName}/${username}`);
-    navigate(`/roomName`)
+    navigate(`/${roomName}/${username}`);
   };
 
   useEffect(() => {
@@ -32,6 +31,13 @@ const Room = () => {
       cleanup2();
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    const cursorEl = document.querySelector('.cursor');
+    if (cursorEl) {
+      new GooCursor(cursorEl);
+    }
+  }, []);
 
   return (
     <div className="room-container" id="#room">
@@ -55,6 +61,25 @@ const Room = () => {
             Create / Join Room
           </button>
         </form>
+      </div>
+	  <div className="cursor">
+        <div className="cursor__inner">
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+          <defs>
+            <filter id="gooey">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+              <feColorMatrix
+                in="blur"
+                type="matrix"
+                values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -7"
+                result="gooey"
+              />
+              <feMorphology in="gooey" operator="dilate" radius="2" result="outline" />
+              <feComposite in="outline" in2="gooey" operator="out" />
+            </filter>
+          </defs>
+        </svg>
       </div>
     </div>
   );
