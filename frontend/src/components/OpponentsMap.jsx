@@ -7,7 +7,6 @@ const OpponentsMap = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("PieceType =", opponentsGrid);
   }, [opponentsGrid]);
   useEffect(() => {
     dispatch(setupopponentsMapListeners());

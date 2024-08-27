@@ -31,3 +31,9 @@ export const receiveChatMessage = (message) => ({
 	payload: message,
 });
 
+export const receiveGameEnd = (isGameEnded) => ({
+	type: 'GAME_END',
+	payload: isGameEnded,
+});
+
+

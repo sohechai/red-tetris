@@ -98,7 +98,7 @@ export class Game {
       }
     }
 
-    for (let alert = 0; alert < 10; alert++) {
+    for (let alert = 0; alert < 3; alert++) {
       this.srv.to(client.id).emit('map', redMap);
       await sleep(500);
       this.srv.to(client.id).emit('map', emptyMap);

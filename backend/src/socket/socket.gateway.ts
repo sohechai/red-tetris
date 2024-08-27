@@ -43,8 +43,10 @@ export class AppGateway
 		this.logger.log(`Client started game: ${client.id}`);
 		if (this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.owner === true) {
 			const game: Game = new Game(this.players, Player.getRoomBySocketId(this.players, client), this.wss);
-			game.start();
-			client.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameEnd");
+			await game.start();
+			console.log("Game ended");
+			this.wss.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameEnd", true);
+			console.log(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room);
 		}
 	}
 
