@@ -26,8 +26,7 @@ export class Game {
         if (this.bag.blocks.length === player.bag.length) {
           this.bag.AppendBlockToBag();
         }
-        // console.log(player.bag, player.indexOfBag);
-        player.bag = structuredClone(this.bag.blocks);
+          player.bag = player.bag.concat(structuredClone(this.bag.blocks));
       }
     }
   }
@@ -62,7 +61,7 @@ export class Game {
     }
   }
 
-  sendPenality(penality: number, client: Socket): void {
+  async sendPenality(penality: number, client: Socket): Promise<void> {
     if (penality + 1 > 0) {
       for (let player of this.players) {
         //ADD EMIT GAMEOVER
@@ -74,7 +73,7 @@ export class Game {
         }
         if (
           player.user.client.id !== client.id &&
-          player.map.addPenality(penality)
+          await player.map.addPenality(penality)
         ) {
           player.isAlive = false;
         } else if (player.user.client.id === client.id) {
@@ -130,6 +129,10 @@ export class Game {
           player.map.blockFall(player.bag[player.indexOfBag]);
         } else {
           player.indexOfBag++;
+          await this.sendPenality(
+            await player.map.isLineFormed(player.bag[player.indexOfBag]),
+            player.user.client,
+          );
           blockFall = await player.map.addFallingBlock(
             player.bag[player.indexOfBag],
           );
@@ -139,10 +142,6 @@ export class Game {
             continue;
           }
         }
-        this.sendPenality(
-          player.map.isLineFormed(player.bag[player.indexOfBag]),
-          player.user.client,
-        );
         //ADD EMIT GAMEOVER
         this.srv
           .to(player.user.client.id)
@@ -167,7 +166,7 @@ export class Game {
     }
   }
 
-  isAlive(): number {
+  playersAlive(): number {
     let count: number = 0;
     for (let player of this.players) {
       // console.log(player.isAlive);
@@ -179,8 +178,8 @@ export class Game {
   async start(): Promise<void> {
     let gamespeed: number = 1000;
     while (1) {
-      if (!this.isAlive()) break;
-      if (this.players.length > 1 && this.isAlive() === 1) break;
+      if (!this.playersAlive()) break;
+      if (this.players.length > 1 && this.playersAlive() === 1) break;
       this.bagRefueler();
       await this.pieceManager();
       await sleep(gamespeed);

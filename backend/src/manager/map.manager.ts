@@ -219,7 +219,8 @@ export class Map {
     return false;
   }
 
-  isLineFormed(block: Block): number {
+  async isLineFormed(block: Block): Promise<number> {
+    let release = await this.mutex.acquire();
     let lineFormed: number = 0;
     let count: number = 0;
     let indexOfLine: number[] = [];
@@ -239,21 +240,11 @@ export class Map {
       this.map.splice(index, 1);
       this.map.unshift([10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10]);
     }
-    if (lineFormed) {
-      this.map = replaceAllChar(this.map);
-      console.log(block.position[0], block.position[1]);
-      for (let y = 0; y < block.block[block.rotation].length; y++) {
-        for (let x = 0; x < block.block[block.rotation][y].length; x++) {
-          if (block.block[block.rotation][y][x] !== 0)
-            this.map[y + block.position[0]][x + block.position[1]] =
-              block.block[block.rotation][y][x];
-        }
-      }
-    }
+    release();
     return lineFormed - 1;
   }
 
-  addPenality(penality: number): boolean {
+  async addPenality(penality: number): Promise<boolean> {
     for (let y = 0; y < penality; y++) {
       if (findCharacter(this.map[0])) {
         return true;
