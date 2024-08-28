@@ -70,7 +70,6 @@ const RoomName = () => {
           <div className="room-grid-header">Room Name : {me.room}</div>
           <div className="room-player">
             <h1 className="h1-red">{me.pseudo}</h1>
-            <p>score : {me.score}</p>
           </div>
           <Chat />
           <Game />

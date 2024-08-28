@@ -1,12 +1,5 @@
 import socket from "./socket";
-import { receiveMapInfo, receiveNextPieceInfo, receiveOpponentsMapInfo, receiveUserInfo, receiveUsers, receiveChatMessage } from "./usersAction.jsx";
-
-export const launchGame = () => {
-	return (dispatch) => {
-		socket.emit("startGame");
-		console.log("launch game");
-	};
-};
+import { receiveMapInfo, receiveNextPieceInfo, receiveOpponentsMapInfo, receiveUserInfo, receiveUsers, receiveChatMessage, receiveGameEnd } from "./usersAction.jsx";
 
 export const sendMessage = (message) => {
 	return () => {
@@ -30,7 +23,6 @@ export const setupChatListeners = () => {
 export const setupUserListeners = () => {
 	return (dispatch) => {
 		socket.on("usersInRoom", (users) => {
-			console.log("usersInRoom = " + users);
 			dispatch(receiveUsers(users));
 		});
 
@@ -80,7 +72,6 @@ export const setupMeInfo = () => {
 	return (dispatch) => {
 		socket.on("me", (user) => {
 			dispatch(receiveUserInfo(user));
-			console.log("me = " + user);
 		});
 
 		return () => {
@@ -92,6 +83,18 @@ export const setupMeInfo = () => {
 export const startGame = () => {
 	return () => {
 		socket.emit("startGame");
+	};
+};
+
+export const gameEnd = () => {
+	return (dispatch) => {
+		socket.on("gameEnd", () => {
+			dispatch(receiveGameEnd(true));
+		});
+
+		return () => {
+			socket.off("gameEnd");
+		};
 	};
 };
 

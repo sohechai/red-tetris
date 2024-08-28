@@ -382,6 +382,7 @@ form>button {
 	border: 1px solid var(--white);
 	display: flex;
 	flex-direction: column;
+	
 	text-align: start;
 }
 
@@ -404,12 +405,15 @@ form>button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	text-align: center;
 	height: 100%;
 }
 
 .play-button {
 	display: flex;
-	border: 1px solid var(--white);
+	justify-content: center;
+	align-items: center;
+	height: 100%;
 	margin: 0 8px 8px 8px;
 }
 
@@ -422,6 +426,7 @@ form>button {
 .play-button>button:hover {
 	border-radius: 0;
 	background-color: var(--red-shadow);
+	color: white;
 }
 
 /* background animation */
