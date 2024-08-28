@@ -108,5 +108,4 @@ export class AppGateway
 	handleChatMessage(client: Socket, data: { message: string }): void {
 		HandleChatMessage(this.players, client, data.message, this.wss);
 	}
-
 }

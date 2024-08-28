@@ -172,7 +172,10 @@ export class Game {
       // console.log(player.isAlive);
       if (player.isAlive) count++;
     }
-    return count;
+    if (count === 1)
+      this.srv.to(this.players[this.players.findIndex(player => player.isAlive === true)].user.client.id).emit("won");
+      this.players[this.players.findIndex(player => player.isAlive === true)].user.score += 1000;
+      return count;
   }
 
   async start(): Promise<void> {
