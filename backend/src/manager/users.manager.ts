@@ -12,7 +12,11 @@ export function CheckIfUserIsUnique(players: Player[], pseudo: string): number {
 
 // TODO : changer le owner quand le owner leave la room
 export function RemoveUser(player: Player[], client: Socket) {
+	let playerToDelete: Player = player.find((player) => player.user.client.id === client.id);
 	player = player.filter((player) => player.user.client.id !== client.id);
+	if (playerToDelete.user.owner) {
+		player[0].user.owner = true;
+	}
 	return player;
 }
 
