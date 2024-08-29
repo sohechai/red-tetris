@@ -12,6 +12,7 @@ import { Game } from 'src/manager/game.manager';
 import { SelectGameMode } from 'src/manager/lobby.manager';
 import {
 	CheckIfUserIsUnique,
+	GetUserListFromPlayers,
 	HandleChatMessage,
 	RegisterUser,
 	RemoveUser,
@@ -29,9 +30,14 @@ export class AppGateway
 	afterInit(server: Server) {
 		this.logger.log('Initialized!');
 	}
+
+	// TODO : il faut que quand un client se deconnecte redefinir le boolean du owner si c'etait le owner
+	// et renvoyer la liste des users a toute la room sans le client qui vient de se deconnecter
 	handleDisconnect(client: Socket): void {
 		this.players = RemoveUser(this.players, client);
 		this.logger.log(`Client disconnected: ${client.id}`);
+		// KC :(
+		// this.wss.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("usersInRoom", GetUserListFromPlayers(this.players));
 	}
 
 	handleConnection(client: Socket): void {
@@ -43,10 +49,11 @@ export class AppGateway
 		this.logger.log(`Client started game: ${client.id}`);
 		if (this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.owner === true) {
 			const game: Game = new Game(this.players, Player.getRoomBySocketId(this.players, client), this.wss);
+			console.log("Game started");
+			this.wss.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameEnd", false);
 			await game.start();
 			console.log("Game ended");
 			this.wss.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameEnd", true);
-			console.log(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room);
 		}
 	}
 
@@ -98,12 +105,13 @@ export class AppGateway
 	@SubscribeMessage('joinRoom')
 	handleJoinRoom(client: Socket, data: { room: string, pseudo: string }): void {
 		if (CheckIfUserIsUnique(this.players, data.pseudo) === 1) {
-			client.emit("error", "Error: the pseudo is already used");
+			client.emit("error", "Username already exists");
+			this.logger.log(`Error: Username already exists`);
 		}
 		else {
 			this.players = RegisterUser(this.players, data.pseudo, data.room, client, this.wss);
+			this.logger.log(`Client joined room: ${data.room} with pseudo : ${data.pseudo}`);
 		}
-		this.logger.log(`Client joined room: ${data.room} with pseudo : ${data.pseudo}`);
 	}
 
 	@SubscribeMessage('chatMessage')

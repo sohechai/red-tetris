@@ -10,6 +10,7 @@ export function CheckIfUserIsUnique(players: Player[], pseudo: string): number {
 	return 0;
 }
 
+// TODO : changer le owner quand le owner leave la room
 export function RemoveUser(player: Player[], client: Socket) {
 	player = player.filter((player) => player.user.client.id !== client.id);
 	return player;

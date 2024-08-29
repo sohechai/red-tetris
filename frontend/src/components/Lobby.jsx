@@ -1,7 +1,12 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const Lobby = () => {
   const users = useSelector((state) => state.users.users);
+
+  useEffect(() => {
+	console.log(users);
+  }, [users]);
 
   return (
     <div className="room-lobby">

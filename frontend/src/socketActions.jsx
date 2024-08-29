@@ -23,11 +23,12 @@ export const setupChatListeners = () => {
 export const setupUserListeners = () => {
 	return (dispatch) => {
 		socket.on("usersInRoom", (users) => {
+			console.log("usersInRoom = " + users.length);
 			dispatch(receiveUsers(users));
 		});
 
 		return () => {
-			socket.off("usersList");
+			socket.off("usersInRoom");
 		};
 	};
 };
@@ -88,8 +89,8 @@ export const startGame = () => {
 
 export const gameEnd = () => {
 	return (dispatch) => {
-		socket.on("gameEnd", () => {
-			dispatch(receiveGameEnd(true));
+		socket.on("gameEnd", (data) => {
+			dispatch(receiveGameEnd(data));
 		});
 
 		return () => {
@@ -129,8 +130,14 @@ export const FallByOne = () => {
 	};
 };
 
-export const joinRoom = (room, pseudo) => {
+export const joinRoom = (room, pseudo, onError) => {
 	return () => {
 		socket.emit("joinRoom", { room: room, pseudo: pseudo });
+
+		socket.on('error', (errorMessage) => {
+            if (onError) {
+                onError(errorMessage);
+            }
+        });
 	};
 };
