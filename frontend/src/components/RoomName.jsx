@@ -8,12 +8,15 @@ import Lobby from "./Lobby.jsx";
 import Settings from "./Settings.jsx";
 import NextP from "./NextP.jsx";
 import OpponentsMap from "./OpponentsMap.jsx";
+import { useNavigate } from "react-router-dom";
 
 const RoomName = () => {
   const me = useSelector((state) => state.me.me);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
+	console.log('users in room declanché');
     const cleanup = dispatch(setupUserListeners());
     const cleanup2 = dispatch(setupMeInfo());
 
@@ -22,6 +25,12 @@ const RoomName = () => {
       cleanup2();
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!me || !me.room) {
+      navigate("/");
+    }
+  }, [me, navigate]);
 
   const handleKeyPress = (e) => {
 	//  correction de bug car je n'arrivais pas a ecrire dans le chat avec cette fonction
