@@ -5,7 +5,7 @@ const availableGameMode: number[] = [1, 2];
 
 export function SelectGameMode(players: Player[], gameMode: number, client: Socket): Player[] {
     const owner = players[players.findIndex(players => players.user.client.id === client.id)];
-    if (availableGameMode.findIndex(mode => mode === gameMode)) {
+    if (gameMode === 1 || gameMode === 2) {
         owner.user.gameMode = gameMode;
         client.to(owner.user.room).emit("gameModeUpdate", { gameMode });
         for (const player of players) {

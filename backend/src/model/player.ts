@@ -59,8 +59,7 @@ export class Player {
     }
 
     getNextPiece() {
-        const type = ["X", "I", "L", "J", "O", "S", "T", "Z"]
-        // console.log(this.bag[this.indexOfBag + 1].block[this.bag[this.indexOfBag + 1].rotation]);
+        const type = ["X", "I", "J", "L", "O", "S", "T", "Z"]
         let block = this.bag[this.indexOfBag + 1].block[this.bag[this.indexOfBag + 1].rotation];
         for (let y = 0; y < block.length; y++) {
             for (let x = 0; x < block[y].length; x++) {

@@ -87,7 +87,7 @@ export class Game {
     }
   }
 
-  async gameOver(client: Socket) {
+ async gameOver(client: Socket) {
     let redMap: string[][] = [];
     let emptyMap: string[][] = [];
     for (let y = 0; y < 10; y++) {
@@ -202,12 +202,3 @@ export class Game {
     }
   }
 }
-// export async function gameManager(users: User[], client: Socket) {
-//     const owner: User = users[users.findIndex(user => user.client.id === client.id)];
-//     const players: User[] = users.filter(user => user.room === owner.room);
-
-//     owner.client.to(owner.room).emit("gameStart");
-//     while (1) {
-//         await sleep(100);
-//     }
-// }

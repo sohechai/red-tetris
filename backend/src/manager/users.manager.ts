@@ -15,12 +15,13 @@ export function RemoveUser(player: Player[], client: Socket) {
 	let playerToDelete: Player = player.find((player) => player.user.client.id === client.id);
 	player = player.filter((player) => player.user.client.id !== client.id);
 	if (playerToDelete.user.owner) {
-		player[0].user.owner = true;
+		if (player.length)
+			player[0].user.owner = true;
 	}
 	return player;
 }
 
-function SendNewUsersInRoom(players: Player[], pseudo: string, client: Socket, room: string, server: Server) {
+export function SendNewUsersInRoom(players: Player[], pseudo: string, client: Socket, room: string, server: Server) {
 	const usersInRoom: { pseudo: string, score: number, owner: boolean }[] = [];
 	const me: UserInfo = players[players.findIndex(player => player.user.pseudo === pseudo)].me();
 
@@ -37,7 +38,7 @@ function SendNewUsersInRoom(players: Player[], pseudo: string, client: Socket, r
 	client.emit("me", me);
 }
 
-function RoomAlreadyExist(players: Player[], room: string): boolean {
+export function RoomAlreadyExist(players: Player[], room: string): boolean {
 	if (players.findIndex((player) => player.user.room === room) !== -1) return true;
 	return false;
 }

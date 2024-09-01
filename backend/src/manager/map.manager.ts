@@ -124,7 +124,6 @@ export class Map {
     const release = await this.mutex.acquire();
     if (this.isBlockFalling()) {
       block.position[1] += move;
-      //   this.logMap(this.map);
       let newMap: IMap = replaceAllChar(this.map);
       for (let y = 0; y < block.block[block.rotation].length; y++) {
         for (let x = 0; x < block.block[block.rotation][y].length; x++) {
@@ -142,38 +141,7 @@ export class Map {
     }
     release();
   }
-  logMap(map: IMap) {
-    console.log('____________________________');
-    for (let y = 0; y < 22; y++) {
-      console.log();
-      for (let x = 0; x < 12; x++) {
-        if (map[y][x] === 10) {
-          process.stdout.write('X');
-        } else if (map[y][x] === 11) {
-          process.stdout.write('I');
-        } else if (map[y][x] === 12) {
-          process.stdout.write('L');
-        } else if (map[y][x] === 13) {
-          process.stdout.write('J');
-        } else if (map[y][x] === 14) {
-          process.stdout.write('O');
-        } else if (map[y][x] === 15) {
-          process.stdout.write('S');
-        } else if (map[y][x] === 16) {
-          process.stdout.write('T');
-        } else if (map[y][x] === 17) {
-          process.stdout.write('Z');
-        } else {
-          process.stdout.write(map[y][x].toString());
-        }
-      }
-    }
-  }
   isValidMove(newMap: IMap): boolean {
-    // console.log("NEW MAP");
-    // this.logMap(newMap);
-    // console.log("OLD MAP");
-    // this.logMap(this.map);
     for (let y = 0; y < 22; y++) {
       for (let x = 0; x < 12; x++) {
         if (
@@ -257,42 +225,11 @@ export class Map {
 
   parsed(map: IMap): string[][] {
     const stringMap: string[][] = [];
+    const parse = ["X", "I", "L", "J", "O", "S", "T", "Z", "", "", "X", "I", "L", "J", "O", "S", "T", "Z"]
     for (let y = 1; y < 21; y++) {
       stringMap.push([]);
       for (let x = 1; x < 11; x++) {
-        if (map[y][x] === 10 || map[y][x] === 0) {
-          stringMap[y - 1].push('X');
-        } else if (map[y][x] === 11) {
-          stringMap[y - 1].push('I');
-        } else if (map[y][x] === 12) {
-          stringMap[y - 1].push('L');
-        } else if (map[y][x] === 13) {
-          stringMap[y - 1].push('J');
-        } else if (map[y][x] === 14) {
-          stringMap[y - 1].push('O');
-        } else if (map[y][x] === 15) {
-          stringMap[y - 1].push('S');
-        } else if (map[y][x] === 16) {
-          stringMap[y - 1].push('T');
-        } else if (map[y][x] === 17) {
-          stringMap[y - 1].push('Z');
-        } else if (map[y][x] === 0) {
-          stringMap[y - 1].push('X');
-        } else if (map[y][x] === 1) {
-          stringMap[y - 1].push('I');
-        } else if (map[y][x] === 2) {
-          stringMap[y - 1].push('L');
-        } else if (map[y][x] === 3) {
-          stringMap[y - 1].push('J');
-        } else if (map[y][x] === 4) {
-          stringMap[y - 1].push('O');
-        } else if (map[y][x] === 5) {
-          stringMap[y - 1].push('S');
-        } else if (map[y][x] === 6) {
-          stringMap[y - 1].push('T');
-        } else if (map[y][x] === 7) {
-          stringMap[y - 1].push('Z');
-        }
+        stringMap[y - 1].push(parse[map[y][x]]);
       }
     }
     return stringMap;
