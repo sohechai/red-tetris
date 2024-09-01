@@ -26,6 +26,7 @@ const NextP = ({ type }) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		console.log("nextPiece ", nextPiece);
 	}, [nextPiece]);
 	useEffect(() => {
 		dispatch(setupNextPieceListeners());
@@ -36,24 +37,29 @@ const NextP = ({ type }) => {
 	const numCols = grid[0]?.length || 0;
 
 	return (
-		<div className="room-grid-middle-right-header">
-			<div
-				className="nextP-grid"
-				style={{
-					display: "grid",
-					gridTemplateColumns: `repeat(${numCols}, 30px)`,
-					gridTemplateRows: `repeat(${numRows}, 30px)`,
-				}}
-			>
-				{pieceMap[nextPiece] ? pieceMap[nextPiece].map((row, rowIndex) => (
-					<div key={rowIndex} className="row">
-						{row.map((cell, cellIndex) => (
-							<div key={cellIndex} className={`next-cell ${cell}`} />
-						))}
+		<>
+			<div className="room-grid-middle-right-header">
+				<h1 className="nextP-header">NEXT PIECE</h1>
+				<div className="nextP-container">
+					<div
+						className="nextP-grid"
+						style={{
+							display: "grid",
+							gridTemplateColumns: `repeat(4, 30px)`,
+							gridTemplateRows: `repeat(2, 30px)`,
+						}}
+					>
+						{pieceMap[nextPiece] ? pieceMap[nextPiece].map((row, rowIndex) => (
+							<div key={rowIndex} className="row">
+								{row.map((cell, cellIndex) => (
+									<div key={cellIndex} className={`next-cell ${cell}`} />
+								))}
+							</div>
+						)) : null}
 					</div>
-				)) : null}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
