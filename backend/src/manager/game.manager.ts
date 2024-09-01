@@ -5,6 +5,7 @@ import { Socket, Server } from 'socket.io';
 import { Map } from './map.manager';
 import structuredClone from '@ungap/structured-clone';
 import { GetUserListFromPlayers } from './users.manager';
+import { IMap } from 'src/interface/map';
 
 export class Game {
   players: Player[];
@@ -26,7 +27,7 @@ export class Game {
         if (this.bag.blocks.length === player.bag.length) {
           this.bag.AppendBlockToBag();
         }
-          player.bag = player.bag.concat(structuredClone(this.bag.blocks));
+        player.bag = player.bag.concat(structuredClone(this.bag.blocks));
       }
     }
   }
@@ -172,6 +173,13 @@ export class Game {
       // console.log(player.isAlive);
       if (player.isAlive) count++;
     }
+    if (count === 1) {
+      this.srv.to(this.players[this.players.findIndex(player => player.isAlive === true)].user.client.id).emit("won");
+      this.players[this.players.findIndex(player => player.isAlive === true)].user.score += 1000;
+      let victorymap: IMap = [];
+      this.srv.to(this.players[this.players.findIndex(player => player.isAlive === true)].user.client.id).emit("map", this.players[this.players.findIndex(player => player.isAlive === true)].map.map);
+    }
+
     return count;
   }
 

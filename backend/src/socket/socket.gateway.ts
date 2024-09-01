@@ -34,9 +34,11 @@ export class AppGateway
 	// TODO : il faut que quand un client se deconnecte redefinir le boolean du owner si c'etait le owner
 	// et renvoyer la liste des users a toute la room sans le client qui vient de se deconnecter
 	handleDisconnect(client: Socket): void {
+		
+		let room = this.players.filter((player) => player.user.client.id === client.id)[0].user.room;
 		this.players = RemoveUser(this.players, client);
+		this.wss.to(room).emit("usersInRoom", GetUserListFromPlayers(this.players));
 		this.logger.log(`Client disconnected: ${client.id}`);
-		// KC :(
 		// this.wss.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("usersInRoom", GetUserListFromPlayers(this.players));
 	}
 
@@ -118,5 +120,4 @@ export class AppGateway
 	handleChatMessage(client: Socket, data: { message: string }): void {
 		HandleChatMessage(this.players, client, data.message, this.wss);
 	}
-
 }
