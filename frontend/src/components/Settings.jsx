@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { gameEnd, startGame } from "../socketActions";
+import { useAudio } from "../utils/AudioContext";
+import CustomPopup from "../utils/WinPopUp.jsx";
 
 const Settings = () => {
 	const me = useSelector((state) => state.me.me);
+	// const win = useSelector((state) => state.gameState.win); 	// TODO recuperer le winner et loose pour retur soit loose pop up soit win pop up
+	const win = true;
 	const dispatch = useDispatch();
 	let isGameEnded = useSelector((state) => state.gameState.isGameEnded);
 	const [isGameLaunched, setIsGameLaunched] = useState(false);
+	const { playSound } = useAudio();
+	const [showPopup, setShowPopup] = useState(false);
+
+	const handleMouseOver = () => {
+		playSound('/sound/button_hover_sound.wav');
+	};
 
 	const launchGame = (e) => {
 		e.preventDefault();
@@ -21,18 +31,25 @@ const Settings = () => {
 	useEffect(() => {
 		if (isGameEnded) {
 			setIsGameLaunched(false);
+			setShowPopup(true);
+			const timer = setTimeout(() => {
+				setShowPopup(false);
+			}, 5000);
+			return () => clearTimeout(timer);
 		}
 	}, [isGameEnded])
+
+
 
 	return (
 		<div className="room-settings">
 			<h1 className="h1-header">START GAME</h1>
-
+			<CustomPopup show={showPopup} win={win} />
 			{me.owner ? (
 				<>
 					{!isGameLaunched &&
 						<div className="play-button">
-							<button type="button" onClick={launchGame}>
+							<button type="button" onClick={launchGame} onMouseOver={handleMouseOver}>
 								PLAY
 							</button>
 						</div>
@@ -40,7 +57,7 @@ const Settings = () => {
 				</>
 			) : (
 				<div className="not-owner">
-					<p>Waiting for the owner to start the game</p>
+					<p>Only the owner can start the game; if it's in progress, new players must wait until it ends before the owner starts a new one</p>
 				</div>
 			)}
 		</div>

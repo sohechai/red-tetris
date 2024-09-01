@@ -25,9 +25,8 @@ const NextP = ({ type }) => {
 	const nextPiece = useSelector((state) => state.nextPiece.nextPiece);
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		console.log("nextPiece ", nextPiece);
-	}, [nextPiece]);
+	useEffect(() => { }, [nextPiece]);
+
 	useEffect(() => {
 		dispatch(setupNextPieceListeners());
 	}, []);

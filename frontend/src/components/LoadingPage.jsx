@@ -15,7 +15,6 @@ const LoadingPage = () => {
 		<div className={`loading-page ${startAnimation ? 'animate' : ''}`}>
 			{!startAnimation && <div className="loading-text">
 				<div className="loading-bar"></div>
-				{/* <div className="loading-bar"></div> */}
 				<span className="word">LOADING</span>
 				<span className="word">PLS</span>
 				<span className="word">WAIT</span>

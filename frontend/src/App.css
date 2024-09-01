@@ -430,6 +430,7 @@ form>button {
 	align-items: center;
 	text-align: center;
 	height: 100%;
+	padding: 1em;
 }
 
 .play-button {
@@ -558,3 +559,29 @@ form>button {
 .loading-text.loaded {
 	background-color: white;
 }
+
+/* Pop up win / loose */
+.popup-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  .popup-content {
+	background: #0e0d0d;
+	padding: 20px;
+	border-radius: 8px;
+	border: 1px solid var(--white);
+	text-align: center;
+  }
+  
+  .popup-content button {
+	margin-top: 10px;
+  }
+  
