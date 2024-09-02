@@ -4,6 +4,12 @@ import { iBlock } from 'src/model/block';
 import { Server, Socket } from 'socket.io';
 import { IMap } from 'src/interface/map';
 
+const mockEmit = jest.fn();
+const mockJoin = jest.fn();
+const mockTo = jest.fn(() => ({ emit: mockEmit }));
+const mockSocket = { id: 'test-client-id', emit: mockEmit, join: mockJoin, to: mockTo } as unknown as Socket;
+const mockServer = { id: 'test-client-id', emit: mockEmit, join: mockJoin, to: mockTo } as unknown as Server;
+
 describe('Map', () => {
   let map: Map;
 
@@ -36,8 +42,12 @@ describe('Map', () => {
     let map1 = new Map();
     const block = new Block(iBlock);
     block.position[0] = 5;
-    await map1.rotatePiece(block, {id : "test-id"} as Socket, new Server); // Provide mock Socket and Server
+    block.position[1] = 5;
+    await map1.rotatePiece(block, mockSocket, mockServer); // Provide mock Socket and Server
     expect(block.rotation).toBe(0); // After rotation, the rotation index should change
+    await map1.addFallingBlock(block);
+    await map1.rotatePiece(block, mockSocket, mockServer); // Provide mock Socket and Server
+    expect(block.rotation).toBe(1); // After rotation, the rotation index should change
   });
 
   it('should move a block correctly', async () => {
@@ -45,13 +55,24 @@ describe('Map', () => {
     const block = new Block(iBlock);
     const oldPos = block.position[1];
     block.position[0] = 5;
-
-    await map1.movePiece(block, 1, null as any, null as any); // Move block right by 1
+    block.position[1] = 5;
+    await map1.movePiece(block, 1, mockSocket, mockServer); // Move block right by 1
     expect(block.position[1]).toBe(oldPos); // Ensure the block has moved right
+    
+    await map1.addFallingBlock(block);
+    await map1.movePiece(block, 1, mockSocket, mockServer); // Move block right by 1
+    expect(block.position[1]).toBe(oldPos + 1); // Ensure the block has moved right
   });
 
-  it('should correctly identify if a block is falling', () => {
+  it('should correctly identify if a block is falling', async () => {
     expect(map.isBlockFalling()).toBe(false); // Test with initial map
+    let map1 = new Map();
+    const block = new Block(iBlock);
+    block.position[0] = 5;
+    block.position[1] = 5;
+    await map1.addFallingBlock(block);
+    expect(map1.isBlockFalling()).toBe(true);
+
   });
 
   it('should identify if a move is valid or not', async () => {
@@ -69,7 +90,7 @@ describe('Map', () => {
     expect(lines).toBe(0); // Check that lines were indeed formed
   });
 
-  it('should add penalty correctly', async () => {
+  it('should add penality correctly', async () => {
     const penalty = 1;
     const result = await map.addPenality(penalty);
     expect(result).toBe(false); // Assumes penalty addition should return true

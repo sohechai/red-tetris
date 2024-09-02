@@ -1,5 +1,5 @@
 import socket from "./socket";
-import { receiveMapInfo, receiveNextPieceInfo, receiveOpponentsMapInfo, receiveUserInfo, receiveUsers, receiveChatMessage, receiveGameEnd } from "./usersAction.jsx";
+import { receiveMapInfo, receiveNextPieceInfo, receiveOpponentsMapInfo, receiveUserInfo, receiveUsers, receiveChatMessage, receiveGameEnd, receiveWinState } from "./usersAction.jsx";
 
 export const sendMessage = (message) => {
 	return () => {
@@ -29,6 +29,17 @@ export const setupUserListeners = () => {
 
 		return () => {
 			socket.off("usersInRoom");
+		};
+	};
+};
+
+export const setupWinListeners = () => {
+	return (dispatch) => {
+		socket.on("won", (win) => {
+			dispatch(receiveWinState(win));
+		});
+		return () => {
+			socket.off("won");
 		};
 	};
 };

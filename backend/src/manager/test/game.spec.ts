@@ -2,12 +2,9 @@ import { Game } from 'src/manager/game.manager';
 import { Player } from 'src/model/player';
 import { Server, Socket } from 'socket.io';
 import { Map } from '../map.manager';
+import { Bag } from '../bag.manager';
 
 describe('Game', () => {
-
-
-    let mockServer: Server;
-    let mockSocket: Socket;
   let game: Game;
   let players: Player[];
   let server: Server;
@@ -34,6 +31,10 @@ describe('Game', () => {
     players[0].indexOfBag = players[0].bag.length - 2; // Trigger refueling
     game.bagRefueler();
     expect(game.bag.blocks.length).toBeGreaterThan(initialLength);
+    game.bag = new Bag();
+    players[0].indexOfBag = 0;
+    game.bagRefueler();
+    expect(game.bag.blocks.length).toBe(7);
   });
 
   it('should send penalty correctly', async () => {
@@ -44,7 +45,26 @@ describe('Game', () => {
   });
 
   it('should correctly determine the number of alive players', () => {
-    const count = game.playersAlive();
+    let players2 = [player];
+    let game2 = new Game(players2, 'room', server);
+    let count = game.playersAlive();
     expect(count).toBe(2);
+    count = game2.playersAlive();
+    expect(count).toBe(1);
+  });
+
+  it('should start the game and stop at good timing', async () => {
+    jest.useFakeTimers();
+    player.bag = game.bag.blocks;
+    let players2 = [player];
+    let game2 = new Game(players2, 'room', server);
+    let promise = game2.start();
+    jest.advanceTimersByTime(1000);
+    expect(game.bag.blocks.length).toBe(7);
+    game2.players[0].isAlive = false;
+    jest.advanceTimersByTime(1000);
+    expect(game.bag.blocks.length).toBe(7);
+    jest.useRealTimers();
+    await promise;
   });
 });

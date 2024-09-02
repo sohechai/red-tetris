@@ -32,36 +32,6 @@ export class Game {
     }
   }
 
-  logMap() {
-    console.log('____________________________');
-    for (let y = 0; y < 22; y++) {
-      for (let x = 0; x < 12; x++) {
-        if (this.players[0].map.map[y][x] === 10) {
-          process.stdout.write('X');
-        } else if (this.players[0].map.map[y][x] === 11) {
-          process.stdout.write('I');
-        } else if (this.players[0].map.map[y][x] === 12) {
-          process.stdout.write('L');
-        } else if (this.players[0].map.map[y][x] === 13) {
-          process.stdout.write('J');
-        } else if (this.players[0].map.map[y][x] === 14) {
-          process.stdout.write('O');
-        } else if (this.players[0].map.map[y][x] === 15) {
-          process.stdout.write('S');
-        } else if (this.players[0].map.map[y][x] === 16) {
-          process.stdout.write('T');
-        } else if (this.players[0].map.map[y][x] === 17) {
-          process.stdout.write('Z');
-        } else if (this.players[0].map.map[y][x] === 0) {
-          process.stdout.write('.');
-        } else {
-          process.stdout.write(this.players[0].map.map[y][x].toString());
-        }
-      }
-      console.log();
-    }
-  }
-
   async sendPenality(penality: number, client: Socket): Promise<void> {
     if (penality + 1 > 0) {
       for (let player of this.players) {
@@ -151,7 +121,6 @@ export class Game {
           .to(player.user.client.id)
           .emit('nextPiece', player.getNextPiece());
         this.sendSpectre(player.user.client);
-        // this.logMap();
         if (player.hasLost()) {
           player.isAlive = false;
           this.gameOver(player.user.client);
@@ -174,10 +143,19 @@ export class Game {
       if (player.isAlive) count++;
     }
     if (count === 1) {
-      this.srv.to(this.players[this.players.findIndex(player => player.isAlive === true)].user.client.id).emit("won");
-      this.players[this.players.findIndex(player => player.isAlive === true)].user.score += 1000;
-      let victorymap: IMap = [];
-      this.srv.to(this.players[this.players.findIndex(player => player.isAlive === true)].user.client.id).emit("map", this.players[this.players.findIndex(player => player.isAlive === true)].map.map);
+      for (let player of this.players) {
+        if (player.isAlive === true) {
+          this.srv.to(player.user.client.id).emit("won", true);
+          player.user.score += 1000;
+          this.srv.to(player.user.room).emit("usersInRoom", GetUserListFromPlayers(this.players));
+          console.log("player has won: ", player.user.client.id);
+        }
+        else {
+          this.srv.to(player.user.client.id).emit("won", false);
+          console.log("player has lost: ", player.user.client.id);
+        }
+
+      }
     }
 
     return count;

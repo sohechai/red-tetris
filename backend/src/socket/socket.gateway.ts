@@ -34,12 +34,12 @@ export class AppGateway
 	// TODO : il faut que quand un client se deconnecte redefinir le boolean du owner si c'etait le owner
 	// et renvoyer la liste des users a toute la room sans le client qui vient de se deconnecter
 	handleDisconnect(client: Socket): void {
-		
-		let room = this.players.filter((player) => player.user.client.id === client.id)[0].user.room;
-		this.players = RemoveUser(this.players, client);
-		this.wss.to(room).emit("usersInRoom", GetUserListFromPlayers(this.players));
+		if (this.players.length && this.players.filter((player) => player.user.client.id === client.id).length) {
+			let room = this.players.filter((player) => player.user.client.id === client.id)[0].user.room;
+			this.players = RemoveUser(this.players, client);
+			this.wss.to(room).emit("usersInRoom", GetUserListFromPlayers(this.players));
+		}
 		this.logger.log(`Client disconnected: ${client.id}`);
-		// this.wss.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("usersInRoom", GetUserListFromPlayers(this.players));
 	}
 
 	handleConnection(client: Socket): void {
@@ -86,22 +86,21 @@ export class AppGateway
 	@SubscribeMessage('movePieceRight')
 	handleMovePieceRight(client: Socket): void {
 		const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
-		console.log("ID: ", player.user.client.id);
-		if (player.indexOfBag >= 0)
+		if (player && player.indexOfBag >= 0)
 			player.map.movePiece(player.bag[player.indexOfBag], 1, client, this.wss);
 	}
 
 	@SubscribeMessage('movePieceLeft')
 	handleMovePieceLeft(client: Socket): void {
 		const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
-		if (player.indexOfBag >= 0)
+		if (player && player.indexOfBag >= 0)
 			this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.movePiece(player.bag[player.indexOfBag], -1, client, this.wss);
 	}
 
 	@SubscribeMessage('dropPiece')
 	handleDropPiece(client: Socket): void {
 		const player: Player = this.players[this.players.findIndex(player => player.user.client.id === client.id)];
-		if (player.indexOfBag >= 0)
+		if (player && player.indexOfBag >= 0)
 			this.players[this.players.findIndex(player => player.user.client.id === client.id)].map.dropPiece(player.bag[player.indexOfBag], client, this.wss);
 	}
 	@SubscribeMessage('joinRoom')
@@ -111,8 +110,15 @@ export class AppGateway
 			this.logger.log(`Error: Username already exists`);
 		}
 		else {
-			this.players = RegisterUser(this.players, data.pseudo, data.room, client, this.wss);
-			this.logger.log(`Client joined room: ${data.room} with pseudo : ${data.pseudo}`);
+			if (this.players.filter((player) => player.user.room === data.room).length > 4) {
+				client.emit("error", "Room is full");
+				this.logger.log(`Error: Room is full`);
+			}
+			else {
+				this.players = RegisterUser(this.players, data.pseudo, data.room, client, this.wss);
+				this.logger.log(`Client joined room: ${data.room} with pseudo : ${data.pseudo}`);
+				client.emit("success");
+			}
 		}
 	}
 

@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { gameEnd, startGame } from "../socketActions";
+import { gameEnd, setupWinListeners, startGame } from "../socketActions";
 import { useAudio } from "../utils/AudioContext";
 import CustomPopup from "../utils/WinPopUp.jsx";
 
 const Settings = () => {
 	const me = useSelector((state) => state.me.me);
-	// const win = useSelector((state) => state.gameState.win); 	// TODO recuperer le winner et loose pour retur soit loose pop up soit win pop up
-	const win = true;
+	const win = useSelector((state) => state.win.win); 	// TODO recuperer le winner et loose pour retur soit loose pop up soit win pop up
 	const dispatch = useDispatch();
 	let isGameEnded = useSelector((state) => state.gameState.isGameEnded);
 	const [isGameLaunched, setIsGameLaunched] = useState(false);
@@ -26,6 +25,7 @@ const Settings = () => {
 
 	useEffect(() => {
 		dispatch(gameEnd());
+		dispatch(setupWinListeners());
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -37,7 +37,7 @@ const Settings = () => {
 			}, 5000);
 			return () => clearTimeout(timer);
 		}
-	}, [isGameEnded])
+	}, [isGameEnded, win])
 
 
 

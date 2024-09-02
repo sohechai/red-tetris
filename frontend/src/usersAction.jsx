@@ -33,4 +33,9 @@ export const receiveGameEnd = (isGameEnded) => ({
 	payload: isGameEnded,
 });
 
+export const receiveWinState = (win) => ({
+	type: 'WIN',
+	payload: win,
+});
+
 

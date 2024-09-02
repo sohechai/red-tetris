@@ -8,6 +8,7 @@ const nextPieceInitialState = { nextPiece: [] };
 const opponentsMapInitialState = { opponentsMap: [] };
 const chatInitialState = { messages: [] };
 const gameStateInitialState = { isGameEnded: false };
+const winInitialState = {win: undefined};
 
 const userReducer = (state = userInitialState, action) => {
   switch (action.type) {
@@ -72,6 +73,15 @@ const gameStateReducer = (state = gameStateInitialState, action) => {
   }
 };
 
+const winStateReducer = (state = winInitialState, action) => {
+  switch (action.type) {
+    case 'WIN':
+      return { ...state, win: action.payload };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   users: userReducer,
   me: meReducer,
@@ -80,6 +90,7 @@ const rootReducer = combineReducers({
   opponentsMap: opponentsMapReducer,
   messages: chatReducer,
   gameState: gameStateReducer,
+  win: winStateReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
