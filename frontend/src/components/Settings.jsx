@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { gameEnd, setupWinListeners, startGame } from "../socketActions";
+import { gameEnd, setupMeInfo, setupWinListeners, startGame } from "../socketActions";
 import { useAudio } from "../utils/AudioContext";
 import CustomPopup from "../utils/WinPopUp.jsx";
 
@@ -26,6 +26,7 @@ const Settings = () => {
 	useEffect(() => {
 		dispatch(gameEnd());
 		dispatch(setupWinListeners());
+		dispatch(setupMeInfo());
 	}, [dispatch]);
 
 	useEffect(() => {

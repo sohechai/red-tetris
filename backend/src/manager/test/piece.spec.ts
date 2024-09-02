@@ -1,12 +1,12 @@
-import { Block, rotateRight, rotateLeft } from 'src/manager/block.manager';
+import { Piece, rotateRight, rotateLeft } from 'src/manager/piece.manager';
 import { iBlock } from 'src/model/block';
 
 
 describe('Block', () => {
-  let block: Block;
+  let block: Piece;
 
   beforeEach(() => {
-    block = new Block(iBlock);
+    block = new Piece(iBlock);
   });
 
   it('should initialize with default values', () => {

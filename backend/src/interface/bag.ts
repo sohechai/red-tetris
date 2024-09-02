@@ -1,3 +1,3 @@
-import { Block } from "src/manager/block.manager";
+import { Piece } from "src/manager/piece.manager";
 
-export interface IBag extends Array<Block>{};
+export interface IBag extends Array<Piece>{};

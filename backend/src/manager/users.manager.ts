@@ -16,7 +16,11 @@ export function RemoveUser(player: Player[], client: Socket) {
 	player = player.filter((player) => player.user.client.id !== client.id);
 	if (playerToDelete.user.owner) {
 		if (player.length)
+		{
 			player[0].user.owner = true;
+			console.log("Hello :", player[0].me());
+			player[0].user.client.emit("me", player[0].me());
+		}
 	}
 	return player;
 }

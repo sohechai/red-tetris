@@ -1,6 +1,6 @@
 import { IBag } from "src/interface/bag";
 import { iBlock, jBlock, lBlock, oBlock, sBlock, tBlock, zBlock } from "src/model/block";
-import { Block } from "./block.manager";
+import { Piece } from "./piece.manager";
 
 
 export class Bag {
@@ -12,13 +12,13 @@ export class Bag {
     //sauvegarder les position dans une autre array qu'y aura la même dimension
     createBag(): IBag {
         const defaultBag: IBag = [
-            new Block(iBlock),
-            new Block(jBlock),
-            new Block(oBlock),
-            new Block(zBlock),
-            new Block(sBlock),
-            new Block(tBlock),
-            new Block(lBlock),
+            new Piece(iBlock),
+            new Piece(jBlock),
+            new Piece(oBlock),
+            new Piece(zBlock),
+            new Piece(sBlock),
+            new Piece(tBlock),
+            new Piece(lBlock),
         ];
 
         return this.ShuffleBag(defaultBag);
@@ -34,13 +34,13 @@ export class Bag {
 
     AppendBlockToBag() {
         const defaultBag: IBag = [
-            new Block(iBlock),
-            new Block(jBlock),
-            new Block(oBlock),
-            new Block(zBlock),
-            new Block(sBlock),
-            new Block(tBlock),
-            new Block(lBlock),
+            new Piece(iBlock),
+            new Piece(jBlock),
+            new Piece(oBlock),
+            new Piece(zBlock),
+            new Piece(sBlock),
+            new Piece(tBlock),
+            new Piece(lBlock),
         ];
 
         this.blocks = this.blocks.concat(this.ShuffleBag(defaultBag));

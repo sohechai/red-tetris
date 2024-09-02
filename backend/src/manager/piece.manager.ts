@@ -1,6 +1,6 @@
 import { IBlock } from "src/interface/block";
 
-export class Block {
+export class Piece {
     block: IBlock;
     rotation: number;
     position: [number, number];
@@ -11,14 +11,14 @@ export class Block {
     }
 
 }
-export function rotateRight(block: Block) {
+export function rotateRight(block: Piece) {
     block.rotation++;
     if (block.rotation === 4)
         block.rotation = 0;
   }
 
   //peut etres remplacer par un tableau de rotation
-  export function rotateLeft(block: Block) {
+  export function rotateLeft(block: Piece) {
     block.rotation--;
     if (block.rotation === -1)
         block.rotation = 3;

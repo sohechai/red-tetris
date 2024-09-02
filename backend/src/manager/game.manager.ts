@@ -82,7 +82,7 @@ export class Game {
     const spectre = [];
     for (let player of this.players) {
       if (client.id !== player.user.client.id) {
-        spectre.push(player.map.parsed(player.map.map));
+        spectre.push({map: player.map.parsed(player.map.map), pseudo: player.user.pseudo});
       }
     }
     for (let player of this.players) {
@@ -141,7 +141,7 @@ export class Game {
     for (let player of this.players) {
       if (player.isAlive) count++;
     }
-    if (count === 1) {
+    if (count === 1 && this.players.length !== 1) {
       for (let player of this.players) {
         if (player.isAlive === true) {
           this.srv.to(player.user.client.id).emit("won", true);

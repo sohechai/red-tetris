@@ -2,7 +2,7 @@ import { Mutex } from 'async-mutex';
 import { IMap } from 'src/interface/map';
 import { lowercaseArray } from 'src/utils/lowercaseArray';
 import { replaceAllChar } from 'src/utils/replaceAllCharacterOfArray';
-import { Block, rotateLeft, rotateRight } from './block.manager';
+import { Piece, rotateLeft, rotateRight } from './piece.manager';
 import { findCharacter } from 'src/utils/findCharacter';
 import { Server, Socket } from 'socket.io';
 
@@ -29,7 +29,7 @@ export class Map {
     this.mutex = new Mutex();
   }
 
-  async blockFall(block: Block) {
+  async blockFall(block: Piece) {
     const release = await this.mutex.acquire();
     let newMap: IMap = replaceAllChar(this.map);
     block.position[0] += 1;
@@ -48,7 +48,7 @@ export class Map {
     release();
   }
   //DELETE PLUS TARD POUR UTILISER BLOCKFALL
-  async dropOne(block: Block, client: Socket, server: Server) {
+  async dropOne(block: Piece, client: Socket, server: Server) {
     const release = await this.mutex.acquire();
     if (this.isBlockFalling()) {
       let newMap: IMap = replaceAllChar(this.map);
@@ -71,7 +71,7 @@ export class Map {
     release();
   }
 
-  async dropPiece(block: Block, client: Socket, server: Server) {
+  async dropPiece(block: Piece, client: Socket, server: Server) {
     //BUG PRESS DROP ET MOVE
     const release = await this.mutex.acquire();
     if (this.isBlockFalling()) {
@@ -99,7 +99,7 @@ export class Map {
     release();
   }
 
-  async rotatePiece(block: Block, client: Socket, server: Server) {
+  async rotatePiece(block: Piece, client: Socket, server: Server) {
     const release = await this.mutex.acquire();
     if (this.isBlockFalling()) {
       let newMap: IMap = replaceAllChar(this.map);
@@ -120,7 +120,7 @@ export class Map {
     }
     release();
   }
-  async movePiece(block: Block, move: number, client: Socket, server: Server) {
+  async movePiece(block: Piece, move: number, client: Socket, server: Server) {
     const release = await this.mutex.acquire();
     if (this.isBlockFalling()) {
       block.position[1] += move;
@@ -158,7 +158,7 @@ export class Map {
   }
 
   // verifier que la piece est posable
-  async addFallingBlock(block: Block) {
+  async addFallingBlock(block: Piece) {
     const release = await this.mutex.acquire();
     let newMap: IMap = replaceAllChar(this.map);
     for (let y = 0; y < block.block[block.rotation].length; y++) {
@@ -187,7 +187,7 @@ export class Map {
     return false;
   }
 
-  async isLineFormed(block: Block): Promise<number> {
+  async isLineFormed(block: Piece): Promise<number> {
     let release = await this.mutex.acquire();
     let lineFormed: number = 0;
     let count: number = 0;
@@ -225,13 +225,14 @@ export class Map {
 
   parsed(map: IMap): string[][] {
     const stringMap: string[][] = [];
-    const parse = ["X", "I", "L", "J", "O", "S", "T", "Z", "", "", "X", "I", "L", "J", "O", "S", "T", "Z"]
+    const parse = ["X", "I", "L", "J", "O", "S", "T", "Z", "", "", "P", "I", "L", "J", "O", "S", "T", "Z"]
     for (let y = 1; y < 21; y++) {
       stringMap.push([]);
       for (let x = 1; x < 11; x++) {
         stringMap[y - 1].push(parse[map[y][x]]);
       }
     }
+    console.log(stringMap);
     return stringMap;
   }
 }

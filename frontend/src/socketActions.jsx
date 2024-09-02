@@ -59,6 +59,7 @@ export const setupMapListeners = () => {
 export const setupopponentsMapListeners = () => {
 	return (dispatch) => {
 		socket.on("spectre", (map) => {
+			console.log(map);
 			dispatch(receiveOpponentsMapInfo(map));
 		});
 
@@ -83,6 +84,8 @@ export const setupNextPieceListeners = () => {
 export const setupMeInfo = () => {
 	return (dispatch) => {
 		socket.on("me", (user) => {
+			console.log("hello it's me");
+			console.log(user);
 			dispatch(receiveUserInfo(user));
 		});
 

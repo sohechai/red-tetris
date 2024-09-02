@@ -342,6 +342,11 @@ form>button {
 	background-color: #cd051b;
 }
 
+.cell.P {
+	background-color: grey;
+}
+
+
 /* room lobby */
 .room-lobby {
 	grid-row: 2 / 4;
