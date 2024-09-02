@@ -9,6 +9,7 @@ import {
 import logo from "../assets/tetris-logo.svg";
 import { GooCursor } from "../utils/cursor.jsx";
 import store from "../store.jsx";
+import { useAudio } from "../utils/AudioContext.jsx";
 
 const Room = () => {
 	const users = useSelector((state) => state.users.users);
@@ -17,8 +18,12 @@ const Room = () => {
 	const [username, setUsername] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 	let navigate = useNavigate();
+	const { playSound } = useAudio();
 
-	// ajouter une fonction leave room pour que lorsque la room est pleine on puisse gerer le cas pour que le user leave la room juste apres avoir check
+	const handleMouseOver = () => {
+		playSound('/sound/button_hover_sound.wav');
+	};
+
 	const handleJoinRoom = async (e) => {
 		e.preventDefault();
 
@@ -29,37 +34,14 @@ const Room = () => {
 
 		setErrorMessage("");
 
-		dispatch(joinRoom(roomName, username, (error) => {
-            setErrorMessage(error);
-        }));
-
-		let roomFull = false;
-
-		await new Promise((resolve) => {
-			const unsubscribe = store.subscribe(() => {
-				const state = store.getState();
-				const users = state.users.users;
-				console.log('users ' + users.length);
-				if (users.length >= 4) {
-					console.log('room is full');
-					roomFull = true;
-					setErrorMessage("Room is full");
-				}
-				unsubscribe();
-				resolve(); 
-			});
-		});
-
-		setTimeout(() => {
-			if (!roomFull) {
-				navigate(`/${roomName}/${username}`);
-				roomFull = false;
-			}
-		}, 0);
+		try {
+			await joinRoom(roomName, username)();
+			navigate(`/${roomName}/${username}`);
+		} catch (error) {
+			console.log("error : ", error);
+			setErrorMessage(error);
+		}
 	};
-
-
-
 
 	useEffect(() => {
 		const cleanup = dispatch(setupUserListeners());
@@ -105,7 +87,7 @@ const Room = () => {
 					{
 						errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>
 					}
-					<button type="submit" onClick={handleJoinRoom}>
+					<button type="submit" onClick={handleJoinRoom} onMouseOver={handleMouseOver}>
 						Create / Join Room
 					</button>
 				</form>

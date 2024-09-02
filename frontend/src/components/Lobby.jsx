@@ -5,7 +5,6 @@ const Lobby = () => {
   const users = useSelector((state) => state.users.users);
 
   useEffect(() => {
-	console.log(users);
   }, [users]);
 
   return (

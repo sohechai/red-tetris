@@ -1,15 +1,24 @@
-:root {
-	font-family: Roboto, sans-serif;
-	line-height: 1.5;
-	font-weight: 200;
-
-	color: rgba(255, 255, 255, 0.87);
-
-	background: #0F0F0F;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+@font-face {
+    font-family: 'ThemeVCKText';
+    src: url('/fonts/themevck-text.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal; 
 }
+
+
+:root {
+    font-family: 'ThemeVCKText', Roboto, sans-serif;
+    line-height: 1.5;
+    font-weight: 200;
+	font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.87);
+
+    background: #0F0F0F;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 
 p {
 	margin: 0;
@@ -69,10 +78,11 @@ button {
 	border-radius: 8px;
 	border: 1px solid white;
 	padding: 1em 2em;
+	/* border-radius: 2.3em; */
 	font-size: 1em;
 	font-weight: 500;
 	font-family: inherit;
-	background-color: #000000;
+	background-color: #212121;
 	color: #ffffff;
 	cursor: pointer;
 	will-change: filter;
@@ -89,8 +99,3 @@ button:focus-visible {
 	outline: 4px auto -webkit-focus-ring-color;
 }
 
-.game-font {
-	font-family: "Press Start 2P", system-ui;
-	font-weight: 400;
-	margin: 0;
-}

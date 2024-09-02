@@ -130,14 +130,24 @@ export const FallByOne = () => {
 	};
 };
 
-export const joinRoom = (room, pseudo, onError) => {
-	return () => {
-		socket.emit("joinRoom", { room: room, pseudo: pseudo });
+export const joinRoom = (room, pseudo) => {
+    return () => {
+        return new Promise((resolve, reject) => {
+            const handleError = (errorMessage) => {
+                console.log("error msg = " + errorMessage);
+                reject(errorMessage);
+            };
 
-		socket.on('error', (errorMessage) => {
-            if (onError) {
-                onError(errorMessage);
-            }
+            const handleSuccess = () => {
+                resolve();
+            };
+
+            socket.once('error', handleError);
+            socket.once('success', handleSuccess);
+
+            socket.emit("joinRoom", { room: room, pseudo: pseudo });
         });
-	};
+    };
 };
+
+
