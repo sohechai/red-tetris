@@ -166,7 +166,7 @@ export class Game {
     while (1) {
       console.log("yo je suis ici deux fois");
       playersAlive = this.playersAlive()
-      if ((this.players.length > 1 && playersAlive === 1) || (playersAlive && this.players.length === 1)) break;
+      if ((this.players.length > 1 && playersAlive === 1) || !playersAlive) break;
       this.bagRefueler();
       await this.pieceManager();
       await sleep(gamespeed);
