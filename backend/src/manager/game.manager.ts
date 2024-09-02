@@ -139,7 +139,6 @@ export class Game {
   playersAlive(): number {
     let count: number = 0;
     for (let player of this.players) {
-      // console.log(player.isAlive);
       if (player.isAlive) count++;
     }
     if (count === 1) {
@@ -157,15 +156,17 @@ export class Game {
 
       }
     }
-
+    console.log("Number of player alive: ", count);
     return count;
   }
 
   async start(): Promise<void> {
     let gamespeed: number = 1000;
+    let playersAlive: number = this.players.length;
     while (1) {
-      if (!this.playersAlive()) break;
-      if (this.players.length > 1 && this.playersAlive() === 1) break;
+      console.log("yo je suis ici deux fois");
+      playersAlive = this.playersAlive()
+      if ((this.players.length > 1 && playersAlive === 1) || (playersAlive && this.players.length === 1)) break;
       this.bagRefueler();
       await this.pieceManager();
       await sleep(gamespeed);
