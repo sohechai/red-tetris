@@ -29,11 +29,9 @@ const NextP = ({ type }) => {
 
 	useEffect(() => {
 		dispatch(setupNextPieceListeners());
-	}, []);
-	const grid = pieceMap[type] || [];
+	}, [dispatch]);
 
-	const numRows = grid.length;
-	const numCols = grid[0]?.length || 0;
+	const grid = pieceMap[type] || [];
 
 	return (
 		<>
@@ -48,13 +46,17 @@ const NextP = ({ type }) => {
 							gridTemplateRows: `repeat(2, 30px)`,
 						}}
 					>
-						{pieceMap[nextPiece] ? pieceMap[nextPiece].map((row, rowIndex) => (
+						{grid.map((row, rowIndex) => (
 							<div key={rowIndex} className="row">
 								{row.map((cell, cellIndex) => (
-									<div key={cellIndex} className={`next-cell ${cell}`} />
+									<div
+										key={cellIndex}
+										className={`next-cell ${cell}`}
+										data-testid={`cell-${rowIndex}-${cellIndex}`}
+									/>
 								))}
 							</div>
-						)) : null}
+						))}
 					</div>
 				</div>
 			</div>

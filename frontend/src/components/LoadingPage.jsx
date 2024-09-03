@@ -12,9 +12,9 @@ const LoadingPage = () => {
 	}, []);
 
 	return (
-		<div className={`loading-page ${startAnimation ? 'animate' : ''}`}>
+		<div className={`loading-page ${startAnimation ? 'animate' : ''}`} data-testid="loading-page">
 			{!startAnimation && <div className="loading-text">
-				<div className="loading-bar"></div>
+				<div className="loading-bar" data-testid="loading-bar"></div>
 				<span className="word">LOADING</span>
 				<span className="word">PLS</span>
 				<span className="word">WAIT</span>

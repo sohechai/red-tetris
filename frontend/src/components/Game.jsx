@@ -1,28 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { setupMapListeners } from "../socketActions";
+// src/components/Game.jsx
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-function Game() {
-  const map = useSelector((state) => state.map.map);
-  const dispatch = useDispatch();
+const Game = () => {
+	const map = useSelector(state => state.map);
 
-  useEffect(() => {
-    dispatch(setupMapListeners());
-  }, [])
+	// console.log('Map:', map); // Pour le débogage
 
-  return (
-    <div className="room-game">
-      <div className="game-container">
-        {map? map.map((row, rowIndex) => (
-          <div key={rowIndex} className="row">
-            {row.map((cell, cellIndex) => (
-              <div key={cellIndex} className={`cell ${cell}`} />
-            ))}
-          </div>
-        )): null}
-      </div>
-    </div>
-  );
-}
+	return (
+		<div className="room-game">
+			<div className="game-container">
+				{map ? map.map((row, rowIndex) => (
+					<div key={rowIndex} className="row">
+						{row.map((cell, cellIndex) => (
+							<div key={cellIndex} className={`cell ${cell}`} data-testid={`cell-${cell}`}/>
+						))}
+					</div>
+				)) : null}
+			</div>
+		</div>
+	);
+};
 
 export default Game;

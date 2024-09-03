@@ -10,21 +10,21 @@ const Lobby = () => {
   return (
     <div className="room-lobby">
       <div className="lobby-header">
-        <h1>LOBBY</h1>
-        <p>{users.length} / 5</p>
+        <h1 data-testid="lobby-title">LOBBY</h1>
+        <p data-testid="user-count">{users.length} / 5</p>
       </div>
       <div className="lobby-players">
         {users.map((user, index) => (
-          <div className="player-info" key={index}>
+          <div className="player-info" key={index} data-testid={`player-${index}`}>
             <div className="pseudo">
-              {user.pseudo}
+              <span data-testid={`player-pseudo-${index}`}>{user.pseudo}</span>
               {user.owner === true ? (
-                <div className="circle" />
+                <div className="circle" data-testid={`player-owner-${index}`} />
               ) : (
-                <div className="circle" style={{ background: "transparent" }} />
+                <div className="circle" style={{ background: "transparent" }} data-testid={`player-no-owner-${index}`} />
               )}
             </div>
-            <div className="score">score : {user.score}</div>
+            <div className="score" data-testid={`player-score-${index}`}>score : {user.score}</div>
           </div>
         ))}
       </div>

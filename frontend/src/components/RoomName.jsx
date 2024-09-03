@@ -18,23 +18,15 @@ const RoomName = () => {
 	useEffect(() => {
 		const cleanup = dispatch(setupUserListeners());
 		const cleanup2 = dispatch(setupMeInfo());
-
-		return () => {
-			cleanup();
-			cleanup2();
-		};
 	}, [dispatch]);
 
-	// note : le crash arrive lorsque le user n'est pas assigné et qu'on reload la page
 	useEffect(() => {
-		console.log("me : ", me);
 		if (me.length === 0) {
 			navigate("/");
 		}
 	}, [me]);
 
 	const handleKeyPress = (e) => {
-		//  correction de bug car je n'arrivais pas a ecrire dans le chat avec cette fonction
 		if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
 			return;
 		}
@@ -71,15 +63,15 @@ const RoomName = () => {
 	}, [dispatch]);
 
 	return (
-		<div className="room-container" id="#room">
+		<div className="room-container" data-testid="room-container">
 			<div className="room-header">
-				<img alt="Tetris Logo" className="logo" src={logo} />
+				<img alt="Tetris Logo" className="logo" src={logo} data-testid="logo" />
 			</div>
 			<div className="room-content">
 				<div className="room-grid">
-					<div className="room-grid-header">Room Name : {me.room}</div>
+					<div className="room-grid-header" data-testid="room-name">Room Name : {me.room}</div>
 					<div className="room-player">
-						<h1 className="h1-red">{me.pseudo}</h1>
+						<h1 className="h1-red" data-testid="player-name">{me.pseudo}</h1>
 					</div>
 					<Chat />
 					<Game />

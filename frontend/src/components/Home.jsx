@@ -4,13 +4,8 @@ import logo from '../assets/tetris-logo.svg';
 import { GooCursor } from '../utils/cursor';
 import { useAudio } from '../utils/AudioContext';
 
-const Play = () => {
+const Home = () => {
 	let navigate = useNavigate();
-	const { playSound } = useAudio();
-
-	const handleMouseOver = () => {
-		playSound('/sound/button_hover_sound.wav');
-	  };
 
 	const handleClick = (e) => {
 		e.preventDefault();
@@ -27,7 +22,7 @@ const Play = () => {
 	return (
 		<div className="parent-container">
 			<img alt="Tetris Logo" className="logo" src={logo} id="play-logo" />
-			<button onClick={handleClick} onMouseOver={handleMouseOver}>PLAY</button>
+			<button onClick={handleClick} >PLAY</button>
 
 			<div className="cursor">
 				<div className="cursor__inner">
@@ -52,4 +47,4 @@ const Play = () => {
 	);
 };
 
-export default Play;
+export default Home;
