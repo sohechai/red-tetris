@@ -18,7 +18,6 @@ export function RemoveUser(player: Player[], client: Socket) {
 		if (player.length)
 		{
 			player[0].user.owner = true;
-			console.log("Hello :", player[0].me());
 			player[0].user.client.emit("me", player[0].me());
 		}
 	}
@@ -33,11 +32,6 @@ export function SendNewUsersInRoom(players: Player[], pseudo: string, client: So
 		if (player.user.room === room)
 			usersInRoom.push({ pseudo: player.user.pseudo, score: player.user.score, owner: player.user.owner });
 	}
-	// console.log("USERS IN ROOM :");
-	// console.log(usersInRoom);
-	// console.log("_____________________\n");
-	// console.log("ME :");
-	// console.log(me)
 	server.to(room).emit("usersInRoom", usersInRoom);
 	client.emit("me", me);
 }

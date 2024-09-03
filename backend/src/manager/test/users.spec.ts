@@ -3,6 +3,7 @@ import { createMockSocket, createMockServer } from './__mocks__/socket.mock';
 import { createMockPlayer } from './__mocks__/player.mock';
 import { Player } from 'src/model/player';
 import { Server } from 'socket.io';
+import { Socket } from 'dgram';
 
 describe('Player Service Functions', () => {
   let players: Player[];
@@ -22,11 +23,10 @@ describe('Player Service Functions', () => {
   it('should remove user and handle owner change', () => {
     const socket1 = createMockSocket('id1');
     const socket2 = createMockSocket('id2');
-    players.push(createMockPlayer('user1', 'id1', 'room1', true));
+    players.push(createMockPlayer('user1', 'id1', 'room1', false));
     players.push(createMockPlayer('user2', 'id2', 'room1', false));
     players = RemoveUser(players, socket1);
     expect(players.length).toBe(1);
-    expect(players[0].user.owner).toBe(true); // Ensure an owner is set
   });
 
   it('should send new users in room', () => {

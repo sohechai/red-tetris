@@ -58,4 +58,11 @@ describe('AppGateway', () => {
     it('should handle a client deconnection', () => {
         gateway.handleMovePieceRight(mockClient);
       });
+
+      it('should handle a player joining room', () => {
+        gateway.handleJoinRoom(mockClient, {room: "test", pseudo: "test"});
+      });
+      it('should handle a player drop piece', () => {
+        gateway.handleDropPiece(mockClient);
+      });
   });

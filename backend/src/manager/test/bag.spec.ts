@@ -1,5 +1,5 @@
 import { Bag } from 'src/manager/bag.manager';
-import { Block } from 'src/manager/block.manager';
+import { Piece } from 'src/manager/piece.manager';
 import { iBlock, jBlock, lBlock, oBlock, sBlock, tBlock, zBlock } from 'src/model/block';
 import { IBag } from 'src/interface/bag';
 
@@ -14,7 +14,7 @@ describe('Bag', () => {
     expect(bag.blocks.length).toBe(7);
     // Check that the blocks are instances of Block
     bag.blocks.forEach(block => {
-      expect(block).toBeInstanceOf(Block);
+      expect(block).toBeInstanceOf(Piece);
     });
     // Check if the bag is shuffled
     const originalBlocks = [...bag.blocks];

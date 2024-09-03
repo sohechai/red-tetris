@@ -1,5 +1,5 @@
 import { Map } from 'src/manager/map.manager';
-import { Block } from 'src/manager/block.manager';
+import { Piece } from 'src/manager/piece.manager';
 import { iBlock } from 'src/model/block';
 import { Server, Socket } from 'socket.io';
 import { IMap } from 'src/interface/map';
@@ -25,14 +25,14 @@ describe('Map', () => {
   });
 
   it('should correctly fall a block', async () => {
-    const block = new Block(iBlock);
+    const block = new Piece(iBlock);
 
     await map.blockFall(block);
     expect(block.position[0]).toBe(1); // Assumes the block falls one row
   });
 
   it('should drop a block correctly', async () => {
-    const block = new Block(iBlock);
+    const block = new Piece(iBlock);
     map.addFallingBlock(block);
     await map.dropOne(block, {id : "test-id"} as Socket, new Server); // Provide mock Socket and Server
     expect(block.position[0]).toBe(1);
@@ -40,7 +40,7 @@ describe('Map', () => {
 
   it('should rotate a block correctly', async () => {
     let map1 = new Map();
-    const block = new Block(iBlock);
+    const block = new Piece(iBlock);
     block.position[0] = 5;
     block.position[1] = 5;
     await map1.rotatePiece(block, mockSocket, mockServer); // Provide mock Socket and Server
@@ -52,7 +52,7 @@ describe('Map', () => {
 
   it('should move a block correctly', async () => {
     let map1 = new Map();
-    const block = new Block(iBlock);
+    const block = new Piece(iBlock);
     const oldPos = block.position[1];
     block.position[0] = 5;
     block.position[1] = 5;
@@ -67,7 +67,7 @@ describe('Map', () => {
   it('should correctly identify if a block is falling', async () => {
     expect(map.isBlockFalling()).toBe(false); // Test with initial map
     let map1 = new Map();
-    const block = new Block(iBlock);
+    const block = new Piece(iBlock);
     block.position[0] = 5;
     block.position[1] = 5;
     await map1.addFallingBlock(block);
@@ -86,7 +86,7 @@ describe('Map', () => {
     for(let i = 1; i < 11; i++) {
         map.map[2][i] = 11;
     }
-    const lines = await map.isLineFormed(new Block(iBlock));
+    const lines = await map.isLineFormed(new Piece(iBlock));
     expect(lines).toBe(0); // Check that lines were indeed formed
   });
 
