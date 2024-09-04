@@ -82,7 +82,6 @@ export function HandleChatMessage(
 			pseudo: user.user.pseudo,
 			message,
 		};
-		console.log("chatMessage : ", chatMessage);
 		server.to(user.user.room).emit('chatMessage', chatMessage);
 	}
 }

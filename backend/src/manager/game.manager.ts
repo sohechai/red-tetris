@@ -147,16 +147,13 @@ export class Game {
           this.srv.to(player.user.client.id).emit("won", true);
           player.user.score += 1000;
           this.srv.to(player.user.room).emit("usersInRoom", GetUserListFromPlayers(this.players));
-          console.log("player has won: ", player.user.client.id);
         }
         else {
           this.srv.to(player.user.client.id).emit("won", false);
-          console.log("player has lost: ", player.user.client.id);
         }
 
       }
     }
-    console.log("Number of player alive: ", count);
     return count;
   }
 
@@ -164,7 +161,6 @@ export class Game {
     let gamespeed: number = 1000;
     let playersAlive: number = this.players.length;
     while (1) {
-      console.log("yo je suis ici deux fois");
       playersAlive = this.playersAlive()
       if ((this.players.length > 1 && playersAlive === 1) || !playersAlive) break;
       this.bagRefueler();

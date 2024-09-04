@@ -232,7 +232,6 @@ export class Map {
         stringMap[y - 1].push(parse[map[y][x]]);
       }
     }
-    console.log(stringMap);
     return stringMap;
   }
 }
