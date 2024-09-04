@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import sendButton from "../assets/send.svg";
 import { sendMessage, setupChatListeners } from '../socketActions';
 import "../App.css";
+import ChatMessages from './ChatMessages';
+
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -28,13 +30,7 @@ const Chat = () => {
   return (
     <div className="room-chat">
       <h1 className="h1-header">CHAT</h1>
-      <div className="chat-messages">
-        {messages.map((message, index) => (
-          <div className="chat-message" key={index}>
-            {message.pseudo} : {message.message}
-          </div>
-        ))}
-      </div>
+      <ChatMessages messages={ messages }/>
       <div className="input-container">
         <input
           type="text"

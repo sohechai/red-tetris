@@ -1,13 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setupMapListeners } from "../socketActions";
 
-function Game() {
-  const map = useSelector((state) => state.map.map);
-  const dispatch = useDispatch();
+function Game(props) {
+  const map = props.map;
 
   useEffect(() => {
-    dispatch(setupMapListeners());
+    
   }, [])
 
   return (
