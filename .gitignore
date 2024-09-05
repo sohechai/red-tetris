@@ -5,6 +5,9 @@ node_modules/
 dist/
 build/
 
+# Coverage
+coverage/
+
 # IDE/Editor specific
 .vscode/
 .idea/
