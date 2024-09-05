@@ -4,8 +4,7 @@ import { useAudio } from "../utils/AudioContext";
 import CustomPopup from "../utils/WinPopUp.jsx";
 import { startGame } from "../socketActions.jsx";
 
-const Settings = ( { me, win, isGameEnded }) => {
-	const [isGameLaunched, setIsGameLaunched] = useState(false);
+const Settings = ( { me, win, isGameEnded, isGameLaunched }) => {
 	const { playSound } = useAudio();
 	const [showPopup, setShowPopup] = useState(false);
 	const dispatch = useDispatch();
@@ -17,12 +16,14 @@ const Settings = ( { me, win, isGameEnded }) => {
 	const launchGame = (e) => {
 		e.preventDefault();
 		dispatch(startGame());
-		setIsGameLaunched(true);
 	};
 
 	useEffect(() => {
+		console.log(isGameLaunched);
+	}, [isGameLaunched]);
+
+	useEffect(() => {
 		if (isGameEnded) {
-			setIsGameLaunched(false);
 			setShowPopup(true);
 			const timer = setTimeout(() => {
 				setShowPopup(false);

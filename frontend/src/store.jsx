@@ -9,6 +9,7 @@ const opponentsMapInitialState = { opponentsMap: [] };
 const chatInitialState = { messages: [] };
 const gameStateInitialState = { isGameEnded: false };
 const winInitialState = {win: undefined};
+const isGameLaunched = { isGameLaunched: false };
 
 const userReducer = (state = userInitialState, action) => {
   switch (action.type) {
@@ -82,6 +83,15 @@ const winStateReducer = (state = winInitialState, action) => {
   }
 };
 
+const isGameLaunchedReducer = (state = isGameLaunched, action) => {
+  switch (action.type) {
+    case 'GAME_LAUNCHED':
+      return { ...state, isGameLaunched: action.payload };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   users: userReducer,
   me: meReducer,
@@ -90,7 +100,8 @@ const rootReducer = combineReducers({
   opponentsMap: opponentsMapReducer,
   messages: chatReducer,
   gameState: gameStateReducer,
-  win: winStateReducer
+  win: winStateReducer,
+  isGameLaunched: isGameLaunchedReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));

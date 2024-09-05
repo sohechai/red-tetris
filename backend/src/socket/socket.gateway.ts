@@ -49,11 +49,14 @@ export class AppGateway
 	@SubscribeMessage('startGame')
 	async handleGameStart(client: Socket): Promise<void> {
 		this.logger.log(`Client started game: ${client.id}`);
+		const room = this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room;
 		if (this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.owner === true) {
 			const game: Game = new Game(this.players, Player.getRoomBySocketId(this.players, client), this.wss);
-			this.wss.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameEnd", false);
+			this.wss.to(room).emit("gameLaunched", true);
+			this.wss.to(room).emit("gameEnd", false);
 			await game.start();
-			this.wss.to(this.players[this.players.findIndex(player => player.user.client.id === client.id)].user.room).emit("gameEnd", true);
+			this.wss.to(room).emit("gameEnd", true);
+			this.wss.to(room).emit("gameLaunched", false);
 		}
 	}
 

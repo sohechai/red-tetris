@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { dropPiece, FallByOne, gameEnd, MoveLeft, MoveRight, Rotate, setupMapListeners, setupMeInfo, setupNextPieceListeners, setupopponentsMapListeners, setupUserListeners, setupWinListeners } from "../socketActions.jsx";
+import { dropPiece, FallByOne, gameEnd, MoveLeft, MoveRight, Rotate, setupIsGameLaunchedListener, setupMapListeners, setupMeInfo, setupNextPieceListeners, setupopponentsMapListeners, setupUserListeners, setupWinListeners } from "../socketActions.jsx";
 import logo from "../assets/tetris-logo.svg";
 import Game from "./Game.jsx";
 import Chat from "./Chat.jsx";
@@ -46,10 +46,11 @@ const RoomName = () => {
 	const nextPiece = useSelector((state) => state.nextPiece.nextPiece);
 	const opponentsGrid = useSelector((state) => state.opponentsMap.opponentsMap);
 	const win = useSelector((state) => state.win.win); 	// TODO recuperer le winner et loose pour retur soit loose pop up soit win pop up
-	let isGameEnded = useSelector((state) => state.gameState.isGameEnded);
-
+	const isGameEnded = useSelector((state) => state.gameState.isGameEnded);
+	const isGameLaunched = useSelector((state) => state.isGameLaunched.isGameLaunched);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
 	useEffect(() => {
 		const cleanup = dispatch(setupUserListeners());
 		const cleanup2 = dispatch(setupMeInfo());
@@ -58,6 +59,7 @@ const RoomName = () => {
 		const cleanup5 = dispatch(setupopponentsMapListeners());
 		const cleanup6 = dispatch(gameEnd());
 		const cleanup7 = dispatch(setupWinListeners());
+		const cleanup8 = dispatch(setupIsGameLaunchedListener());
 		return () => {
 			cleanup();
 			cleanup2();
@@ -66,6 +68,7 @@ const RoomName = () => {
 			cleanup5();
 			cleanup6();
 			cleanup7();
+			cleanup8();
 		};
 	}, [dispatch]);
 
@@ -100,7 +103,7 @@ const RoomName = () => {
 					<NextP type={"T"} nextPiece={ nextPiece } />
 					<OpponentsMap opponentsGrid={ opponentsGrid }/>
 					<Lobby users={users}/>
-					<Settings win={ win } me={ me } isGameEnded={ isGameEnded } />
+					<Settings win={ win } me={ me } isGameEnded={ isGameEnded } isGameLaunched={ isGameLaunched }/>
 				</div>
 			</div>
 		</div>

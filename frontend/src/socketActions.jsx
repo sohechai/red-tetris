@@ -1,5 +1,5 @@
 import socket from "./socket";
-import { receiveMapInfo, receiveNextPieceInfo, receiveOpponentsMapInfo, receiveUserInfo, receiveUsers, receiveChatMessage, receiveGameEnd, receiveWinState } from "./usersAction.jsx";
+import { receiveMapInfo, receiveNextPieceInfo, receiveOpponentsMapInfo, receiveUserInfo, receiveUsers, receiveChatMessage, receiveGameEnd, receiveWinState, receiveIsGameLaunched } from "./usersAction.jsx";
 
 export const sendMessage = (message) => {
 	return () => {
@@ -86,6 +86,19 @@ export const setupMeInfo = () => {
 
 		return () => {
 			socket.off("usersList");
+		};
+	};
+};
+
+export const setupIsGameLaunchedListener = () => {
+	return (dispatch) => {
+		socket.on("gameLaunched", (isGameLaunched) => {
+			console.log(isGameLaunched);
+			dispatch(receiveIsGameLaunched(isGameLaunched));
+		});
+
+		return () => {
+			socket.off("gameLaunched");
 		};
 	};
 };

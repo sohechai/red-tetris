@@ -39,3 +39,9 @@ export const receiveWinState = (win) => ({
 });
 
 
+export const receiveIsGameLaunched = (isGameLaunched) => ({
+	type: 'GAME_LAUNCHED',
+	payload: isGameLaunched,
+});
+
+
