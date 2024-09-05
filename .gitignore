@@ -6,7 +6,7 @@ dist/
 build/
 
 # Coverage
-coverage/
+**/coverage/
 
 # IDE/Editor specific
 .vscode/
