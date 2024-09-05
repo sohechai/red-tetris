@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAudio } from "../utils/AudioContext";
 import CustomPopup from "../utils/WinPopUp.jsx";
+import { startGame } from "../socketActions.jsx";
 
 const Settings = ( { me, win, isGameEnded }) => {
 	const [isGameLaunched, setIsGameLaunched] = useState(false);

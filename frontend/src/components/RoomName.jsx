@@ -71,7 +71,6 @@ const RoomName = () => {
 
 	// note : le crash arrive lorsque le user n'est pas assigné et qu'on reload la page
 	useEffect(() => {
-		console.log("me : ", me);
 		if (me.length === 0) {
 			navigate("/");
 		}

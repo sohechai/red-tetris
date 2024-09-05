@@ -409,7 +409,6 @@ export const sendMessage = (message) =&gt; {
 export const setupChatListeners = () =&gt; {
 	return (dispatch) =&gt; {
 		socket.on("chatMessage", (message) =&gt; {
-			console.log("chatMessage = " + message);
 			dispatch(receiveChatMessage(message));
 		});
 &nbsp;
@@ -422,7 +421,6 @@ export const setupChatListeners = () =&gt; {
 export const setupUserListeners = () =&gt; {
 	return (dispatch) =&gt; {
 		socket.on("usersInRoom", (users) =&gt; {
-			console.log("usersInRoom = " + users.length);
 			dispatch(receiveUsers(users));
 		});
 &nbsp;
@@ -458,7 +456,6 @@ export const setupMapListeners = () =&gt; {
 export const setupopponentsMapListeners = () =&gt; {
 	return (dispatch) =&gt; {
 		socket.on("spectre", (map) =&gt; {
-			console.log(map);
 			dispatch(receiveOpponentsMapInfo(map));
 		});
 &nbsp;
@@ -483,8 +480,6 @@ export const setupNextPieceListeners = () =&gt; {
 export const setupMeInfo = () =&gt; {
 	return (dispatch) =&gt; {
 		socket.on("me", (user) =&gt; {
-			console.log("hello it's me");
-			console.log(user);
 			dispatch(receiveUserInfo(user));
 		});
 &nbsp;

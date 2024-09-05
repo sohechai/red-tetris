@@ -100,7 +100,6 @@ export class GooCursor {
 
         if (cellIndex >= this.cellsTotal || cellIndex < 0) {
             console.error('Cell index out of bounds');
-            console.log('cellIndex:', cellIndex, 'rowIndex:', rowIndex, 'columnIndex:', columnIndex);
             return null;
         }
 

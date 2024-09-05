@@ -10,7 +10,6 @@ export const sendMessage = (message) => {
 export const setupChatListeners = () => {
 	return (dispatch) => {
 		socket.on("chatMessage", (message) => {
-			console.log("chatMessage = " + message);
 			dispatch(receiveChatMessage(message));
 		});
 
@@ -23,7 +22,6 @@ export const setupChatListeners = () => {
 export const setupUserListeners = () => {
 	return (dispatch) => {
 		socket.on("usersInRoom", (users) => {
-			console.log("usersInRoom = " + users.length);
 			dispatch(receiveUsers(users));
 		});
 
@@ -59,7 +57,6 @@ export const setupMapListeners = () => {
 export const setupopponentsMapListeners = () => {
 	return (dispatch) => {
 		socket.on("spectre", (map) => {
-			console.log(map);
 			dispatch(receiveOpponentsMapInfo(map));
 		});
 
@@ -84,8 +81,6 @@ export const setupNextPieceListeners = () => {
 export const setupMeInfo = () => {
 	return (dispatch) => {
 		socket.on("me", (user) => {
-			console.log("hello it's me");
-			console.log(user);
 			dispatch(receiveUserInfo(user));
 		});
 
@@ -148,7 +143,6 @@ export const joinRoom = (room, pseudo) => {
     return () => {
         return new Promise((resolve, reject) => {
             const handleError = (errorMessage) => {
-                console.log("error msg = " + errorMessage);
                 reject(errorMessage);
             };
 

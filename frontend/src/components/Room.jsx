@@ -37,7 +37,6 @@ const Room = () => {
 			await joinRoom(roomName, username)();
 			navigate(`/${roomName}/${username}`);
 		} catch (error) {
-			console.log("error : ", error);
 			setErrorMessage(error);
 		}
 	};
