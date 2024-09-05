@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
-import useWindowSize from 'react-use/lib/useWindowSize'
+import React from 'react';
 
 const CustomPopup = ({ show }) => {
-
+	
 	if (!show) return null;
-	const [isVisible, setIsVisible] = useState(false);
-	const { width, height } = useWindowSize()
-
-
 
 	return (
 		<div className="popup-overlay">

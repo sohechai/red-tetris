@@ -1,17 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
-import { setupopponentsMapListeners } from "../socketActions";
-import { useEffect } from "react";
-
-const OpponentsMap = () => {
-	const opponentsGrid = useSelector((state) => state.opponentsMap.opponentsMap);
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-	}, [opponentsGrid]);
-
-	useEffect(() => {
-		dispatch(setupopponentsMapListeners());
-	}, []);
+const OpponentsMap = ( { opponentsGrid } ) => {
 
 	return (
 		<div className="room-grid-middle-right-content">

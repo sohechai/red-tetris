@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
 import {
 	I_PIECE,
 	J_PIECE,
@@ -8,8 +7,6 @@ import {
 	T_PIECE,
 	Z_PIECE,
 } from "../assets/data/tetris-piece.jsx";
-import { setupNextPieceListeners } from "../socketActions.jsx";
-import { useEffect } from "react";
 
 const pieceMap = {
 	I: I_PIECE,
@@ -21,20 +18,8 @@ const pieceMap = {
 	Z: Z_PIECE,
 };
 
-const NextP = ({ type }) => {
-	const nextPiece = useSelector((state) => state.nextPiece.nextPiece);
-	const dispatch = useDispatch();
-
-	useEffect(() => { }, [nextPiece]);
-
-	useEffect(() => {
-		dispatch(setupNextPieceListeners());
-	}, []);
-	const grid = pieceMap[type] || [];
-
-	const numRows = grid.length;
-	const numCols = grid[0]?.length || 0;
-
+const NextP = ({ nextPiece }) => {
+	
 	return (
 		<>
 			<div className="room-grid-middle-right-header">

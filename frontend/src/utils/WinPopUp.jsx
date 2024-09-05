@@ -23,10 +23,10 @@ const useWindowSize = () => {
 };
 
 const CustomPopup = ({ show, win }) => {
-	if (!show) return null;
-
+	
 	const { width, height } = useWindowSize();
-
+	
+	if (!show) return null;
 	return (
 		<div className="popup-overlay">
 			<div className="popup-content">

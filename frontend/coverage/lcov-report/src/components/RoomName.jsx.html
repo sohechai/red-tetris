@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">26.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/44</span>
+                <span class='fraction'>16/60</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.33% </span>
+                <span class="strong">6.25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/12</span>
+                <span class='fraction'>1/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.02% </span>
+                <span class="strong">31.37% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/39</span>
+                <span class='fraction'>16/51</span>
             </div>
         
             
@@ -164,7 +164,17 @@
 <a name='L99'></a><a href='#L99'>99</a>
 <a name='L100'></a><a href='#L100'>100</a>
 <a name='L101'></a><a href='#L101'>101</a>
-<a name='L102'></a><a href='#L102'>102</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -213,13 +223,25 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -228,8 +250,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -267,7 +287,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { dropPiece, FallByOne, MoveLeft, MoveRight, Rotate, setupMapListeners, setupMeInfo, setupUserListeners } from "../socketActions.jsx";
+import { dropPiece, FallByOne, gameEnd, MoveLeft, MoveRight, Rotate, setupMapListeners, setupMeInfo, setupNextPieceListeners, setupopponentsMapListeners, setupUserListeners, setupWinListeners } from "../socketActions.jsx";
 import logo from "../assets/tetris-logo.svg";
 import Game from "./Game.jsx";
 import Chat from "./Chat.jsx";
@@ -310,17 +330,29 @@ const RoomName = <span class="fstat-no" title="function not covered" >()</span> 
 	const me = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.me.me)</span>;</span>
 	const map = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.map.map)</span>;</span>
 	const users = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.users.users)</span>;</span>
+	const nextPiece = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.nextPiece.nextPiece)</span>;</span>
+	const opponentsGrid = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.opponentsMap.opponentsMap)</span>;</span>
+	const win = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.win.win)</span>;</span> 	// TODO recuperer le winner et loose pour retur soit loose pop up soit win pop up
+	let isGameEnded = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.gameState.isGameEnded)</span>;</span>
+&nbsp;
 	const dispatch = <span class="cstat-no" title="statement not covered" >useDispatch();</span>
 	const navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
 <span class="cstat-no" title="statement not covered" >	useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 		const cleanup = <span class="cstat-no" title="statement not covered" >dispatch(setupUserListeners());</span>
 		const cleanup2 = <span class="cstat-no" title="statement not covered" >dispatch(setupMeInfo());</span>
 		const cleanup3 = <span class="cstat-no" title="statement not covered" >dispatch(setupMapListeners());</span>
-		
+		const cleanup4 = <span class="cstat-no" title="statement not covered" >dispatch(setupNextPieceListeners());</span>
+		const cleanup5 = <span class="cstat-no" title="statement not covered" >dispatch(setupopponentsMapListeners());</span>
+		const cleanup6 = <span class="cstat-no" title="statement not covered" >dispatch(gameEnd());</span>
+		const cleanup7 = <span class="cstat-no" title="statement not covered" >dispatch(setupWinListeners());</span>
 <span class="cstat-no" title="statement not covered" >		return <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >			cleanup();</span>
 <span class="cstat-no" title="statement not covered" >			cleanup2();</span>
 <span class="cstat-no" title="statement not covered" >			cleanup3();</span>
+<span class="cstat-no" title="statement not covered" >			cleanup4();</span>
+<span class="cstat-no" title="statement not covered" >			cleanup5();</span>
+<span class="cstat-no" title="statement not covered" >			cleanup6();</span>
+<span class="cstat-no" title="statement not covered" >			cleanup7();</span>
 		};
 	}, [dispatch]);
 &nbsp;
@@ -331,9 +363,7 @@ const RoomName = <span class="fstat-no" title="function not covered" >()</span> 
 <span class="cstat-no" title="statement not covered" >			navigate("/");</span>
 		}
 	}, [me]);
-&nbsp;
 	
-&nbsp;
 <span class="cstat-no" title="statement not covered" >	useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >		window.addEventListener('keydown', <span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >handleKeyPress(e, dispatch))</span>;</span>
 &nbsp;
@@ -355,10 +385,10 @@ const RoomName = <span class="fstat-no" title="function not covered" >()</span> 
 					&lt;/div&gt;
 					&lt;Chat /&gt;
 					&lt;Game map={map}/&gt;
-					&lt;NextP type={"T"} /&gt;
-					&lt;OpponentsMap /&gt;
+					&lt;NextP type={"T"} nextPiece={ nextPiece } /&gt;
+					&lt;OpponentsMap opponentsGrid={ opponentsGrid }/&gt;
 					&lt;Lobby users={users}/&gt;
-					&lt;Settings /&gt;
+					&lt;Settings win={ win } me={ me } isGameEnded={ isGameEnded } /&gt;
 				&lt;/div&gt;
 			&lt;/div&gt;
 		&lt;/div&gt;
@@ -373,7 +403,7 @@ export default RoomName;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-04T15:54:28.507Z
+                at 2024-09-05T10:04:21.199Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

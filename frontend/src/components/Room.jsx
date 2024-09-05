@@ -12,7 +12,6 @@ import store from "../store.jsx";
 import { useAudio } from "../utils/AudioContext.jsx";
 
 const Room = () => {
-	const users = useSelector((state) => state.users.users);
 	const dispatch = useDispatch();
 	const [roomName, setRoomname] = useState("");
 	const [username, setUsername] = useState("");

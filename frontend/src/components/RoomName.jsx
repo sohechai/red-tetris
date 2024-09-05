@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { dropPiece, FallByOne, MoveLeft, MoveRight, Rotate, setupMapListeners, setupMeInfo, setupUserListeners } from "../socketActions.jsx";
+import { dropPiece, FallByOne, gameEnd, MoveLeft, MoveRight, Rotate, setupMapListeners, setupMeInfo, setupNextPieceListeners, setupopponentsMapListeners, setupUserListeners, setupWinListeners } from "../socketActions.jsx";
 import logo from "../assets/tetris-logo.svg";
 import Game from "./Game.jsx";
 import Chat from "./Chat.jsx";
@@ -43,17 +43,29 @@ const RoomName = () => {
 	const me = useSelector((state) => state.me.me);
 	const map = useSelector((state) => state.map.map);
 	const users = useSelector((state) => state.users.users);
+	const nextPiece = useSelector((state) => state.nextPiece.nextPiece);
+	const opponentsGrid = useSelector((state) => state.opponentsMap.opponentsMap);
+	const win = useSelector((state) => state.win.win); 	// TODO recuperer le winner et loose pour retur soit loose pop up soit win pop up
+	let isGameEnded = useSelector((state) => state.gameState.isGameEnded);
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	useEffect(() => {
 		const cleanup = dispatch(setupUserListeners());
 		const cleanup2 = dispatch(setupMeInfo());
 		const cleanup3 = dispatch(setupMapListeners());
-		
+		const cleanup4 = dispatch(setupNextPieceListeners());
+		const cleanup5 = dispatch(setupopponentsMapListeners());
+		const cleanup6 = dispatch(gameEnd());
+		const cleanup7 = dispatch(setupWinListeners());
 		return () => {
 			cleanup();
 			cleanup2();
 			cleanup3();
+			cleanup4();
+			cleanup5();
+			cleanup6();
+			cleanup7();
 		};
 	}, [dispatch]);
 
@@ -64,9 +76,7 @@ const RoomName = () => {
 			navigate("/");
 		}
 	}, [me]);
-
 	
-
 	useEffect(() => {
 		window.addEventListener('keydown', (e) => handleKeyPress(e, dispatch));
 
@@ -88,10 +98,10 @@ const RoomName = () => {
 					</div>
 					<Chat />
 					<Game map={map}/>
-					<NextP type={"T"} />
-					<OpponentsMap />
+					<NextP type={"T"} nextPiece={ nextPiece } />
+					<OpponentsMap opponentsGrid={ opponentsGrid }/>
 					<Lobby users={users}/>
-					<Settings />
+					<Settings win={ win } me={ me } isGameEnded={ isGameEnded } />
 				</div>
 			</div>
 		</div>

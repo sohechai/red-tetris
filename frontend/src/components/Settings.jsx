@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { gameEnd, setupMeInfo, setupWinListeners, startGame } from "../socketActions";
+import { useDispatch } from "react-redux";
 import { useAudio } from "../utils/AudioContext";
 import CustomPopup from "../utils/WinPopUp.jsx";
 
-const Settings = () => {
-	const me = useSelector((state) => state.me.me);
-	const win = useSelector((state) => state.win.win); 	// TODO recuperer le winner et loose pour retur soit loose pop up soit win pop up
-	const dispatch = useDispatch();
-	let isGameEnded = useSelector((state) => state.gameState.isGameEnded);
+const Settings = ( { me, win, isGameEnded }) => {
 	const [isGameLaunched, setIsGameLaunched] = useState(false);
 	const { playSound } = useAudio();
 	const [showPopup, setShowPopup] = useState(false);
+	const dispatch = useDispatch();
 
 	const handleMouseOver = () => {
 		playSound('/sound/button_hover_sound.wav');
@@ -22,12 +18,6 @@ const Settings = () => {
 		dispatch(startGame());
 		setIsGameLaunched(true);
 	};
-
-	useEffect(() => {
-		dispatch(gameEnd());
-		dispatch(setupWinListeners());
-		dispatch(setupMeInfo());
-	}, [dispatch]);
 
 	useEffect(() => {
 		if (isGameEnded) {

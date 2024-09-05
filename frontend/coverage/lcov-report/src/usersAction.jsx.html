@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/16</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -109,7 +109,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -119,12 +119,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -134,12 +129,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -150,7 +150,7 @@
 	payload: users,
 });
 &nbsp;
-export const receiveUserInfo = <span class="fstat-no" title="function not covered" >(u</span>serInfo) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+export const receiveUserInfo = (userInfo) =&gt; ({
 	type: "RECEIVE_USER_INFO",
 	payload: userInfo,
 });
@@ -160,12 +160,12 @@ export const receiveMapInfo = (map) =&gt; ({
 	payload: map,
 });
 &nbsp;
-export const receiveNextPieceInfo = <span class="fstat-no" title="function not covered" >(p</span>iece) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+export const receiveNextPieceInfo = (piece) =&gt; ({
 	type: "RECEIVE_PIECE_INFO",
 	payload: piece,
 });
 &nbsp;
-export const receiveOpponentsMapInfo = <span class="fstat-no" title="function not covered" >(o</span>pponentsMap) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+export const receiveOpponentsMapInfo = (opponentsMap) =&gt; ({
 	type: "RECEIVE_OPMAP_INFO",
 	payload: opponentsMap,
 });
@@ -175,12 +175,12 @@ export const receiveChatMessage = (message) =&gt; ({
 	payload: message,
 });
 &nbsp;
-export const receiveGameEnd = <span class="fstat-no" title="function not covered" >(i</span>sGameEnded) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+export const receiveGameEnd = (isGameEnded) =&gt; ({
 	type: 'GAME_END',
 	payload: isGameEnded,
 });
 &nbsp;
-export const receiveWinState = <span class="fstat-no" title="function not covered" >(w</span>in) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+export const receiveWinState = (win) =&gt; ({
 	type: 'WIN',
 	payload: win,
 });
@@ -193,7 +193,7 @@ export const receiveWinState = <span class="fstat-no" title="function not covere
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-04T15:54:28.507Z
+                at 2024-09-05T12:57:27.655Z
             </div>
         <script src="../prettify.js"></script>
         <script>

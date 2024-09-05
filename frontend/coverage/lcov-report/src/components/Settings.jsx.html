@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">3.33% </span>
+                <span class="strong">5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/30</span>
+                <span class='fraction'>1/20</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">3.84% </span>
+                <span class="strong">5.26% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/26</span>
+                <span class='fraction'>1/19</span>
             </div>
         
             
@@ -121,18 +121,7 @@
 <a name='L56'></a><a href='#L56'>56</a>
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L59'></a><a href='#L59'>59</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -142,16 +131,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,19 +180,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { gameEnd, setupMeInfo, setupWinListeners, startGame } from "../socketActions";
+import { useDispatch } from "react-redux";
 import { useAudio } from "../utils/AudioContext";
 import CustomPopup from "../utils/WinPopUp.jsx";
 &nbsp;
-const Settings = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-	const me = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.me.me)</span>;</span>
-	const win = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.win.win)</span>;</span> 	// TODO recuperer le winner et loose pour retur soit loose pop up soit win pop up
-	const dispatch = <span class="cstat-no" title="statement not covered" >useDispatch();</span>
-	let isGameEnded = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.gameState.isGameEnded)</span>;</span>
+const Settings = <span class="fstat-no" title="function not covered" >( </span>{ me, win, isGameEnded }) =&gt; {
 	const [isGameLaunched, setIsGameLaunched] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
 	const { playSound } = <span class="cstat-no" title="statement not covered" >useAudio();</span>
 	const [showPopup, setShowPopup] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
+	const dispatch = <span class="cstat-no" title="statement not covered" >useDispatch();</span>
 &nbsp;
 	const handleMouseOver = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >		playSound('/sound/button_hover_sound.wav');</span>
@@ -223,12 +199,6 @@ const Settings = <span class="fstat-no" title="function not covered" >()</span> 
 <span class="cstat-no" title="statement not covered" >		dispatch(startGame());</span>
 <span class="cstat-no" title="statement not covered" >		setIsGameLaunched(true);</span>
 	};
-&nbsp;
-<span class="cstat-no" title="statement not covered" >	useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >		dispatch(gameEnd());</span>
-<span class="cstat-no" title="statement not covered" >		dispatch(setupWinListeners());</span>
-<span class="cstat-no" title="statement not covered" >		dispatch(setupMeInfo());</span>
-	}, [dispatch]);
 &nbsp;
 <span class="cstat-no" title="statement not covered" >	useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >		if (isGameEnded) {</span>
@@ -274,7 +244,7 @@ export default Settings;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-04T15:53:18.765Z
+                at 2024-09-05T12:57:27.655Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -75,7 +75,8 @@
       "jestGlobalMocks.ts",
       ".module.ts",
       "main.ts",
-      ".mock.ts"
+      ".mock.ts",
+      "socket.gateway.ts"
   ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
